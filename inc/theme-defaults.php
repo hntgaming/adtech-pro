@@ -237,6 +237,28 @@ function HTG_set_default_options() {
 add_action( 'after_switch_theme', 'HTG_set_default_options' );
 
 /**
+ * One-time migration for v2.3.1
+ * Updates container width from old default (1200) to new default (1920)
+ */
+function HTG_migrate_v231() {
+	$migrated = get_option( 'HTG_migrated_v231', false );
+	
+	if ( $migrated ) {
+		return; // Already migrated
+	}
+	
+	// Update container width if it's still at old default
+	$current_width = get_option( 'HTG_container_width', false );
+	if ( $current_width === false || $current_width == 1200 ) {
+		update_option( 'HTG_container_width', 1920 );
+	}
+	
+	// Mark as migrated
+	update_option( 'HTG_migrated_v231', true );
+}
+add_action( 'init', 'HTG_migrate_v231' );
+
+/**
  * Reset options to defaults (admin function)
  * Only call this from admin panel reset button
  */
