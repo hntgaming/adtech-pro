@@ -1,0 +1,1051 @@
+/**
+ * H&T AdTech Pro - Enterprise Admin Dashboard
+ * Production-ready admin interface for high-traffic publishers
+ *
+ * @package HTG
+ * @version 2.3.0
+ */
+
+/* ===========================================
+   CSS Variables - Unified Design System
+   =========================================== */
+
+:root {
+	/* Primary Brand Colors */
+	--htg-primary: #1a1f36;
+	--htg-primary-hover: #252b47;
+	--htg-secondary: #00d4aa;
+	--htg-secondary-hover: #00b894;
+	--htg-accent: #6c5ce7;
+	--htg-accent-hover: #5f4dd1;
+	
+	/* Dark Theme Background */
+	--htg-bg-dark: #0a0a0a;
+	--htg-bg-card: #121212;
+	--htg-bg-section: #1a1a1a;
+	--htg-bg-hover: #222222;
+	
+	/* Light Theme Backgrounds (Admin) */
+	--htg-admin-bg: #f0f2f5;
+	--htg-admin-card: #ffffff;
+	--htg-admin-border: #e1e5eb;
+	
+	/* Text Colors */
+	--htg-text-primary: #1a2332;
+	--htg-text-secondary: #64748b;
+	--htg-text-muted: #94a3b8;
+	--htg-text-white: #ffffff;
+	
+	/* Status Colors */
+	--htg-success: #10b981;
+	--htg-success-bg: #d1fae5;
+	--htg-warning: #f59e0b;
+	--htg-warning-bg: #fef3c7;
+	--htg-error: #ef4444;
+	--htg-error-bg: #fee2e2;
+	--htg-info: #3b82f6;
+	--htg-info-bg: #dbeafe;
+	
+	/* Gradients */
+	--htg-gradient-primary: linear-gradient(135deg, #1a1f36 0%, #2d3556 100%);
+	--htg-gradient-secondary: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+	--htg-gradient-accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+	--htg-gradient-dark: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+	
+	/* Shadows */
+	--htg-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+	--htg-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+	--htg-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+	--htg-shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+	
+	/* Border Radius */
+	--htg-radius-sm: 6px;
+	--htg-radius-md: 10px;
+	--htg-radius-lg: 16px;
+	--htg-radius-xl: 24px;
+	--htg-radius-full: 9999px;
+	
+	/* Spacing */
+	--htg-space-xs: 8px;
+	--htg-space-sm: 12px;
+	--htg-space-md: 20px;
+	--htg-space-lg: 30px;
+	--htg-space-xl: 40px;
+	
+	/* Transitions */
+	--htg-transition-fast: 0.15s ease;
+	--htg-transition-normal: 0.25s ease;
+	--htg-transition-slow: 0.4s ease;
+}
+
+/* ===========================================
+   Base Admin Wrapper
+   =========================================== */
+
+.HTG-admin-wrap {
+	background: var(--htg-admin-bg);
+	margin: -20px -20px 0 -20px;
+	padding: 0 0 var(--htg-space-xl);
+	min-height: 100vh;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+}
+
+.HTG-admin-wrap *,
+.HTG-admin-wrap *::before,
+.HTG-admin-wrap *::after {
+	box-sizing: border-box;
+}
+
+/* ===========================================
+   Admin Header - Dark Theme Branding
+   =========================================== */
+
+.HTG-admin-header {
+	background: var(--htg-gradient-primary);
+	padding: var(--htg-space-lg) var(--htg-space-xl);
+	position: relative;
+	overflow: hidden;
+}
+
+.HTG-admin-header::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 400px;
+	height: 100%;
+	background: linear-gradient(135deg, transparent 0%, rgba(0, 212, 170, 0.1) 100%);
+	pointer-events: none;
+}
+
+.HTG-admin-header::after {
+	content: '';
+	position: absolute;
+	bottom: -50px;
+	right: -50px;
+	width: 150px;
+	height: 150px;
+	background: var(--htg-accent);
+	border-radius: 50%;
+	opacity: 0.1;
+	pointer-events: none;
+}
+
+.HTG-admin-header h1 {
+	color: var(--htg-text-white);
+	font-size: 28px;
+	font-weight: 700;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: var(--htg-space-sm);
+	position: relative;
+	z-index: 1;
+}
+
+.HTG-admin-badge {
+	background: rgba(0, 212, 170, 0.2);
+	color: var(--htg-secondary);
+	padding: 4px 12px;
+	border-radius: var(--htg-radius-full);
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	border: 1px solid rgba(0, 212, 170, 0.3);
+}
+
+.HTG-admin-tagline {
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 14px;
+	margin: 8px 0 0;
+	font-weight: 400;
+	position: relative;
+	z-index: 1;
+}
+
+/* ===========================================
+   Admin Grid Layout
+   =========================================== */
+
+.HTG-admin-row {
+	display: grid;
+	gap: var(--htg-space-md);
+	padding: var(--htg-space-md) var(--htg-space-xl);
+	max-width: 1600px;
+	margin: 0 auto;
+}
+
+.HTG-admin-row:first-of-type {
+	padding-top: var(--htg-space-lg);
+}
+
+.HTG-admin-cols-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.HTG-admin-cols-3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.HTG-admin-cols-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1200px) {
+	.HTG-admin-cols-3,
+	.HTG-admin-cols-4 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.HTG-admin-row {
+		padding: var(--htg-space-sm);
+	}
+	
+	.HTG-admin-cols-2,
+	.HTG-admin-cols-3,
+	.HTG-admin-cols-4 {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ===========================================
+   Admin Cards
+   =========================================== */
+
+.HTG-admin-card {
+	background: var(--htg-admin-card);
+	border-radius: var(--htg-radius-lg);
+	box-shadow: var(--htg-shadow-sm);
+	border: 1px solid var(--htg-admin-border);
+	overflow: hidden;
+	transition: all var(--htg-transition-normal);
+}
+
+.HTG-admin-card:hover {
+	box-shadow: var(--htg-shadow-md);
+	transform: translateY(-2px);
+}
+
+.HTG-card-header {
+	padding: var(--htg-space-md) var(--htg-space-md);
+	border-bottom: 1px solid var(--htg-admin-border);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: linear-gradient(180deg, #fafbfc 0%, #ffffff 100%);
+}
+
+.HTG-card-header h2 {
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--htg-text-primary);
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.HTG-card-header h2 .dashicons {
+	color: var(--htg-secondary);
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+.HTG-card-body {
+	padding: var(--htg-space-md);
+}
+
+/* Card Variants */
+.HTG-card-info {
+	background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+	border-color: var(--htg-secondary);
+}
+
+.HTG-card-info .HTG-card-header {
+	background: transparent;
+	border-bottom-color: rgba(0, 212, 170, 0.2);
+}
+
+.HTG-card-warning {
+	border-left: 4px solid var(--htg-warning);
+}
+
+.HTG-card-warning .HTG-card-header {
+	background: var(--htg-warning-bg);
+}
+
+/* ===========================================
+   Quick Actions Grid
+   =========================================== */
+
+.HTG-quick-actions {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--htg-space-sm);
+}
+
+.HTG-quick-action {
+	display: flex;
+	align-items: center;
+	gap: var(--htg-space-sm);
+	padding: var(--htg-space-sm) var(--htg-space-md);
+	background: var(--htg-admin-bg);
+	border: 1px solid transparent;
+	border-radius: var(--htg-radius-md);
+	text-decoration: none;
+	color: var(--htg-text-primary);
+	font-weight: 500;
+	font-size: 13px;
+	transition: all var(--htg-transition-fast);
+}
+
+.HTG-quick-action:hover {
+	background: var(--htg-primary);
+	color: var(--htg-text-white);
+	transform: translateX(4px);
+	box-shadow: var(--htg-shadow-md);
+}
+
+.HTG-quick-action .dashicons {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+	color: var(--htg-secondary);
+	transition: color var(--htg-transition-fast);
+}
+
+.HTG-quick-action:hover .dashicons {
+	color: var(--htg-secondary);
+}
+
+@media (max-width: 480px) {
+	.HTG-quick-actions {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ===========================================
+   Stats Cards
+   =========================================== */
+
+.HTG-stat-card {
+	background: var(--htg-admin-card);
+	border-radius: var(--htg-radius-lg);
+	padding: var(--htg-space-md);
+	display: flex;
+	align-items: center;
+	gap: var(--htg-space-md);
+	box-shadow: var(--htg-shadow-sm);
+	border: 1px solid var(--htg-admin-border);
+	transition: all var(--htg-transition-normal);
+}
+
+.HTG-stat-card:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--htg-shadow-lg);
+}
+
+.HTG-stat-icon {
+	width: 56px;
+	height: 56px;
+	border-radius: var(--htg-radius-md);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	background: var(--htg-gradient-primary);
+}
+
+.HTG-stat-icon .dashicons {
+	font-size: 26px;
+	width: 26px;
+	height: 26px;
+	color: var(--htg-secondary);
+}
+
+.HTG-stat-content {
+	flex: 1;
+	min-width: 0;
+}
+
+.HTG-stat-value {
+	font-size: 28px;
+	font-weight: 700;
+	color: var(--htg-text-primary);
+	line-height: 1;
+	margin-bottom: 6px;
+}
+
+.HTG-stat-label {
+	font-size: 13px;
+	color: var(--htg-text-secondary);
+	font-weight: 500;
+}
+
+/* ===========================================
+   Ad Slots List
+   =========================================== */
+
+.HTG-ad-slots-list {
+	display: grid;
+	gap: var(--htg-space-xs);
+}
+
+.HTG-ad-slot-item {
+	display: flex;
+	align-items: center;
+	gap: var(--htg-space-sm);
+	padding: var(--htg-space-sm);
+	background: var(--htg-admin-bg);
+	border-radius: var(--htg-radius-sm);
+	transition: background var(--htg-transition-fast);
+}
+
+.HTG-ad-slot-item:hover {
+	background: #e8ecf1;
+}
+
+.HTG-ad-slot-status {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.HTG-ad-slot-status.active {
+	background: var(--htg-success);
+	box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.HTG-ad-slot-status.inactive {
+	background: var(--htg-text-muted);
+}
+
+.HTG-ad-slot-info {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.HTG-ad-slot-info strong {
+	font-size: 13px;
+	color: var(--htg-text-primary);
+}
+
+.HTG-ad-slot-location {
+	font-size: 11px;
+	color: var(--htg-text-secondary);
+}
+
+.HTG-ad-slots-summary {
+	margin-top: var(--htg-space-sm);
+	padding-top: var(--htg-space-sm);
+	border-top: 1px solid var(--htg-admin-border);
+	text-align: center;
+	font-size: 13px;
+	color: var(--htg-text-secondary);
+}
+
+.HTG-ad-slots-summary strong {
+	color: var(--htg-secondary);
+}
+
+.HTG-no-data {
+	text-align: center;
+	color: var(--htg-text-muted);
+	font-style: italic;
+	padding: var(--htg-space-md);
+}
+
+/* ===========================================
+   Info List (Site Information)
+   =========================================== */
+
+.HTG-info-list {
+	display: grid;
+	gap: var(--htg-space-xs);
+}
+
+.HTG-info-row {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--htg-space-sm);
+	padding: var(--htg-space-sm);
+	background: var(--htg-admin-bg);
+	border-radius: var(--htg-radius-sm);
+}
+
+.HTG-info-row .dashicons {
+	color: var(--htg-accent);
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+	margin-top: 2px;
+}
+
+.HTG-info-details {
+	flex: 1;
+	min-width: 0;
+}
+
+.HTG-info-label {
+	font-size: 11px;
+	color: var(--htg-text-secondary);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	margin-bottom: 2px;
+}
+
+.HTG-info-value {
+	font-size: 13px;
+	color: var(--htg-text-primary);
+	font-weight: 600;
+	word-break: break-all;
+}
+
+/* ===========================================
+   Info Grid (Getting Started)
+   =========================================== */
+
+.HTG-info-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: var(--htg-space-md);
+}
+
+.HTG-info-item {
+	padding: var(--htg-space-md);
+	background: var(--htg-admin-card);
+	border-radius: var(--htg-radius-md);
+	box-shadow: var(--htg-shadow-sm);
+	border: 1px solid var(--htg-admin-border);
+}
+
+.HTG-info-item h3 {
+	font-size: 15px;
+	color: var(--htg-primary);
+	margin: 0 0 var(--htg-space-xs);
+	font-weight: 600;
+}
+
+.HTG-info-item p {
+	font-size: 13px;
+	color: var(--htg-text-secondary);
+	margin: 0 0 var(--htg-space-sm);
+	line-height: 1.5;
+}
+
+.HTG-info-item .button {
+	width: 100%;
+	text-align: center;
+	justify-content: center;
+}
+
+/* ===========================================
+   Admin Footer
+   =========================================== */
+
+.HTG-admin-footer {
+	text-align: center;
+	padding: var(--htg-space-lg) var(--htg-space-xl);
+	color: var(--htg-text-secondary);
+	font-size: 13px;
+	margin-top: var(--htg-space-lg);
+	border-top: 1px solid var(--htg-admin-border);
+	background: var(--htg-admin-card);
+}
+
+.HTG-admin-footer a {
+	color: var(--htg-primary);
+	text-decoration: none;
+	font-weight: 600;
+	transition: color var(--htg-transition-fast);
+}
+
+.HTG-admin-footer a:hover {
+	color: var(--htg-secondary);
+}
+
+/* ===========================================
+   Buttons
+   =========================================== */
+
+.HTG-admin-wrap .button,
+.HTG-admin-wrap button[type="submit"] {
+	border-radius: var(--htg-radius-sm);
+	font-weight: 500;
+	padding: 8px 16px;
+	height: auto;
+	line-height: 1.4;
+	transition: all var(--htg-transition-fast);
+}
+
+.HTG-admin-wrap .button-primary,
+.HTG-admin-wrap button[type="submit"].button-primary {
+	background: var(--htg-primary);
+	border-color: var(--htg-primary);
+	color: var(--htg-text-white);
+	box-shadow: 0 2px 4px rgba(26, 31, 54, 0.2);
+}
+
+.HTG-admin-wrap .button-primary:hover,
+.HTG-admin-wrap button[type="submit"].button-primary:hover {
+	background: var(--htg-primary-hover);
+	border-color: var(--htg-primary-hover);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px rgba(26, 31, 54, 0.3);
+}
+
+.HTG-admin-wrap .button-hero {
+	padding: 14px 28px;
+	font-size: 15px;
+}
+
+.HTG-admin-wrap .button-hero .dashicons {
+	vertical-align: middle;
+	margin-right: 8px;
+	margin-top: -2px;
+}
+
+.HTG-admin-wrap .button-secondary {
+	background: var(--htg-admin-card);
+	border-color: var(--htg-admin-border);
+	color: var(--htg-text-primary);
+}
+
+.HTG-admin-wrap .button-secondary:hover {
+	background: var(--htg-admin-bg);
+	border-color: var(--htg-text-secondary);
+}
+
+/* ===========================================
+   Form Elements
+   =========================================== */
+
+.HTG-admin-wrap input[type="text"],
+.HTG-admin-wrap input[type="email"],
+.HTG-admin-wrap input[type="url"],
+.HTG-admin-wrap input[type="number"],
+.HTG-admin-wrap textarea,
+.HTG-admin-wrap select {
+	border-radius: var(--htg-radius-sm);
+	border: 1px solid var(--htg-admin-border);
+	padding: 10px 14px;
+	font-size: 14px;
+	transition: all var(--htg-transition-fast);
+}
+
+.HTG-admin-wrap input:focus,
+.HTG-admin-wrap textarea:focus,
+.HTG-admin-wrap select:focus {
+	border-color: var(--htg-secondary);
+	box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.15);
+	outline: none;
+}
+
+.HTG-admin-wrap .form-table th {
+	font-weight: 600;
+	color: var(--htg-text-primary);
+	padding: 20px 10px 20px 0;
+}
+
+.HTG-admin-wrap .form-table td {
+	padding: 15px 10px;
+}
+
+.HTG-admin-wrap .description {
+	color: var(--htg-text-secondary);
+	font-size: 12px;
+	margin-top: 6px;
+}
+
+/* Toggle Switch */
+.HTG-toggle {
+	position: relative;
+	display: inline-block;
+	width: 44px;
+	height: 24px;
+}
+
+.HTG-toggle input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.HTG-toggle-slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: var(--htg-text-muted);
+	border-radius: var(--htg-radius-full);
+	transition: var(--htg-transition-normal);
+}
+
+.HTG-toggle-slider:before {
+	position: absolute;
+	content: "";
+	height: 18px;
+	width: 18px;
+	left: 3px;
+	bottom: 3px;
+	background: white;
+	border-radius: 50%;
+	transition: var(--htg-transition-normal);
+}
+
+.HTG-toggle input:checked + .HTG-toggle-slider {
+	background: var(--htg-secondary);
+}
+
+.HTG-toggle input:checked + .HTG-toggle-slider:before {
+	transform: translateX(20px);
+}
+
+/* ===========================================
+   Tab Navigation
+   =========================================== */
+
+.HTG-settings-tabs {
+	margin-top: var(--htg-space-md);
+}
+
+.HTG-settings-tabs .nav-tab-wrapper {
+	border-bottom: 2px solid var(--htg-admin-border);
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.HTG-settings-tabs .nav-tab {
+	border: none;
+	background: transparent;
+	padding: 12px 20px;
+	margin: 0 4px -2px 0;
+	font-weight: 500;
+	color: var(--htg-text-secondary);
+	border-bottom: 2px solid transparent;
+	transition: all var(--htg-transition-fast);
+}
+
+.HTG-settings-tabs .nav-tab:hover {
+	color: var(--htg-primary);
+	background: transparent;
+}
+
+.HTG-settings-tabs .nav-tab-active {
+	color: var(--htg-primary);
+	border-bottom-color: var(--htg-secondary);
+	background: transparent;
+}
+
+.HTG-tab-content {
+	background: var(--htg-admin-card);
+	padding: var(--htg-space-lg);
+	border: 1px solid var(--htg-admin-border);
+	border-top: none;
+	border-radius: 0 0 var(--htg-radius-md) var(--htg-radius-md);
+}
+
+/* ===========================================
+   Admin Notice Styles
+   =========================================== */
+
+.HTG-admin-notice {
+	padding: var(--htg-space-md);
+	border-radius: var(--htg-radius-md);
+	margin-bottom: var(--htg-space-md);
+}
+
+.HTG-notice-info {
+	background: var(--htg-info-bg);
+	border-left: 4px solid var(--htg-info);
+}
+
+.HTG-notice-success {
+	background: var(--htg-success-bg);
+	border-left: 4px solid var(--htg-success);
+}
+
+.HTG-notice-warning {
+	background: var(--htg-warning-bg);
+	border-left: 4px solid var(--htg-warning);
+}
+
+.HTG-notice-error {
+	background: var(--htg-error-bg);
+	border-left: 4px solid var(--htg-error);
+}
+
+.HTG-admin-notice h3 {
+	margin: 0 0 var(--htg-space-xs);
+	font-size: 15px;
+	font-weight: 600;
+}
+
+.HTG-admin-notice p {
+	margin: 0 0 var(--htg-space-xs);
+	font-size: 13px;
+}
+
+.HTG-admin-notice ul {
+	margin: var(--htg-space-xs) 0;
+	padding-left: var(--htg-space-md);
+}
+
+.HTG-admin-notice li {
+	margin-bottom: 4px;
+	font-size: 13px;
+}
+
+/* ===========================================
+   Admin Page Specific Styles
+   =========================================== */
+
+.HTG-admin-page {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: var(--htg-space-md);
+}
+
+.HTG-admin-page > h1 {
+	display: flex;
+	align-items: center;
+	gap: var(--htg-space-sm);
+	margin-bottom: var(--htg-space-md);
+	color: var(--htg-text-primary);
+	font-size: 24px;
+}
+
+.HTG-admin-page > h1 .dashicons {
+	color: var(--htg-secondary);
+	font-size: 28px;
+	width: 28px;
+	height: 28px;
+}
+
+.HTG-admin-page .HTG-admin-card {
+	margin-bottom: var(--htg-space-md);
+}
+
+.HTG-admin-page .HTG-admin-card h2 {
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--htg-text-primary);
+	margin: 0 0 var(--htg-space-sm);
+	padding-bottom: var(--htg-space-sm);
+	border-bottom: 1px solid var(--htg-admin-border);
+}
+
+/* ===========================================
+   Ad Slot Configuration
+   =========================================== */
+
+.HTG-ad-slot-config {
+	background: var(--htg-admin-bg);
+	padding: var(--htg-space-md);
+	margin-bottom: var(--htg-space-md);
+	border-left: 4px solid var(--htg-primary);
+	border-radius: var(--htg-radius-sm);
+}
+
+.HTG-ad-slot-config h3 {
+	margin: 0 0 var(--htg-space-xs);
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--htg-text-primary);
+	display: flex;
+	align-items: center;
+	gap: var(--htg-space-xs);
+}
+
+.HTG-ad-slot-config h3 .dashicons {
+	color: var(--htg-secondary);
+}
+
+.HTG-ad-slot-config .description {
+	margin-bottom: var(--htg-space-sm);
+}
+
+.HTG-ad-slot-config textarea {
+	width: 100%;
+	font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+	font-size: 12px;
+	background: var(--htg-admin-card);
+}
+
+/* ===========================================
+   Legal Pages Grid
+   =========================================== */
+
+.HTG-legal-pages-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: var(--htg-space-md);
+	margin: var(--htg-space-lg) 0;
+}
+
+.HTG-legal-page-card {
+	background: var(--htg-admin-card);
+	border: 1px solid var(--htg-admin-border);
+	border-radius: var(--htg-radius-lg);
+	padding: var(--htg-space-md);
+	text-align: center;
+	transition: all var(--htg-transition-normal);
+}
+
+.HTG-legal-page-card:hover {
+	border-color: var(--htg-secondary);
+	box-shadow: var(--htg-shadow-md);
+	transform: translateY(-2px);
+}
+
+.HTG-legal-page-icon {
+	width: 56px;
+	height: 56px;
+	margin: 0 auto var(--htg-space-sm);
+	background: var(--htg-gradient-primary);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.HTG-legal-page-icon .dashicons {
+	font-size: 26px;
+	width: 26px;
+	height: 26px;
+	color: var(--htg-secondary);
+}
+
+.HTG-legal-page-card h3 {
+	margin: 0 0 var(--htg-space-xs);
+	font-size: 16px;
+	color: var(--htg-text-primary);
+}
+
+.HTG-legal-page-card p {
+	font-size: 13px;
+	color: var(--htg-text-secondary);
+	margin: 0 0 var(--htg-space-sm);
+}
+
+.HTG-page-exists {
+	background: var(--htg-success-bg);
+	padding: var(--htg-space-sm);
+	border-radius: var(--htg-radius-sm);
+	color: #065f46;
+	font-weight: 600;
+	font-size: 13px;
+}
+
+.HTG-page-exists .dashicons {
+	color: var(--htg-success);
+	vertical-align: middle;
+}
+
+.HTG-legal-notice {
+	background: var(--htg-warning-bg);
+	border: 1px solid var(--htg-warning);
+	border-radius: var(--htg-radius-md);
+	padding: var(--htg-space-md);
+}
+
+.HTG-legal-notice h3 {
+	margin: 0 0 var(--htg-space-xs);
+	color: #92400e;
+	font-size: 15px;
+}
+
+.HTG-legal-notice p {
+	margin: 0;
+	color: #78350f;
+	font-size: 13px;
+}
+
+/* ===========================================
+   Accessibility & Focus States
+   =========================================== */
+
+.HTG-admin-wrap button:focus,
+.HTG-admin-wrap .button:focus,
+.HTG-admin-wrap input:focus,
+.HTG-admin-wrap select:focus,
+.HTG-admin-wrap textarea:focus,
+.HTG-admin-wrap a:focus {
+	outline: 2px solid var(--htg-secondary);
+	outline-offset: 2px;
+}
+
+/* ===========================================
+   Print Styles
+   =========================================== */
+
+@media print {
+	.HTG-admin-header,
+	.HTG-admin-footer,
+	.button,
+	#wpadminbar {
+		display: none !important;
+	}
+	
+	.HTG-admin-wrap {
+		background: white;
+	}
+	
+	.HTG-admin-card {
+		break-inside: avoid;
+		page-break-inside: avoid;
+	}
+}
+
+/* ===========================================
+   Reduced Motion
+   =========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+	.HTG-admin-wrap *,
+	.HTG-admin-wrap *::before,
+	.HTG-admin-wrap *::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* ===========================================
+   WordPress Color Picker Override
+   =========================================== */
+
+.HTG-admin-wrap .wp-picker-container {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--htg-space-xs);
+}
+
+.HTG-admin-wrap .wp-picker-container .wp-color-result {
+	border-radius: var(--htg-radius-sm);
+	height: 36px;
+	min-width: 36px;
+}
+
+.HTG-admin-wrap .wp-picker-container .wp-picker-input-wrap {
+	margin-left: 0;
+}
+
+/* ===========================================
+   WordPress Admin Menu Icon
+   =========================================== */
+
+#adminmenu .toplevel_page_HTG-dashboard .wp-menu-image::before {
+	content: '\f239';
+}

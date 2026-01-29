@@ -1,0 +1,378 @@
+/**
+ * Dark Mode Styles
+ * Dark theme styles for the entire site
+ *
+ * @package HTG
+ * @since 2.0.0
+ */
+
+/* Dark Mode Toggle Button */
+.HTG-dark-mode-toggle {
+	position: fixed;
+	bottom: 80px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background: #1a1f36;
+	border: 2px solid #00d4aa;
+	color: #fff;
+	cursor: pointer;
+	z-index: 9997;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.HTG-dark-mode-toggle:hover {
+	background: #00d4aa;
+	transform: scale(1.1);
+}
+
+.HTG-dark-mode-toggle .HTG-icon-light {
+	display: block;
+}
+
+.HTG-dark-mode-toggle .HTG-icon-dark {
+	display: none;
+}
+
+/* ===========================================
+   Dark Mode Base Styles
+   =========================================== */
+
+body.HTG-dark-mode {
+	background: #0a0a0a;
+	color: #e0e0e0;
+}
+
+body.HTG-dark-mode .HTG-wrapper {
+	background: #121212;
+	box-shadow: 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Typography */
+body.HTG-dark-mode h1,
+body.HTG-dark-mode h2,
+body.HTG-dark-mode h3,
+body.HTG-dark-mode h4,
+body.HTG-dark-mode h5,
+body.HTG-dark-mode h6 {
+	color: #ffffff;
+}
+
+body.HTG-dark-mode p,
+body.HTG-dark-mode li,
+body.HTG-dark-mode .entry-content {
+	color: #e0e0e0;
+}
+
+/* Links */
+body.HTG-dark-mode a {
+	color: #00d4aa;
+}
+
+body.HTG-dark-mode a:hover,
+body.HTG-dark-mode a:focus {
+	color: #b9eacc;
+}
+
+/* Header */
+body.HTG-dark-mode .site-header {
+	background: #121212;
+	border-bottom: 1px solid #2a2a2a;
+}
+
+body.HTG-dark-mode .hm-top-bar {
+	background: #1a1a1a;
+	border-bottom: 1px solid #2a2a2a;
+}
+
+body.HTG-dark-mode .site-title a {
+	color: #00d4aa;
+}
+
+body.HTG-dark-mode .site-description {
+	color: #b0b0b0;
+}
+
+/* Navigation */
+body.HTG-dark-mode .hm-nav-container {
+	background: #1a1a1a;
+}
+
+body.HTG-dark-mode .main-navigation {
+	background: #1a1a1a;
+}
+
+body.HTG-dark-mode .main-navigation a {
+	color: #e0e0e0;
+}
+
+body.HTG-dark-mode .main-navigation a:hover,
+body.HTG-dark-mode .main-navigation .current_page_item > a,
+body.HTG-dark-mode .main-navigation .current-menu-item > a {
+	background: #1a1f36;
+	color: #ffffff;
+}
+
+body.HTG-dark-mode .main-navigation ul ul {
+	background: #2a2a2a;
+}
+
+/* Posts */
+body.HTG-dark-mode .HTG-post .entry-title a {
+	color: #ffffff;
+}
+
+body.HTG-dark-mode .HTG-post .entry-title a:hover {
+	color: #00d4aa;
+}
+
+body.HTG-dark-mode .entry-meta,
+body.HTG-dark-mode .entry-meta a {
+	color: #b0b0b0;
+}
+
+body.HTG-dark-mode .cat-links a {
+	/* Keep the beautiful gradient badges in dark mode! */
+	display: inline-block;
+	color: #ffffff !important;
+	background: linear-gradient(135deg, #00d4aa 0%, #5dbde8 100%) !important;
+	font-weight: 600;
+	padding: 5px 12px;
+	border-radius: 4px;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 11px;
+	letter-spacing: 0.5px;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 6px rgba(128, 211, 245, 0.4);
+}
+
+body.HTG-dark-mode .cat-links a:hover {
+	background: linear-gradient(135deg, #b9eacc 0%, #00d4aa 100%) !important;
+	color: #121212 !important;
+	transform: translateY(-2px);
+	box-shadow: 0 4px 10px rgba(128, 211, 245, 0.5);
+}
+
+/* Single Post */
+body.HTG-dark-mode .HTG-single .entry-title {
+	color: #ffffff;
+}
+
+body.HTG-dark-mode .hm-authorbox {
+	background: #1a1a1a;
+	border-color: #2a2a2a;
+}
+
+/* Sidebar */
+body.HTG-dark-mode #secondary {
+	background: transparent;
+}
+
+body.HTG-dark-mode .widget {
+	background: #1a1a1a;
+	padding: 20px;
+	border-radius: 4px;
+	margin-bottom: 30px;
+}
+
+body.HTG-dark-mode .widget-title {
+	color: #ffffff;
+	border-bottom-color: #1a1f36;
+}
+
+body.HTG-dark-mode .widget a {
+	color: #e0e0e0;
+}
+
+body.HTG-dark-mode .widget a:hover {
+	color: #00d4aa;
+}
+
+/* Comments */
+body.HTG-dark-mode .comment-list article {
+	border-top-color: #2a2a2a;
+	background: #1a1a1a;
+}
+
+body.HTG-dark-mode .comment-author a {
+	color: #00d4aa;
+}
+
+body.HTG-dark-mode .comment-reply-link {
+	background: #1a1f36;
+}
+
+body.HTG-dark-mode .comment-reply-link:hover {
+	background: #00d4aa;
+	color: #121212;
+}
+
+/* Forms */
+body.HTG-dark-mode input[type="text"],
+body.HTG-dark-mode input[type="email"],
+body.HTG-dark-mode input[type="url"],
+body.HTG-dark-mode input[type="password"],
+body.HTG-dark-mode input[type="search"],
+body.HTG-dark-mode input[type="number"],
+body.HTG-dark-mode textarea,
+body.HTG-dark-mode select {
+	background: #1a1a1a;
+	border-color: #2a2a2a;
+	color: #e0e0e0;
+}
+
+body.HTG-dark-mode input:focus,
+body.HTG-dark-mode textarea:focus,
+body.HTG-dark-mode select:focus {
+	border-color: #1a1f36;
+	background: #222222;
+}
+
+/* Buttons */
+body.HTG-dark-mode button,
+body.HTG-dark-mode input[type="button"],
+body.HTG-dark-mode input[type="submit"],
+body.HTG-dark-mode .th-readmore {
+	background: #1a1f36;
+	color: #ffffff;
+}
+
+body.HTG-dark-mode button:hover,
+body.HTG-dark-mode input[type="button"]:hover,
+body.HTG-dark-mode input[type="submit"]:hover,
+body.HTG-dark-mode .th-readmore:hover {
+	background: #00d4aa;
+	color: #121212;
+}
+
+/* Footer */
+body.HTG-dark-mode .site-footer {
+	background: #0a0a0a;
+	border-top: 1px solid #2a2a2a;
+}
+
+body.HTG-dark-mode .footer-widget-area {
+	background: #0a0a0a;
+}
+
+body.HTG-dark-mode .footer-widget-title {
+	color: #ffffff;
+	border-bottom-color: #1a1f36;
+}
+
+body.HTG-dark-mode .site-info {
+	background: #000000;
+	color: #b0b0b0;
+}
+
+/* Pagination */
+body.HTG-dark-mode .page-numbers {
+	background: #1a1a1a;
+	color: #ffffff;
+}
+
+body.HTG-dark-mode .page-numbers:hover {
+	background: #2a2a2a;
+}
+
+body.HTG-dark-mode .nav-links .current {
+	background: #1a1f36;
+}
+
+/* Tables */
+body.HTG-dark-mode table {
+	border-color: #2a2a2a;
+}
+
+body.HTG-dark-mode th {
+	background: #1a1a1a;
+	border-color: #2a2a2a;
+}
+
+body.HTG-dark-mode td {
+	border-color: #2a2a2a;
+}
+
+/* Blockquotes */
+body.HTG-dark-mode blockquote,
+body.HTG-dark-mode .wp-block-quote {
+	background: #1a1a1a;
+	border-left-color: #1a1f36;
+	color: #e0e0e0;
+}
+
+/* Code Blocks */
+body.HTG-dark-mode pre,
+body.HTG-dark-mode code {
+	background: #1a1a1a;
+	color: #00d4aa;
+}
+
+/* Magazine Widgets */
+body.HTG-dark-mode .hmb-entry-title a,
+body.HTG-dark-mode .hms-title a {
+	color: #ffffff;
+}
+
+body.HTG-dark-mode .hmb-entry-title a:hover,
+body.HTG-dark-mode .hms-title a:hover {
+	color: #00d4aa;
+}
+
+/* Search Form */
+body.HTG-dark-mode .search-form .search-field {
+	background: #1a1a1a;
+	border-color: #2a2a2a;
+	color: #e0e0e0;
+}
+
+body.HTG-dark-mode .search-form .search-submit {
+	background: #1a1f36;
+}
+
+body.HTG-dark-mode .search-form .search-submit:hover {
+	background: #00d4aa;
+	color: #121212;
+}
+
+/* Breadcrumbs */
+body.HTG-dark-mode .hm-breadcrumb-wrap {
+	background: #1a1a1a;
+	border-color: #2a2a2a;
+	padding: 12px 20px;
+	border-radius: 4px;
+}
+
+body.HTG-dark-mode .breadcrumb-trail a {
+	color: #00d4aa;
+}
+
+body.HTG-dark-mode .breadcrumb-current {
+	color: #b0b0b0;
+}
+
+/* Ad Slots in Dark Mode */
+body.HTG-dark-mode .HTG-ad-slot {
+	background: transparent;
+}
+
+body.HTG-dark-mode .HTG-ad-label {
+	color: #808080;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+	.HTG-dark-mode-toggle {
+		bottom: 60px;
+		right: 15px;
+		width: 45px;
+		height: 45px;
+	}
+}
+

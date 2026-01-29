@@ -1,0 +1,45 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node (if using build tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build artifacts
+*.map
+*.log
+
+# Local development
+.env
+.env.local
+*.local
+
+# WordPress specific
+wp-config.php
+debug.log
+
+# Backup files
+*.bak
+*.backup
+*_backup*
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+# Don't ignore these (theme essentials)
+!style.css
+!screenshot.png
+!readme.txt
