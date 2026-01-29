@@ -42,17 +42,17 @@ function HTG_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 	if ( true == get_theme_mod( 'HTG_use_high_res_images', false ) ) {
-		add_image_size( 'HTG-landscape',	1500, 607, true );
-		add_image_size( 'HTG-featured', 1000, 545, true );
-		add_image_size( 'HTG-grid', 696, 430, true );
-		add_image_size( 'HTG-list', 580, 440, true );
-		add_image_size( 'HTG-thumbnail', 270, 186, true );
+		add_image_size( 'HTG-landscape',	1500, 9999, false ); // No crop - full width
+		add_image_size( 'HTG-featured', 1000, 9999, false );    // No crop - full image
+		add_image_size( 'HTG-grid', 696, 9999, false );         // No crop
+		add_image_size( 'HTG-list', 580, 9999, false );         // No crop
+		add_image_size( 'HTG-thumbnail', 270, 186, true );      // Thumbnails can crop
 	} else {
-		add_image_size( 'HTG-landscape',	1120, 450, true );
-		add_image_size( 'HTG-featured', 735, 400, true );
-		add_image_size( 'HTG-grid', 348, 215, true );
-		add_image_size( 'HTG-list', 290, 220, true );
-		add_image_size( 'HTG-thumbnail', 135, 93, true );
+		add_image_size( 'HTG-landscape',	1120, 9999, false ); // No crop - full width
+		add_image_size( 'HTG-featured', 735, 9999, false );     // No crop - full image
+		add_image_size( 'HTG-grid', 348, 9999, false );         // No crop
+		add_image_size( 'HTG-list', 290, 9999, false );         // No crop
+		add_image_size( 'HTG-thumbnail', 135, 93, true );       // Thumbnails can crop
 	}
 
 	// This theme uses wp_nav_menu() in one location.

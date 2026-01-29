@@ -28,20 +28,82 @@ function HTG_apply_general_settings() {
 	
 	?>
 	<style id="HTG-general-settings">
-		/* Site Layout */
+		/* Container Width - Auto Responsive */
+		.hm-container,
+		.container,
+		.site-content,
+		.HTG-wrapper {
+			max-width: <?php echo esc_attr( $container_width ); ?>px;
+			width: 100%;
+			margin-left: auto;
+			margin-right: auto;
+			padding-left: 20px;
+			padding-right: 20px;
+			box-sizing: border-box;
+		}
+		
+		/* Full width inner elements */
+		.hm-nav-container,
+		.site-header .hm-container,
+		.header-main-area .hm-container {
+			max-width: <?php echo esc_attr( $container_width ); ?>px;
+		}
+		
+		/* Responsive Breakpoints - Auto adjust based on screen size */
+		@media screen and (max-width: 1920px) {
+			.hm-container,
+			.container,
+			.site-content,
+			.HTG-wrapper {
+				max-width: 100%;
+			}
+		}
+		
+		@media screen and (min-width: 1921px) {
+			.hm-container,
+			.container,
+			.site-content,
+			.HTG-wrapper {
+				max-width: <?php echo esc_attr( $container_width ); ?>px;
+			}
+		}
+		
+		@media screen and (max-width: 1400px) {
+			.hm-container,
+			.container,
+			.site-content {
+				padding-left: 30px;
+				padding-right: 30px;
+			}
+		}
+		
+		@media screen and (max-width: 991px) {
+			.hm-container,
+			.container,
+			.site-content {
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+		}
+		
+		@media screen and (max-width: 576px) {
+			.hm-container,
+			.container,
+			.site-content {
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+		}
+		
+		/* Site Layout - Boxed */
 		<?php if ( $site_layout === 'boxed' ) : ?>
 		.site-content {
 			max-width: <?php echo esc_attr( $container_width ); ?>px;
 			margin: 0 auto;
-			padding: 0 20px;
+			background: var(--htg-content-bg, #0a0a0a);
+			box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
 		}
 		<?php endif; ?>
-		
-		/* Container Width */
-		.container,
-		.site-content {
-			max-width: <?php echo esc_attr( $container_width ); ?>px;
-		}
 		
 		/* Sidebar Position */
 		<?php if ( $sidebar_position === 'left' ) : ?>

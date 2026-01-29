@@ -614,7 +614,7 @@ class HTG_Settings_Pages {
 			// Site Settings
 			update_option( 'HTG_site_layout', sanitize_text_field( $_POST['HTG_site_layout'] ?? 'wide' ) );
 			update_option( 'HTG_sidebar_position', sanitize_text_field( $_POST['HTG_sidebar_position'] ?? 'right' ) );
-			update_option( 'HTG_container_width', absint( $_POST['HTG_container_width'] ?? 1200 ) );
+			update_option( 'HTG_container_width', absint( $_POST['HTG_container_width'] ?? 1920 ) );
 			update_option( 'HTG_breadcrumbs_enable', isset( $_POST['HTG_breadcrumbs_enable'] ) ? 1 : 0 );
 			update_option( 'HTG_footer_copyright', wp_kses_post( $_POST['HTG_footer_copyright'] ?? '' ) );
 			
@@ -649,7 +649,7 @@ class HTG_Settings_Pages {
 		// Get values
 		$site_layout = get_option( 'HTG_site_layout', 'wide' );
 		$sidebar_position = get_option( 'HTG_sidebar_position', 'right' );
-		$container_width = get_option( 'HTG_container_width', 1200 );
+		$container_width = get_option( 'HTG_container_width', 1920 );
 		$breadcrumbs_enable = get_option( 'HTG_breadcrumbs_enable', 1 );
 		$footer_copyright = get_option( 'HTG_footer_copyright', '© ' . date( 'Y' ) . ' H&T GAMING. All rights reserved.' );
 		$header_layout = get_option( 'HTG_header_layout', 'default' );
@@ -717,7 +717,8 @@ class HTG_Settings_Pages {
 								<tr>
 									<th scope="row"><?php esc_html_e( 'Container Width', 'HTG' ); ?></th>
 									<td>
-										<input type="number" name="HTG_container_width" value="<?php echo esc_attr( $container_width ); ?>" min="960" max="1920" class="small-text" /> px
+										<input type="number" name="HTG_container_width" value="<?php echo esc_attr( $container_width ); ?>" min="960" max="2560" class="small-text" /> px
+										<p class="description"><?php esc_html_e( 'Default: 1920px. Container auto-adjusts for smaller screens.', 'HTG' ); ?></p>
 										<p class="description"><?php esc_html_e( 'Default: 1200px (Range: 960-1920px)', 'HTG' ); ?></p>
 									</td>
 								</tr>

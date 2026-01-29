@@ -51,7 +51,7 @@ function HTG_get_theme_defaults() {
 		// ===========================================
 		'HTG_site_layout'             => 'wide',        // Full width layout
 		'HTG_sidebar_position'        => 'right',       // Right sidebar
-		'HTG_container_width'         => 1200,          // 1200px container
+		'HTG_container_width'         => 1920,          // 1920px container (auto-responsive)
 		'HTG_breadcrumbs_enable'      => 1,             // Breadcrumbs enabled
 		'HTG_breadcrumbs_separator'   => '›',           // Chevron separator
 		'HTG_footer_copyright'        => '© ' . date('Y') . ' H&T GAMING. All rights reserved.',
