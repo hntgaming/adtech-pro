@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.4.2
+Stable tag: 2.4.3
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,13 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.4.3 =
+* Fix: Improved update detection - reduced cache from 12 hours to 1 hour
+* New: "Check for Updates" link in theme actions for instant refresh
+* New: Force update check via URL parameter (?htg_force_update_check=1)
+* New: Auto-clear WordPress update transient when checking for updates
+* Improved: Update notification now appears faster after new releases
 
 = 2.4.2 =
 * Fix: Tables now properly responsive on mobile devices - horizontal scroll with sticky first column

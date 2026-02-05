@@ -50,7 +50,7 @@ class HTG_GitHub_Updater {
 	 *
 	 * @var string
 	 */
-	private $current_version = '2.4.2';
+	private $current_version = '2.4.3';
 
 	/**
 	 * GitHub API URL
@@ -67,11 +67,11 @@ class HTG_GitHub_Updater {
 	private $transient_key = 'htg_github_update_check';
 
 	/**
-	 * Cache duration in seconds (12 hours)
+	 * Cache duration in seconds (1 hour - reduced for faster update detection)
 	 *
 	 * @var int
 	 */
-	private $cache_duration = 43200;
+	private $cache_duration = 3600;
 
 	/**
 	 * GitHub access token for private repos (optional)
@@ -111,6 +111,12 @@ class HTG_GitHub_Updater {
 		
 		// Manual update check via admin
 		add_action( 'admin_post_htg_check_updates', array( $this, 'manual_check' ) );
+		
+		// Auto-clear cache via URL parameter
+		add_action( 'admin_init', array( $this, 'maybe_force_check' ) );
+		
+		// Add check for updates link in theme row
+		add_filter( 'theme_action_links_' . $this->theme_slug, array( $this, 'add_check_updates_link' ) );
 	}
 
 	/**
@@ -377,6 +383,39 @@ class HTG_GitHub_Updater {
 	 */
 	public function clear_cache() {
 		delete_transient( $this->transient_key );
+		delete_site_transient( 'update_themes' );
+	}
+	
+	/**
+	 * Force check via URL parameter (?htg_force_update_check=1)
+	 */
+	public function maybe_force_check() {
+		if ( isset( $_GET['htg_force_update_check'] ) && current_user_can( 'update_themes' ) ) {
+			$this->clear_cache();
+			$this->get_github_release( true );
+			
+			// Redirect to remove query param
+			$redirect = remove_query_arg( 'htg_force_update_check' );
+			$redirect = add_query_arg( 'htg_cache_cleared', '1', $redirect );
+			wp_safe_redirect( $redirect );
+			exit;
+		}
+		
+		// Show notice after cache clear
+		if ( isset( $_GET['htg_cache_cleared'] ) ) {
+			add_action( 'admin_notices', function() {
+				echo '<div class="notice notice-success is-dismissible"><p><strong>H&T AdTech Pro:</strong> Update cache cleared. Refresh the page to see the latest version.</p></div>';
+			} );
+		}
+	}
+	
+	/**
+	 * Add "Check for Updates" link in theme actions
+	 */
+	public function add_check_updates_link( $links ) {
+		$check_url = add_query_arg( 'htg_force_update_check', '1', admin_url( 'themes.php' ) );
+		$links['check_updates'] = '<a href="' . esc_url( $check_url ) . '">Check for Updates</a>';
+		return $links;
 	}
 
 	/**
