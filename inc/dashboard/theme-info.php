@@ -589,6 +589,23 @@ function HTG_render_changelog_tab() {
 		<div class="HTG-changelog-list">
 			<div class="HTG-changelog-item">
 				<div class="HTG-changelog-version">
+					<span class="version">2.5.1</span>
+					<span class="date"><?php esc_html_e( 'January 2026', 'adtech-pro' ); ?></span>
+				</div>
+				<div class="HTG-changelog-content">
+					<h4><?php esc_html_e( 'Dark Theme Hover Style Consistency', 'adtech-pro' ); ?></h4>
+					<ul>
+						<li><?php esc_html_e( 'Fixed post navigation hover - proper anchor-based hover behavior', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed related posts hover consistency with teal accent color', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed 15+ dark theme hover colors from invisible to visible', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed comment section dark theme colors and borders', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed widget titles with white text and teal accent border', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Added smooth 0.2s transitions to all hover effects', 'adtech-pro' ); ?></li>
+					</ul>
+				</div>
+			</div>
+			<div class="HTG-changelog-item">
+				<div class="HTG-changelog-version">
 					<span class="version">2.5.0</span>
 					<span class="date"><?php esc_html_e( 'January 2026', 'adtech-pro' ); ?></span>
 				</div>

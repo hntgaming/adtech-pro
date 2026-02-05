@@ -4,7 +4,7 @@ Theme URI: https://hntgaming.me/themes/adtech-pro
 Author: H&T GAMING
 Author URI: https://hntgaming.me/
 Description: A modern dark-themed magazine theme for bloggers, news sites, and content publishers. Features a magazine-style homepage with featured slider and category sections, built-in ad placement areas for AdSense or any ad network, and tools to help grow your audience. Includes newsletter signup, social sharing, reading progress bar, and a legal page generator for Privacy Policy and Terms pages.
-Version: 2.5.0
+Version: 2.5.1
 Tested up to: 6.8
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -1191,12 +1191,19 @@ a:active {
   letter-spacing: 1px;
   margin-bottom: 5px;
   text-transform: uppercase;
+  transition: color 0.2s ease;
 }
 .post-navigation .post-title {
   color: #ffffff;
   font-weight: bold;
+  transition: color 0.2s ease;
 }
-.post-navigation .post-title:hover {
+.post-navigation a:hover .meta-nav,
+.post-navigation a:focus .meta-nav {
+  color: #00d4aa;
+}
+.post-navigation a:hover .post-title,
+.post-navigation a:focus .post-title {
   color: #00d4aa;
 }
 .post-navigation .nav-previous {
@@ -2001,9 +2008,10 @@ a.hm-viewall:hover {
 }
 .footer-widget-area .widget a {
   color: #ddd;
+  transition: color 0.2s ease;
 }
 .footer-widget-area .widget a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 
 .site-info {
@@ -2016,9 +2024,10 @@ a.hm-viewall:hover {
 }
 .site-info a {
   color: #fff;
+  transition: color 0.2s ease;
 }
 .site-info a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 
 .site-info-owner {
@@ -2168,9 +2177,10 @@ a.hm-viewall:hover {
 .hmb-entry-title a {
   color: #ffffff;
   line-height: 1.3;
+  transition: color 0.2s ease;
 }
 .hmb-entry-title a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 
 .hmb-entry-meta,
@@ -2183,10 +2193,11 @@ a.hm-viewall:hover {
 .hmb-entry-meta a,
 .hms-meta a {
   color: #888;
+  transition: color 0.2s ease;
 }
 .hmb-entry-meta a:hover,
 .hms-meta a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 
 .hmb-entry-summary {
@@ -2483,11 +2494,12 @@ li.hm-tab {
 .footer-widget-area .hmb-entry-title a,
 .footer-widget-area .hms-title a {
   color: #eeeeee;
+  transition: color 0.2s ease;
 }
 .footer-widget-area .hmw-grid-post .post-title a:hover,
 .footer-widget-area .hmb-entry-title a:hover,
 .footer-widget-area .hms-title a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 .footer-widget-area ul.hm-tab-nav {
   background: #2b2b2b;
@@ -2973,9 +2985,10 @@ html {
 }
 .HTG-post .entry-meta a {
   color: #888;
+  transition: color 0.2s ease;
 }
 .HTG-post .entry-meta a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 .HTG-post .entry-summary {
   margin: 0.813em 0 0;
@@ -3115,15 +3128,17 @@ html {
 }
 .HTG-single .entry-meta a {
   color: #888888;
+  transition: color 0.2s ease;
 }
 .HTG-single .entry-meta a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 .HTG-single .author a {
-  color: #444;
+  color: #888888;
+  transition: color 0.2s ease;
 }
 .HTG-single .author a:hover {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 
 .hm-authorbox {
@@ -3522,8 +3537,10 @@ html {
 }
 .hm-rel-post .post-title a {
   color: #ffffff;
+  transition: color 0.2s ease;
 }
-.hm-rel-post .post-title a:hover {
+.hm-rel-post .post-title a:hover,
+.hm-rel-post .post-title a:focus {
   color: #00d4aa;
 }
 
@@ -3698,7 +3715,7 @@ ol.wp-block-gallery {
 .comment-list article,
 .comment-list .pingback,
 .comment-list .trackback {
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #333333;
   padding: 30px 30px 30px 75px;
   position: relative;
 }
@@ -3713,13 +3730,14 @@ ol.wp-block-gallery {
 }
 
 .comment-author {
-  color: #1a1a1a;
+  color: #ffffff;
   margin-bottom: 0.4375em;
   line-height: 1;
   display: inline;
 }
 .comment-author a {
-  color: #1a1f36;
+  color: #ffffff;
+  transition: color 0.2s ease;
 }
 .comment-author a:hover {
   color: #00d4aa;
@@ -3760,7 +3778,7 @@ footer.comment-meta {
 .comment-metadata a:focus,
 .pingback .comment-edit-link:hover,
 .pingback .comment-edit-link:focus {
-  color: #1a1f36;
+  color: #00d4aa;
 }
 
 .comment-metadata .edit-link,
@@ -3843,11 +3861,11 @@ footer.comment-meta {
 }
 
 .required {
-  color: #1a1f36;
+  color: #ff6b6b;
 }
 
 .comment-reply-title {
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #333333;
 }
 
 .comment-reply-title small {
@@ -3862,7 +3880,7 @@ footer.comment-meta {
 
 .comment-reply-title small a:hover,
 .comment-reply-title small a:focus {
-  color: #1a1a1a;
+  color: #00d4aa;
 }
 
 .comment-reply-title small a:before {
@@ -3875,7 +3893,7 @@ footer.comment-meta {
   font-size: 20px;
   position: relative;
   top: -5px;
-  color: #1a1f36;
+  color: #888888;
 }
 
 /*--------------------------------------------------------------
@@ -4293,7 +4311,7 @@ a.woocommerce-review-link:hover {
 
 .woocommerce-widget-area ul li a:hover {
   text-decoration: none;
-  color: #1a1f36;
+  color: #00d4aa;
 }
 
 .woocommerce-widget-area .widget-title {
@@ -4856,7 +4874,7 @@ article.HTG-single {
 
 .widget ul li:hover {
 	padding-left: 28px;
-	color: #1a1f36;
+	color: #00d4aa;
 }
 
 .widget ul li:hover::before {
@@ -6191,9 +6209,9 @@ p.site-title a:hover,
 #secondary .widget-title,
 .sidebar .widget-title,
 .widget-area .widget-title {
-	color: #1a1f36;
+	color: #ffffff;
 	background: transparent;
-	border-bottom: 3px solid #1a1f36;
+	border-bottom: 3px solid #00d4aa;
 	padding-bottom: 10px;
 	margin-bottom: 20px;
 }

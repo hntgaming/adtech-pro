@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,15 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.5.1 =
+* Fix: Post navigation hover styles - Changed from span:hover to a:hover for proper anchor behavior
+* Fix: Related posts hover now consistent with rest of site using #00d4aa teal accent
+* Fix: Multiple dark theme color fixes - Updated 15+ hover colors from invisible #1a1f36 to visible #00d4aa
+* Fix: Comment section dark theme - Updated borders, author colors, and required field indicator
+* Fix: Footer widget links, site info links, WooCommerce widget hover colors
+* Fix: Widget titles now use white text with teal accent border for dark theme visibility
+* Improved: Added smooth 0.2s transitions to all hover effects for polished UX
 
 = 2.5.0 =
 * Major: WordPress.org compliance - Fixed text domain inconsistency (657 occurrences updated from 'HTG' to 'adtech-pro')
