@@ -16,8 +16,8 @@
 	<?php do_action( 'HTG_before_footer' ); ?>
 
 	<?php 
-	// Ad Slot: Footer Top
-	HTG_display_ad( 'footer_top' ); 
+	// Ad Slot: Before Footer
+	HTG_display_ad( 'before_footer' ); 
 	?>
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
@@ -59,13 +59,13 @@
 							echo wp_kses_post( $footer_copyright_text );
 						} else {
 							$site_link = '<a href="' . esc_url( home_url( '/' ) ) . '" title="' . esc_attr( get_bloginfo( 'name' ) ) . '" >' . esc_attr( get_bloginfo( 'name' ) ) . '</a>';
-							printf( esc_html__( 'Copyright &#169; %1$s %2$s.', 'HTG' ), date_i18n( 'Y' ), $site_link );
+							printf( esc_html__( 'Copyright &#169; %1$s %2$s.', 'adtech-pro' ), date_i18n( 'Y' ), $site_link );
 						}		
 					?>
 				</div>			
 				<div class="site-info-designer">
 					<?php
-						printf( esc_html__( 'Powered by %1$s | AdTech Pro by %2$s', 'HTG' ),
+						printf( esc_html__( 'Powered by %1$s | AdTech Pro by %2$s', 'adtech-pro' ),
 							'<a href="https://wordpress.org" target="_blank" title="WordPress">WordPress</a>',
 							'<a href="https://hntgaming.me" target="_blank" title="H&T GAMING">H&T GAMING</a>'
 						); 

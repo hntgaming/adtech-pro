@@ -22,13 +22,13 @@ function HTG_customizer_notice() {
 		?>
 		<div class="notice notice-info">
 			<p>
-				<strong><?php esc_html_e( '🎨 Customizer Available!', 'HTG' ); ?></strong>
-				<?php esc_html_e( 'Use Customizer for Site Name, Tagline, Logo, and Icon. All theme settings are in the Admin Panel.', 'HTG' ); ?>
+				<strong><?php esc_html_e( '🎨 Customizer Available!', 'adtech-pro' ); ?></strong>
+				<?php esc_html_e( 'Use Customizer for Site Name, Tagline, Logo, and Icon. All theme settings are in the Admin Panel.', 'adtech-pro' ); ?>
 				<a href="<?php echo esc_url( admin_url( 'customize.php' ) ); ?>" class="button" style="margin-left: 10px;">
-					<?php esc_html_e( 'Site Identity', 'HTG' ); ?>
+					<?php esc_html_e( 'Site Identity', 'adtech-pro' ); ?>
 				</a>
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-general-settings' ) ); ?>" class="button button-primary" style="margin-left: 5px;">
-					<?php esc_html_e( 'Theme Settings', 'HTG' ); ?>
+					<?php esc_html_e( 'Theme Settings', 'adtech-pro' ); ?>
 				</a>
 			</p>
 		</div>

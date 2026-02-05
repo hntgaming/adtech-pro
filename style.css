@@ -4,7 +4,7 @@ Theme URI: https://hntgaming.me/themes/adtech-pro
 Author: H&T GAMING
 Author URI: https://hntgaming.me/
 Description: A modern dark-themed magazine theme for bloggers, news sites, and content publishers. Features a magazine-style homepage with featured slider and category sections, built-in ad placement areas for AdSense or any ad network, and tools to help grow your audience. Includes newsletter signup, social sharing, reading progress bar, and a legal page generator for Privacy Policy and Terms pages.
-Version: 2.4.5
+Version: 2.5.0
 Tested up to: 6.8
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -6530,3 +6530,47 @@ body {
 .hm-header-image:empty {
 	display: none !important;
 }
+
+/* ========================================
+   TABLE HEADER FIX - v2.4.8
+   Clean dark header styling for tables
+   ======================================== */
+
+/* Table header row styling - clean dark theme */
+.entry-content th,
+.post-content th,
+.wp-block-table th,
+article th,
+.wp-block-table thead th,
+figure.wp-block-table th {
+	background: #2a2a2a !important;
+	color: #ffffff !important;
+	font-weight: 600;
+	padding: 12px 16px !important;
+	text-align: left;
+	border: 1px solid #3a3a3a !important;
+	border-bottom: 2px solid #00d4aa !important;
+}
+
+/* Responsive table header for mobile */
+@media screen and (max-width: 768px) {
+	.entry-content th,
+	.post-content th,
+	.wp-block-table th,
+	article th {
+		padding: 10px 12px !important;
+		font-size: 13px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.entry-content th,
+	.post-content th,
+	.wp-block-table th,
+	article th {
+		padding: 8px 10px !important;
+		font-size: 12px;
+	}
+}
+
+/* === END TABLE HEADER FIX === */

@@ -26,10 +26,10 @@ function HTG_breadcrumbs() {
 	}
 
 	$separator = ' <span class="breadcrumb-separator">/</span> ';
-	$home_title = __( 'Home', 'HTG' );
+	$home_title = __( 'Home', 'adtech-pro' );
 
 	// Start breadcrumb
-	echo '<nav class="hm-breadcrumb-wrap" aria-label="' . esc_attr__( 'Breadcrumb', 'HTG' ) . '">';
+	echo '<nav class="hm-breadcrumb-wrap" aria-label="' . esc_attr__( 'Breadcrumb', 'adtech-pro' ) . '">';
 	echo '<div class="breadcrumb-trail">';
 	echo '<a href="' . esc_url( home_url( '/' ) ) . '" class="breadcrumb-home">' . esc_html( $home_title ) . '</a>';
 
@@ -59,10 +59,10 @@ function HTG_breadcrumbs() {
 		}
 	} elseif ( is_tag() ) {
 		echo $separator;
-		echo '<span class="breadcrumb-current">' . esc_html__( 'Tag: ', 'HTG' ) . esc_html( single_tag_title( '', false ) ) . '</span>';
+		echo '<span class="breadcrumb-current">' . esc_html__( 'Tag: ', 'adtech-pro' ) . esc_html( single_tag_title( '', false ) ) . '</span>';
 	} elseif ( is_author() ) {
 		echo $separator;
-		echo '<span class="breadcrumb-current">' . esc_html__( 'Author: ', 'HTG' ) . esc_html( get_the_author() ) . '</span>';
+		echo '<span class="breadcrumb-current">' . esc_html__( 'Author: ', 'adtech-pro' ) . esc_html( get_the_author() ) . '</span>';
 	} elseif ( is_date() ) {
 		echo $separator;
 		if ( is_day() ) {
@@ -74,10 +74,10 @@ function HTG_breadcrumbs() {
 		}
 	} elseif ( is_search() ) {
 		echo $separator;
-		echo '<span class="breadcrumb-current">' . esc_html__( 'Search results for: ', 'HTG' ) . esc_html( get_search_query() ) . '</span>';
+		echo '<span class="breadcrumb-current">' . esc_html__( 'Search results for: ', 'adtech-pro' ) . esc_html( get_search_query() ) . '</span>';
 	} elseif ( is_404() ) {
 		echo $separator;
-		echo '<span class="breadcrumb-current">' . esc_html__( '404 - Page Not Found', 'HTG' ) . '</span>';
+		echo '<span class="breadcrumb-current">' . esc_html__( '404 - Page Not Found', 'adtech-pro' ) . '</span>';
 	} elseif ( is_page() ) {
 		global $post;
 		

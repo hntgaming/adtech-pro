@@ -23,7 +23,7 @@ if ( function_exists( 'register_block_style' ) ) {
 			'core/heading',
 			array(
 				'name'  => 'HTG-widget-title',
-				'label' => esc_html__( 'Widget title style', 'HTG' ),
+				'label' => esc_html__( 'Widget title style', 'adtech-pro' ),
 			)
 		);
     }

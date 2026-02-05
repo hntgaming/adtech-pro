@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.4.5
+Stable tag: 2.5.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,29 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.5.0 =
+* Major: WordPress.org compliance - Fixed text domain inconsistency (657 occurrences updated from 'HTG' to 'adtech-pro')
+* Fix: Footer ad slot mismatch - Changed 'footer_top' to 'before_footer' to match Ad Manager settings
+* Fix: Dark mode CSS class mismatch - Updated all selectors from 'body.HTG-dark-mode' to 'body.htg-dark-theme'
+* Removed: Dead code cleanup - Deleted unused js/dark-mode.js (theme is dark-only, no toggle needed)
+* Removed: Legacy FontAwesome v4 font files (~1.08 MB saved) - fontawesome-webfont.*, FontAwesome.otf
+* Improved: Dark mode CSS now properly applies dark theme styles
+* Improved: Cleaner codebase with removed dead code and unused assets
+* Improved: Translation-ready with consistent text domain throughout
+
+= 2.4.8 =
+* Fix: Removed purple gradient from table headers
+* New: Clean dark header style (#2a2a2a) with teal accent border
+* New: Responsive table header sizing for mobile and desktop
+
+= 2.4.7 =
+* Fix: Reverted v2.4.6 changes that broke table layout
+* Fix: Table header row now properly styled with purple gradient background
+* Fix: Header cells (th) now have white text and proper padding
+
+= 2.4.6 =
+* Reverted - this version had issues with table layout
 
 = 2.4.5 =
 * Fix: Force update check now properly clears all WordPress theme caches

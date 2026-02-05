@@ -35,7 +35,7 @@ class HTG_Metaboxes {
         if ( in_array( $post_type, $post_types ) ) {
             add_meta_box(
                 'HTG_layout_meta',
-                esc_html__( 'Select Layout', 'HTG' ),
+                esc_html__( 'Select Layout', 'adtech-pro' ),
                 array( $this, 'render_meta_box_content' ),
                 $post_type,
                 'side',
@@ -115,19 +115,19 @@ class HTG_Metaboxes {
         ?>
 
         <input type="radio" id="th-default-layout" name="HTG_layout" value="th-default-layout" <?php checked( 'th-default-layout', $selected_layout ); ?> />
-        <label for="th-default-layout" class="post-format-icon"><?php esc_html_e( 'Default Layout', 'HTG' ); ?></label><br/>
+        <label for="th-default-layout" class="post-format-icon"><?php esc_html_e( 'Default Layout', 'adtech-pro' ); ?></label><br/>
         
         <input type="radio" id="th-right-sidebar" name="HTG_layout" value="th-right-sidebar" <?php checked( 'th-right-sidebar', $selected_layout ); ?> />
-        <label for="th-right-sidebar" class="post-format-icon"><?php esc_html_e( 'Right Sidebar', 'HTG' ); ?></label><br/>
+        <label for="th-right-sidebar" class="post-format-icon"><?php esc_html_e( 'Right Sidebar', 'adtech-pro' ); ?></label><br/>
         
         <input type="radio" id="th-left-sidebar" name="HTG_layout" value="th-left-sidebar" <?php checked( 'th-left-sidebar', $selected_layout ); ?> />
-        <label for="th-left-sidebar" class="post-format-icon"><?php esc_html_e( 'Left Sidebar', 'HTG' ); ?></label><br/>
+        <label for="th-left-sidebar" class="post-format-icon"><?php esc_html_e( 'Left Sidebar', 'adtech-pro' ); ?></label><br/>
         
         <input type="radio" id="th-no-sidebar" name="HTG_layout" value="th-no-sidebar" <?php checked( 'th-no-sidebar', $selected_layout ); ?> />
-        <label for="th-no-sidebar" class="post-format-icon"><?php esc_html_e( 'Full Width', 'HTG' ); ?></label><br/>
+        <label for="th-no-sidebar" class="post-format-icon"><?php esc_html_e( 'Full Width', 'adtech-pro' ); ?></label><br/>
         
         <input type="radio" id="th-content-centered" name="HTG_layout" value="th-content-centered" <?php checked( 'th-content-centered', $selected_layout ); ?> />
-        <label for="th-content-centered" class="post-format-icon"><?php esc_html_e( 'Full Width Content Centered.', 'HTG' ); ?></label><br/>
+        <label for="th-content-centered" class="post-format-icon"><?php esc_html_e( 'Full Width Content Centered.', 'adtech-pro' ); ?></label><br/>
         
         <?php
     }

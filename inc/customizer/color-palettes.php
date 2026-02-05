@@ -22,8 +22,8 @@ function HTG_get_color_palettes() {
 		// Modern, gaming, tech startups
 		// =============================================
 		'neon_cyber' => array(
-			'name'        => __( 'Neon Cyber', 'HTG' ),
-			'description' => __( 'Vibrant neon on pure black', 'HTG' ),
+			'name'        => __( 'Neon Cyber', 'adtech-pro' ),
+			'description' => __( 'Vibrant neon on pure black', 'adtech-pro' ),
 			// Accents - High contrast neon
 			'primary'     => '#00ffd5',  // Bright cyan
 			'secondary'   => '#bf00ff',  // Neon purple
@@ -47,8 +47,8 @@ function HTG_get_color_palettes() {
 		// News, business, corporate, professional
 		// =============================================
 		'midnight_ocean' => array(
-			'name'        => __( 'Midnight Ocean', 'HTG' ),
-			'description' => __( 'Deep blue professional look', 'HTG' ),
+			'name'        => __( 'Midnight Ocean', 'adtech-pro' ),
+			'description' => __( 'Deep blue professional look', 'adtech-pro' ),
 			// Accents - Blue spectrum
 			'primary'     => '#0ea5e9',  // Sky blue
 			'secondary'   => '#38bdf8',  // Light sky
@@ -72,8 +72,8 @@ function HTG_get_color_palettes() {
 		// Entertainment, news, sports, media
 		// =============================================
 		'crimson_night' => array(
-			'name'        => __( 'Crimson Night', 'HTG' ),
-			'description' => __( 'Bold red on warm charcoal', 'HTG' ),
+			'name'        => __( 'Crimson Night', 'adtech-pro' ),
+			'description' => __( 'Bold red on warm charcoal', 'adtech-pro' ),
 			// Accents - Red/orange warmth
 			'primary'     => '#ef4444',  // Red
 			'secondary'   => '#f97316',  // Orange
@@ -97,8 +97,8 @@ function HTG_get_color_palettes() {
 		// Tech, eco, lifestyle, nature, health
 		// =============================================
 		'forest_depths' => array(
-			'name'        => __( 'Forest Depths', 'HTG' ),
-			'description' => __( 'Fresh green on forest dark', 'HTG' ),
+			'name'        => __( 'Forest Depths', 'adtech-pro' ),
+			'description' => __( 'Fresh green on forest dark', 'adtech-pro' ),
 			// Accents - Nature greens
 			'primary'     => '#10b981',  // Emerald
 			'secondary'   => '#06b6d4',  // Cyan
@@ -122,8 +122,8 @@ function HTG_get_color_palettes() {
 		// Creative, premium, luxury, gaming
 		// =============================================
 		'golden_dusk' => array(
-			'name'        => __( 'Golden Dusk', 'HTG' ),
-			'description' => __( 'Luxury gold on rich dark', 'HTG' ),
+			'name'        => __( 'Golden Dusk', 'adtech-pro' ),
+			'description' => __( 'Luxury gold on rich dark', 'adtech-pro' ),
 			// Accents - Gold spectrum
 			'primary'     => '#f59e0b',  // Amber
 			'secondary'   => '#eab308',  // Yellow
@@ -147,8 +147,8 @@ function HTG_get_color_palettes() {
 		// Creative, design, art, premium
 		// =============================================
 		'royal_violet' => array(
-			'name'        => __( 'Royal Violet', 'HTG' ),
-			'description' => __( 'Rich purple on deep plum', 'HTG' ),
+			'name'        => __( 'Royal Violet', 'adtech-pro' ),
+			'description' => __( 'Rich purple on deep plum', 'adtech-pro' ),
 			// Accents - Purple spectrum
 			'primary'     => '#a855f7',  // Purple
 			'secondary'   => '#ec4899',  // Pink
@@ -172,8 +172,8 @@ function HTG_get_color_palettes() {
 		// Professional, minimal, corporate, portfolio
 		// =============================================
 		'slate_minimal' => array(
-			'name'        => __( 'Slate Minimal', 'HTG' ),
-			'description' => __( 'Clean minimal gray tones', 'HTG' ),
+			'name'        => __( 'Slate Minimal', 'adtech-pro' ),
+			'description' => __( 'Clean minimal gray tones', 'adtech-pro' ),
 			// Accents - Subtle blue-gray
 			'primary'     => '#64748b',  // Slate
 			'secondary'   => '#3b82f6',  // Blue pop
@@ -211,14 +211,14 @@ function HTG_color_palette_customizer( $wp_customize ) {
 
 	// Panel
 	$wp_customize->add_panel( 'HTG_colors_panel', array(
-		'title'       => __( 'Colors & Branding', 'HTG' ),
-		'description' => __( 'Choose a visual style for your site', 'HTG' ),
+		'title'       => __( 'Colors & Branding', 'adtech-pro' ),
+		'description' => __( 'Choose a visual style for your site', 'adtech-pro' ),
 		'priority'    => 30,
 	) );
 
 	// Section: Color Scheme
 	$wp_customize->add_section( 'HTG_color_scheme_section', array(
-		'title'       => __( 'Color Scheme', 'HTG' ),
+		'title'       => __( 'Color Scheme', 'adtech-pro' ),
 		'panel'       => 'HTG_colors_panel',
 		'priority'    => 10,
 	) );
@@ -235,11 +235,11 @@ function HTG_color_palette_customizer( $wp_customize ) {
 	foreach ( $palettes as $key => $palette ) {
 		$choices[ $key ] = $palette['name'] . ' — ' . $palette['description'];
 	}
-	$choices['custom'] = __( 'Custom — Define your own colors', 'HTG' );
+	$choices['custom'] = __( 'Custom — Define your own colors', 'adtech-pro' );
 
 	$wp_customize->add_control( 'HTG_color_scheme', array(
-		'label'       => __( 'Visual Style', 'HTG' ),
-		'description' => __( 'Each style transforms the entire site look', 'HTG' ),
+		'label'       => __( 'Visual Style', 'adtech-pro' ),
+		'description' => __( 'Each style transforms the entire site look', 'adtech-pro' ),
 		'section'     => 'HTG_color_scheme_section',
 		'type'        => 'select',
 		'choices'     => $choices,
@@ -247,8 +247,8 @@ function HTG_color_palette_customizer( $wp_customize ) {
 
 	// Section: Custom Colors (only for custom scheme)
 	$wp_customize->add_section( 'HTG_custom_colors', array(
-		'title'       => __( 'Custom Colors', 'HTG' ),
-		'description' => __( 'Only used when "Custom" scheme is selected', 'HTG' ),
+		'title'       => __( 'Custom Colors', 'adtech-pro' ),
+		'description' => __( 'Only used when "Custom" scheme is selected', 'adtech-pro' ),
 		'panel'       => 'HTG_colors_panel',
 		'priority'    => 20,
 	) );
@@ -259,7 +259,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_primary', array(
-		'label'   => __( 'Primary Accent', 'HTG' ),
+		'label'   => __( 'Primary Accent', 'adtech-pro' ),
 		'section' => 'HTG_custom_colors',
 	) ) );
 
@@ -269,7 +269,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_secondary', array(
-		'label'   => __( 'Secondary Accent', 'HTG' ),
+		'label'   => __( 'Secondary Accent', 'adtech-pro' ),
 		'section' => 'HTG_custom_colors',
 	) ) );
 
@@ -279,7 +279,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_body_bg', array(
-		'label'   => __( 'Site Background', 'HTG' ),
+		'label'   => __( 'Site Background', 'adtech-pro' ),
 		'section' => 'HTG_custom_colors',
 	) ) );
 
@@ -289,13 +289,13 @@ function HTG_color_palette_customizer( $wp_customize ) {
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_content_bg', array(
-		'label'   => __( 'Content Background', 'HTG' ),
+		'label'   => __( 'Content Background', 'adtech-pro' ),
 		'section' => 'HTG_custom_colors',
 	) ) );
 
 	// Typography Section
 	$wp_customize->add_section( 'HTG_typography_section', array(
-		'title'    => __( 'Typography', 'HTG' ),
+		'title'    => __( 'Typography', 'adtech-pro' ),
 		'panel'    => 'HTG_colors_panel',
 		'priority' => 30,
 	) );
@@ -305,7 +305,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 		'sanitize_callback' => 'sanitize_text_field',
 	) );
 	$wp_customize->add_control( 'HTG_heading_font', array(
-		'label'   => __( 'Heading Font', 'HTG' ),
+		'label'   => __( 'Heading Font', 'adtech-pro' ),
 		'section' => 'HTG_typography_section',
 		'type'    => 'select',
 		'choices' => array(
@@ -322,7 +322,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 		'sanitize_callback' => 'sanitize_text_field',
 	) );
 	$wp_customize->add_control( 'HTG_body_font', array(
-		'label'   => __( 'Body Font', 'HTG' ),
+		'label'   => __( 'Body Font', 'adtech-pro' ),
 		'section' => 'HTG_typography_section',
 		'type'    => 'select',
 		'choices' => array(

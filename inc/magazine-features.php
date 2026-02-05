@@ -66,7 +66,7 @@ function HTG_get_post_format_icon( $format = '' ) {
 function HTG_magazine_customizer( $wp_customize ) {
 	// Magazine Section
 	$wp_customize->add_section( 'HTG_magazine', array(
-		'title'    => __( 'Magazine Homepage', 'HTG' ),
+		'title'    => __( 'Magazine Homepage', 'adtech-pro' ),
 		'priority' => 35,
 	) );
 
@@ -77,8 +77,8 @@ function HTG_magazine_customizer( $wp_customize ) {
 	) );
 
 	$wp_customize->add_control( 'HTG_enable_magazine_layout', array(
-		'label'       => __( 'Enable Magazine Layout', 'HTG' ),
-		'description' => __( 'Show magazine-style sections on homepage', 'HTG' ),
+		'label'       => __( 'Enable Magazine Layout', 'adtech-pro' ),
+		'description' => __( 'Show magazine-style sections on homepage', 'adtech-pro' ),
 		'section'     => 'HTG_magazine',
 		'type'        => 'checkbox',
 	) );
@@ -90,8 +90,8 @@ function HTG_magazine_customizer( $wp_customize ) {
 	) );
 
 	$wp_customize->add_control( 'HTG_featured_posts_count', array(
-		'label'       => __( 'Featured Posts Count', 'HTG' ),
-		'description' => __( 'Number of posts in slider', 'HTG' ),
+		'label'       => __( 'Featured Posts Count', 'adtech-pro' ),
+		'description' => __( 'Number of posts in slider', 'adtech-pro' ),
 		'section'     => 'HTG_magazine',
 		'type'        => 'number',
 		'input_attrs' => array(
@@ -109,8 +109,8 @@ function HTG_magazine_customizer( $wp_customize ) {
 		) );
 
 		$wp_customize->add_control( 'HTG_category_section_' . $i, array(
-			'label'       => sprintf( __( 'Category Section %d', 'HTG' ), $i ),
-			'description' => __( 'Choose category to display', 'HTG' ),
+			'label'       => sprintf( __( 'Category Section %d', 'adtech-pro' ), $i ),
+			'description' => __( 'Choose category to display', 'adtech-pro' ),
 			'section'     => 'HTG_magazine',
 			'type'        => 'select',
 			'choices'     => HTG_get_categories_list(),
@@ -122,7 +122,7 @@ function HTG_magazine_customizer( $wp_customize ) {
 		) );
 
 		$wp_customize->add_control( 'HTG_category_section_' . $i . '_posts', array(
-			'label'       => sprintf( __( 'Category Section %d - Posts Count', 'HTG' ), $i ),
+			'label'       => sprintf( __( 'Category Section %d - Posts Count', 'adtech-pro' ), $i ),
 			'section'     => 'HTG_magazine',
 			'type'        => 'number',
 			'input_attrs' => array(
@@ -140,8 +140,8 @@ function HTG_magazine_customizer( $wp_customize ) {
 	) );
 
 	$wp_customize->add_control( 'HTG_excerpt_length', array(
-		'label'       => __( 'Excerpt Length', 'HTG' ),
-		'description' => __( 'Number of words in excerpt', 'HTG' ),
+		'label'       => __( 'Excerpt Length', 'adtech-pro' ),
+		'description' => __( 'Number of words in excerpt', 'adtech-pro' ),
 		'section'     => 'HTG_magazine',
 		'type'        => 'number',
 		'input_attrs' => array(
@@ -162,7 +162,7 @@ function HTG_get_categories_list() {
 		'order'   => 'ASC',
 	) );
 
-	$choices = array( '' => __( '-- Select Category --', 'HTG' ) );
+	$choices = array( '' => __( '-- Select Category --', 'adtech-pro' ) );
 
 	foreach ( $categories as $category ) {
 		$choices[ $category->term_id ] = $category->name;
@@ -240,7 +240,7 @@ function HTG_render_category_section( $category_id, $posts_count, $section_numbe
 				<?php echo esc_html( $category->name ); ?>
 			</h2>
 			<a href="<?php echo esc_url( get_category_link( $category_id ) ); ?>" class="HTG-view-all">
-				<?php esc_html_e( 'View All', 'HTG' ); ?>
+				<?php esc_html_e( 'View All', 'adtech-pro' ); ?>
 				<span class="dashicons dashicons-arrow-right-alt2"></span>
 			</a>
 		</div>
@@ -272,7 +272,7 @@ function HTG_render_category_section( $category_id, $posts_count, $section_numbe
 
 						<div class="HTG-post-meta">
 							<span class="HTG-post-date"><?php echo get_the_date(); ?></span>
-							<span class="HTG-post-author"><?php esc_html_e( 'by', 'HTG' ); ?> <?php the_author(); ?></span>
+							<span class="HTG-post-author"><?php esc_html_e( 'by', 'adtech-pro' ); ?> <?php the_author(); ?></span>
 						</div>
 
 						<?php if ( 'list' === $style ) : ?>

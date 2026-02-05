@@ -20,9 +20,9 @@ function HTG_setup() {
 	 * Make theme available for translation.
 	 * Translations can be filed in the /languages/ directory.
 	 * If you're building a theme based on HTG, use a find and replace
-	 * to change 'HTG' to the name of your theme in all the template files.
+	 * to change 'adtech-pro' to the name of your theme in all the template files.
 	 */
-	load_theme_textdomain( 'HTG', get_template_directory() . '/languages' );
+	load_theme_textdomain( 'adtech-pro', get_template_directory() . '/languages' );
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
@@ -57,9 +57,9 @@ function HTG_setup() {
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
-		'menu-1' 		=> esc_html__( 'Main Menu', 'HTG' ),
-		'menu-2' 		=> esc_html__( 'Top Menu', 'HTG' ),
-		'menu-social'  	=> esc_html__( 'Social Media Menu', 'HTG' )
+		'menu-1' 		=> esc_html__( 'Main Menu', 'adtech-pro' ),
+		'menu-2' 		=> esc_html__( 'Top Menu', 'adtech-pro' ),
+		'menu-social'  	=> esc_html__( 'Social Media Menu', 'adtech-pro' )
 	) );
 
 	/*
@@ -178,7 +178,7 @@ function HTG_setup() {
 		'nav_menus' => array(
 			// Assign a menu to the "main menu" location.
 			'menu-1' => array(
-				'name' => esc_html__( 'Main Menu', 'HTG' ),
+				'name' => esc_html__( 'Main Menu', 'adtech-pro' ),
 				'items' => array(
 					'link_home', // Note that the core "home" page is actually a link in case a static front page is not used.
 					'page_blog',
@@ -187,7 +187,7 @@ function HTG_setup() {
 
 			// Assign a menu to the "top menu" location.
 			'menu-2' => array(
-				'name' => esc_html__( 'Top Menu', 'HTG' ),
+				'name' => esc_html__( 'Top Menu', 'adtech-pro' ),
 				'items' => array(
 					'link_home',
 					'page_blog',
@@ -196,7 +196,7 @@ function HTG_setup() {
 
 			// Assign a menu to the "menu-social" location.
 			'menu-social' => array(
-				'name' => esc_html__( 'Social Links Menu', 'HTG' ),
+				'name' => esc_html__( 'Social Links Menu', 'adtech-pro' ),
 				'items' => array(
 					'link_facebook',
 					'link_twitter',
@@ -234,34 +234,34 @@ add_action( 'after_setup_theme', 'HTG_content_width', 0 );
  */
 function HTG_widgets_init() {
 	register_sidebar( array(
-		'name'          => esc_html__( 'Main Sidebar', 'HTG' ),
+		'name'          => esc_html__( 'Main Sidebar', 'adtech-pro' ),
 		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Add widgets here.', 'HTG' ),
+		'description'   => esc_html__( 'Add widgets here.', 'adtech-pro' ),
 		'before_widget' => '<section id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</section>',
 		'before_title'  => '<h4 class="widget-title">',
 		'after_title'   => '</h4>',
 	) );
 	register_sidebar( array(
-		'name'          => esc_html__( 'Magazine Homepage', 'HTG' ),
+		'name'          => esc_html__( 'Magazine Homepage', 'adtech-pro' ),
 		'id'            => 'magazine',
-		'description'   => esc_html__( 'Appearas on Magazine Homepage template only. Add magazine posts widgets to this widget area.', 'HTG' ),
+		'description'   => esc_html__( 'Appears on Magazine Homepage template only. Add magazine posts widgets to this widget area.', 'adtech-pro' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</div>',
 		'before_title'  => '<h4 class="widget-title">',
 		'after_title'   => '</h4>',
 	) );
 	register_sidebar( array(
-		'name'          => esc_html__( 'Header Advertisement Area', 'HTG' ),
+		'name'          => esc_html__( 'Header Advertisement Area', 'adtech-pro' ),
 		'id'            => 'sidebar-header',
-		'description'   => esc_html__( 'You can add advertisement widget to this widget area.', 'HTG' ),
+		'description'   => esc_html__( 'You can add advertisement widget to this widget area.', 'adtech-pro' ),
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
 		'after_widget'  => '</aside>',
 		'before_title'  => '<h4 class="widget-title">',
 		'after_title'   => '</h4>',
 	) );
 	register_sidebar( array(
-		'name'          => esc_html__( 'Footer Left Sidebar', 'HTG' ),
+		'name'          => esc_html__( 'Footer Left Sidebar', 'adtech-pro' ),
 		'id'            => 'footer-left',
 		'description'   => '',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
@@ -270,7 +270,7 @@ function HTG_widgets_init() {
 		'after_title'   => '</h4>',
 	) );	
 	register_sidebar( array(
-		'name'          => esc_html__( 'Footer Mid Sidebar', 'HTG' ),
+		'name'          => esc_html__( 'Footer Mid Sidebar', 'adtech-pro' ),
 		'id'            => 'footer-mid',
 		'description'   => '',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
@@ -279,7 +279,7 @@ function HTG_widgets_init() {
 		'after_title'   => '</h4>',
 	) );	
 	register_sidebar( array(
-		'name'          => esc_html__( 'Footer Right Sidebar', 'HTG' ),
+		'name'          => esc_html__( 'Footer Right Sidebar', 'adtech-pro' ),
 		'id'            => 'footer-right',
 		'description'   => '',
 		'before_widget' => '<aside id="%1$s" class="widget %2$s">',

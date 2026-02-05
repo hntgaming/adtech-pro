@@ -16,18 +16,18 @@ get_header(); ?>
 
 			<section class="error-404 not-found">
 				<header class="page-header">
-					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'HTG' ); ?></h1>
+					<h1 class="page-title"><?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'adtech-pro' ); ?></h1>
 				</header><!-- .page-header -->
 
 				<div class="page-content">
-					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try a search?', 'HTG' ); ?></p>
+					<p><?php esc_html_e( 'It looks like nothing was found at this location. Maybe try a search?', 'adtech-pro' ); ?></p>
 
 					<?php get_search_form(); ?>
 					
 					<div class="error-404-suggestions">
-						<h2><?php esc_html_e( 'Helpful Links', 'HTG' ); ?></h2>
+						<h2><?php esc_html_e( 'Helpful Links', 'adtech-pro' ); ?></h2>
 						<ul>
-							<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Homepage', 'HTG' ); ?></a></li>
+							<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Homepage', 'adtech-pro' ); ?></a></li>
 							<?php 
 							// Show recent posts
 							$recent_posts = wp_get_recent_posts( array(

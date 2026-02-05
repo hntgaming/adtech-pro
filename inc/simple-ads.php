@@ -69,7 +69,7 @@ function HTG_get_ad_code( $slot, $wrap = true ) {
 	$output = '<div class="htg-ad htg-ad-' . esc_attr( $slot ) . '">';
 	
 	if ( get_option( 'HTG_ad_labels_enable', 1 ) ) {
-		$output .= '<span class="htg-ad-label">' . esc_html__( 'Advertisement', 'HTG' ) . '</span>';
+		$output .= '<span class="htg-ad-label">' . esc_html__( 'Advertisement', 'adtech-pro' ) . '</span>';
 	}
 	
 	$output .= '<div class="htg-ad-content">' . HTG_sanitize_ad_code( $ad_code ) . '</div></div>';
@@ -133,7 +133,7 @@ function HTG_auto_insert_content_ads( $content ) {
 	// Build ad HTML
 	$ad_html = '<div class="htg-ad htg-ad-in-article">';
 	if ( get_option( 'HTG_ad_labels_enable', 1 ) ) {
-		$ad_html .= '<span class="htg-ad-label">' . esc_html__( 'Advertisement', 'HTG' ) . '</span>';
+		$ad_html .= '<span class="htg-ad-label">' . esc_html__( 'Advertisement', 'adtech-pro' ) . '</span>';
 	}
 	$ad_html .= '<div class="htg-ad-content">' . HTG_sanitize_ad_code( $ad_code ) . '</div></div>';
 	
@@ -159,8 +159,8 @@ add_filter( 'the_content', 'HTG_auto_insert_content_ads', 20 );
 function HTG_ad_manager_admin_menu() {
 	add_submenu_page(
 		'HTG-dashboard',
-		__( 'Ad Manager', 'HTG' ),
-		__( 'Ad Manager', 'HTG' ),
+		__( 'Ad Manager', 'adtech-pro' ),
+		__( 'Ad Manager', 'adtech-pro' ),
 		'manage_options',
 		'HTG-simple-ads',
 		'HTG_render_ad_manager_page'
@@ -203,7 +203,7 @@ function HTG_render_ad_manager_page() {
 		// Footer
 		update_option( 'HTG_ad_before_footer', $_POST['HTG_ad_before_footer'] ?? '' );
 		
-		echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'HTG' ) . '</p></div>';
+		echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'adtech-pro' ) . '</p></div>';
 	}
 	
 	// Get values
@@ -213,9 +213,9 @@ function HTG_render_ad_manager_page() {
 	<div class="wrap">
 		<h1 class="htg-page-title">
 			<span class="dashicons dashicons-megaphone"></span>
-			<?php esc_html_e( 'Ad Manager', 'HTG' ); ?>
+			<?php esc_html_e( 'Ad Manager', 'adtech-pro' ); ?>
 		</h1>
-		<p class="htg-page-desc"><?php esc_html_e( 'Manage ad placements and tracking codes across your site.', 'HTG' ); ?></p>
+		<p class="htg-page-desc"><?php esc_html_e( 'Manage ad placements and tracking codes across your site.', 'adtech-pro' ); ?></p>
 
 		<form method="post" action="">
 			<?php wp_nonce_field( 'HTG_ad_manager_nonce' ); ?>
@@ -224,12 +224,12 @@ function HTG_render_ad_manager_page() {
 				<!-- Global Settings -->
 				<div class="htg-ad-section">
 					<div class="htg-section-header">
-						<h2><?php esc_html_e( 'Settings', 'HTG' ); ?></h2>
+						<h2><?php esc_html_e( 'Settings', 'adtech-pro' ); ?></h2>
 					</div>
 					<div class="htg-section-body">
 						<label class="htg-checkbox-row">
 							<input type="checkbox" name="HTG_ad_labels_enable" value="1" <?php checked( $labels_enabled, 1 ); ?>>
-							<span><?php esc_html_e( 'Show "Advertisement" label above ads', 'HTG' ); ?></span>
+							<span><?php esc_html_e( 'Show "Advertisement" label above ads', 'adtech-pro' ); ?></span>
 						</label>
 					</div>
 				</div>
@@ -239,18 +239,18 @@ function HTG_render_ad_manager_page() {
 					<div class="htg-section-header">
 						<h2>
 							<span class="dashicons dashicons-editor-code"></span>
-							<?php esc_html_e( 'Global Codes', 'HTG' ); ?>
+							<?php esc_html_e( 'Global Codes', 'adtech-pro' ); ?>
 						</h2>
-						<p><?php esc_html_e( 'Scripts injected in header or footer (analytics, ad network base code)', 'HTG' ); ?></p>
+						<p><?php esc_html_e( 'Scripts injected in header or footer (analytics, ad network base code)', 'adtech-pro' ); ?></p>
 					</div>
 					<div class="htg-section-body htg-two-col">
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Header Code', 'HTG' ); ?> <code>&lt;head&gt;</code></label>
-							<textarea name="HTG_ad_head_code" rows="6" placeholder="<?php esc_attr_e( 'Google Analytics, AdSense auto ads, verification tags...', 'HTG' ); ?>"><?php echo esc_textarea( get_option( 'HTG_ad_head_code', '' ) ); ?></textarea>
+							<label><?php esc_html_e( 'Header Code', 'adtech-pro' ); ?> <code>&lt;head&gt;</code></label>
+							<textarea name="HTG_ad_head_code" rows="6" placeholder="<?php esc_attr_e( 'Google Analytics, AdSense auto ads, verification tags...', 'adtech-pro' ); ?>"><?php echo esc_textarea( get_option( 'HTG_ad_head_code', '' ) ); ?></textarea>
 						</div>
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Footer Code', 'HTG' ); ?> <code>&lt;/body&gt;</code></label>
-							<textarea name="HTG_ad_footer_code" rows="6" placeholder="<?php esc_attr_e( 'Chat widgets, tracking pixels...', 'HTG' ); ?>"><?php echo esc_textarea( get_option( 'HTG_ad_footer_code', '' ) ); ?></textarea>
+							<label><?php esc_html_e( 'Footer Code', 'adtech-pro' ); ?> <code>&lt;/body&gt;</code></label>
+							<textarea name="HTG_ad_footer_code" rows="6" placeholder="<?php esc_attr_e( 'Chat widgets, tracking pixels...', 'adtech-pro' ); ?>"><?php echo esc_textarea( get_option( 'HTG_ad_footer_code', '' ) ); ?></textarea>
 						</div>
 					</div>
 				</div>
@@ -260,17 +260,17 @@ function HTG_render_ad_manager_page() {
 					<div class="htg-section-header">
 						<h2>
 							<span class="dashicons dashicons-arrow-up-alt"></span>
-							<?php esc_html_e( 'Header Ads', 'HTG' ); ?>
+							<?php esc_html_e( 'Header Ads', 'adtech-pro' ); ?>
 						</h2>
-						<p><?php esc_html_e( 'Ads displayed in the header area', 'HTG' ); ?></p>
+						<p><?php esc_html_e( 'Ads displayed in the header area', 'adtech-pro' ); ?></p>
 					</div>
 					<div class="htg-section-body htg-two-col">
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Above Header', 'HTG' ); ?> <span class="htg-size">728×90</span></label>
+							<label><?php esc_html_e( 'Above Header', 'adtech-pro' ); ?> <span class="htg-size">728×90</span></label>
 							<textarea name="HTG_ad_header_above" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_header_above', '' ) ); ?></textarea>
 						</div>
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Below Header', 'HTG' ); ?> <span class="htg-size">728×90 / 970×90</span></label>
+							<label><?php esc_html_e( 'Below Header', 'adtech-pro' ); ?> <span class="htg-size">728×90 / 970×90</span></label>
 							<textarea name="HTG_ad_header_below" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_header_below', '' ) ); ?></textarea>
 						</div>
 					</div>
@@ -281,33 +281,33 @@ function HTG_render_ad_manager_page() {
 					<div class="htg-section-header">
 						<h2>
 							<span class="dashicons dashicons-media-text"></span>
-							<?php esc_html_e( 'Article Ads', 'HTG' ); ?>
+							<?php esc_html_e( 'Article Ads', 'adtech-pro' ); ?>
 						</h2>
-						<p><?php esc_html_e( 'Ads displayed before, after, or within article content', 'HTG' ); ?></p>
+						<p><?php esc_html_e( 'Ads displayed before, after, or within article content', 'adtech-pro' ); ?></p>
 					</div>
 					<div class="htg-section-body">
 						<div class="htg-two-col">
 							<div class="htg-field">
-								<label><?php esc_html_e( 'Before Article', 'HTG' ); ?> <span class="htg-size">728×90</span></label>
+								<label><?php esc_html_e( 'Before Article', 'adtech-pro' ); ?> <span class="htg-size">728×90</span></label>
 								<textarea name="HTG_ad_before_content" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_before_content', '' ) ); ?></textarea>
 							</div>
 							<div class="htg-field">
-								<label><?php esc_html_e( 'After Article', 'HTG' ); ?> <span class="htg-size">728×90 / 336×280</span></label>
+								<label><?php esc_html_e( 'After Article', 'adtech-pro' ); ?> <span class="htg-size">728×90 / 336×280</span></label>
 								<textarea name="HTG_ad_after_content" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_after_content', '' ) ); ?></textarea>
 							</div>
 						</div>
 						
 						<div class="htg-field htg-field-highlight">
 							<label>
-								<?php esc_html_e( 'In-Article Ad', 'HTG' ); ?> 
-								<span class="htg-size"><?php esc_html_e( 'In-article / 336×280', 'HTG' ); ?></span>
+								<?php esc_html_e( 'In-Article Ad', 'adtech-pro' ); ?> 
+								<span class="htg-size"><?php esc_html_e( 'In-article / 336×280', 'adtech-pro' ); ?></span>
 							</label>
 							<div class="htg-inline-option">
-								<span><?php esc_html_e( 'Insert after paragraph', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'Insert after paragraph', 'adtech-pro' ); ?></span>
 								<input type="number" name="HTG_ad_in_article_position" value="<?php echo esc_attr( $in_article_position ); ?>" min="1" max="20" style="width: 70px;">
 							</div>
-							<textarea name="HTG_ad_in_article" rows="5" placeholder="<?php esc_attr_e( 'Paste your in-article ad code here...', 'HTG' ); ?>"><?php echo esc_textarea( get_option( 'HTG_ad_in_article', '' ) ); ?></textarea>
-							<p class="htg-help"><?php esc_html_e( 'Ad will be automatically inserted after the specified paragraph number on single posts.', 'HTG' ); ?></p>
+							<textarea name="HTG_ad_in_article" rows="5" placeholder="<?php esc_attr_e( 'Paste your in-article ad code here...', 'adtech-pro' ); ?>"><?php echo esc_textarea( get_option( 'HTG_ad_in_article', '' ) ); ?></textarea>
+							<p class="htg-help"><?php esc_html_e( 'Ad will be automatically inserted after the specified paragraph number on single posts.', 'adtech-pro' ); ?></p>
 						</div>
 					</div>
 				</div>
@@ -317,19 +317,19 @@ function HTG_render_ad_manager_page() {
 					<div class="htg-section-header">
 						<h2>
 							<span class="dashicons dashicons-align-right"></span>
-							<?php esc_html_e( 'Sidebar Ads', 'HTG' ); ?>
+							<?php esc_html_e( 'Sidebar Ads', 'adtech-pro' ); ?>
 						</h2>
-						<p><?php esc_html_e( 'Ads displayed in the sidebar widget area', 'HTG' ); ?></p>
+						<p><?php esc_html_e( 'Ads displayed in the sidebar widget area', 'adtech-pro' ); ?></p>
 					</div>
 					<div class="htg-section-body htg-two-col">
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Sidebar Top', 'HTG' ); ?> <span class="htg-size">300×250</span></label>
+							<label><?php esc_html_e( 'Sidebar Top', 'adtech-pro' ); ?> <span class="htg-size">300×250</span></label>
 							<textarea name="HTG_ad_sidebar_top" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_sidebar_top', '' ) ); ?></textarea>
 						</div>
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Sidebar Sticky', 'HTG' ); ?> <span class="htg-size">300×250 / 300×600</span></label>
+							<label><?php esc_html_e( 'Sidebar Sticky', 'adtech-pro' ); ?> <span class="htg-size">300×250 / 300×600</span></label>
 							<textarea name="HTG_ad_sidebar_sticky" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_sidebar_sticky', '' ) ); ?></textarea>
-							<p class="htg-help"><?php esc_html_e( 'This ad will stick to the viewport as users scroll.', 'HTG' ); ?></p>
+							<p class="htg-help"><?php esc_html_e( 'This ad will stick to the viewport as users scroll.', 'adtech-pro' ); ?></p>
 						</div>
 					</div>
 				</div>
@@ -339,18 +339,18 @@ function HTG_render_ad_manager_page() {
 					<div class="htg-section-header">
 						<h2>
 							<span class="dashicons dashicons-admin-home"></span>
-							<?php esc_html_e( 'Homepage & Footer', 'HTG' ); ?>
+							<?php esc_html_e( 'Homepage & Footer', 'adtech-pro' ); ?>
 						</h2>
-						<p><?php esc_html_e( 'Ads for homepage and footer areas', 'HTG' ); ?></p>
+						<p><?php esc_html_e( 'Ads for homepage and footer areas', 'adtech-pro' ); ?></p>
 					</div>
 					<div class="htg-section-body htg-two-col">
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Homepage Top', 'HTG' ); ?> <span class="htg-size">970×250 / 728×90</span></label>
+							<label><?php esc_html_e( 'Homepage Top', 'adtech-pro' ); ?> <span class="htg-size">970×250 / 728×90</span></label>
 							<textarea name="HTG_ad_homepage_top" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_homepage_top', '' ) ); ?></textarea>
-							<p class="htg-help"><?php esc_html_e( 'Displays below the slider on homepage.', 'HTG' ); ?></p>
+							<p class="htg-help"><?php esc_html_e( 'Displays below the slider on homepage.', 'adtech-pro' ); ?></p>
 						</div>
 						<div class="htg-field">
-							<label><?php esc_html_e( 'Before Footer', 'HTG' ); ?> <span class="htg-size">728×90 / 970×90</span></label>
+							<label><?php esc_html_e( 'Before Footer', 'adtech-pro' ); ?> <span class="htg-size">728×90 / 970×90</span></label>
 							<textarea name="HTG_ad_before_footer" rows="5"><?php echo esc_textarea( get_option( 'HTG_ad_before_footer', '' ) ); ?></textarea>
 						</div>
 					</div>
@@ -359,7 +359,7 @@ function HTG_render_ad_manager_page() {
 				<!-- Save Button -->
 				<div class="htg-save-bar">
 					<button type="submit" name="HTG_save_ads" class="button button-primary button-hero">
-						<?php esc_html_e( 'Save All Changes', 'HTG' ); ?>
+						<?php esc_html_e( 'Save All Changes', 'adtech-pro' ); ?>
 					</button>
 				</div>
 			</div>

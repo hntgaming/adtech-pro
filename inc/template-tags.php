@@ -61,7 +61,7 @@ function HTG_posted_on() {
 	if ( in_array( 'author', $meta_display ) ) {
 
 		$byline = sprintf(
-			esc_html__( 'by %s', 'HTG' ),
+			esc_html__( 'by %s', 'adtech-pro' ),
 			'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '">' . esc_html( get_the_author() ) . '</a></span>'
 		);
 
@@ -76,12 +76,12 @@ function HTG_posted_on() {
 			$num_comments = esc_attr( get_comments_number() );
 
 			if ( $num_comments == 0 ) {
-				$comments_txt = esc_html__( 'Leave a Comment', 'HTG' );
+				$comments_txt = esc_html__( 'Leave a Comment', 'adtech-pro' );
 			} elseif ( $num_comments > 1 ) {
 				/* translators: %d: number of comments */
-				$comments_txt = sprintf( esc_html__( '%d Comments.', 'HTG' ), $num_comments );
+				$comments_txt = sprintf( esc_html__( '%d Comments.', 'adtech-pro' ), $num_comments );
 			} else {
-				$comments_txt = esc_html__( '1 Comment', 'HTG' );
+				$comments_txt = esc_html__( '1 Comment', 'adtech-pro' );
 			}
 
 			$HTG_meta[] = '<span class="comments-link"><a href="' . esc_url( get_comments_link() ).'">' . $comments_txt . '</a></span>';
@@ -111,7 +111,7 @@ function HTG_entry_footer() {
 			if ( $tags_list ) {
 				echo '<span class="hm-tags-links">';
 					echo '<span class="hm-tagged">';
-						_e( 'Tagged', 'HTG' );
+						_e( 'Tagged', 'adtech-pro' );
 					echo '</span>';
 					echo $tags_list;
 				echo '</span>';
@@ -122,7 +122,7 @@ function HTG_entry_footer() {
 	edit_post_link(
 		sprintf(
 			/* translators: %s: Name of current post */
-			esc_html__( 'Edit %s', 'HTG' ),
+			esc_html__( 'Edit %s', 'adtech-pro' ),
 			the_title( '<span class="screen-reader-text">"', '"</span>', false )
 		),
 		'<span class="hm-edit-link">',
@@ -150,7 +150,7 @@ function HTG_category_list() {
 		if( in_array( 'categories', $meta_display ) ) {
 
 			/* translators: used between list items, there is a space after the comma */
-			$categories_list = get_the_category_list( esc_html__( ' / ', 'HTG' ) );
+			$categories_list = get_the_category_list( esc_html__( ' / ', 'adtech-pro' ) );
 			if ( $categories_list && HTG_categorized_blog() ) {
 				echo '<div class="cat-links">' . $categories_list . '</div>';
 			}	

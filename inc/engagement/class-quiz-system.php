@@ -30,7 +30,7 @@ class HTG_Quiz_System {
 	public static function add_quiz_meta_box() {
 		add_meta_box(
 			'HTG_quiz_meta_box',
-			__( 'Interactive Quiz', 'HTG' ),
+			__( 'Interactive Quiz', 'adtech-pro' ),
 			array( __CLASS__, 'render_quiz_meta_box' ),
 			'post',
 			'normal',
@@ -57,44 +57,44 @@ class HTG_Quiz_System {
 			<p>
 				<label>
 					<input type="checkbox" name="HTG_quiz_enabled" value="1" <?php checked( $quiz_enabled, '1' ); ?>>
-					<strong><?php esc_html_e( 'Enable Interactive Quiz', 'HTG' ); ?></strong>
+					<strong><?php esc_html_e( 'Enable Interactive Quiz', 'adtech-pro' ); ?></strong>
 				</label>
 			</p>
 
 			<p>
 				<label for="HTG_quiz_question">
-					<strong><?php esc_html_e( 'Quiz Question:', 'HTG' ); ?></strong>
+					<strong><?php esc_html_e( 'Quiz Question:', 'adtech-pro' ); ?></strong>
 				</label><br>
-				<input type="text" id="HTG_quiz_question" name="HTG_quiz_question" value="<?php echo esc_attr( $quiz_question ); ?>" class="widefat" placeholder="<?php esc_attr_e( 'What do you think about this topic?', 'HTG' ); ?>">
+				<input type="text" id="HTG_quiz_question" name="HTG_quiz_question" value="<?php echo esc_attr( $quiz_question ); ?>" class="widefat" placeholder="<?php esc_attr_e( 'What do you think about this topic?', 'adtech-pro' ); ?>">
 			</p>
 
 			<p>
-				<strong><?php esc_html_e( 'Answer Options (2-4 options):', 'HTG' ); ?></strong>
+				<strong><?php esc_html_e( 'Answer Options (2-4 options):', 'adtech-pro' ); ?></strong>
 			</p>
 
 			<?php for ( $i = 0; $i < 4; $i++ ) : ?>
 				<p>
 					<label for="HTG_quiz_option_<?php echo esc_attr( $i ); ?>">
-						<?php echo sprintf( __( 'Option %d:', 'HTG' ), $i + 1 ); ?>
+						<?php echo sprintf( __( 'Option %d:', 'adtech-pro' ), $i + 1 ); ?>
 					</label><br>
-					<input type="text" id="HTG_quiz_option_<?php echo esc_attr( $i ); ?>" name="HTG_quiz_options[]" value="<?php echo esc_attr( isset( $quiz_options[ $i ] ) ? $quiz_options[ $i ] : '' ); ?>" class="widefat" placeholder="<?php echo esc_attr( sprintf( __( 'Answer option %d', 'HTG' ), $i + 1 ) ); ?>">
+					<input type="text" id="HTG_quiz_option_<?php echo esc_attr( $i ); ?>" name="HTG_quiz_options[]" value="<?php echo esc_attr( isset( $quiz_options[ $i ] ) ? $quiz_options[ $i ] : '' ); ?>" class="widefat" placeholder="<?php echo esc_attr( sprintf( __( 'Answer option %d', 'adtech-pro' ), $i + 1 ) ); ?>">
 				</p>
 			<?php endfor; ?>
 
 			<p>
 				<label for="HTG_quiz_position">
-					<strong><?php esc_html_e( 'Quiz Position:', 'HTG' ); ?></strong>
+					<strong><?php esc_html_e( 'Quiz Position:', 'adtech-pro' ); ?></strong>
 				</label><br>
 				<select id="HTG_quiz_position" name="HTG_quiz_position" class="widefat">
-					<option value="after_content" <?php selected( $quiz_position, 'after_content' ); ?>><?php esc_html_e( 'After Content', 'HTG' ); ?></option>
-					<option value="middle_content" <?php selected( $quiz_position, 'middle_content' ); ?>><?php esc_html_e( 'Middle of Content', 'HTG' ); ?></option>
-					<option value="before_comments" <?php selected( $quiz_position, 'before_comments' ); ?>><?php esc_html_e( 'Before Comments', 'HTG' ); ?></option>
-					<option value="shortcode" <?php selected( $quiz_position, 'shortcode' ); ?>><?php esc_html_e( 'Manual (use shortcode)', 'HTG' ); ?></option>
+					<option value="after_content" <?php selected( $quiz_position, 'after_content' ); ?>><?php esc_html_e( 'After Content', 'adtech-pro' ); ?></option>
+					<option value="middle_content" <?php selected( $quiz_position, 'middle_content' ); ?>><?php esc_html_e( 'Middle of Content', 'adtech-pro' ); ?></option>
+					<option value="before_comments" <?php selected( $quiz_position, 'before_comments' ); ?>><?php esc_html_e( 'Before Comments', 'adtech-pro' ); ?></option>
+					<option value="shortcode" <?php selected( $quiz_position, 'shortcode' ); ?>><?php esc_html_e( 'Manual (use shortcode)', 'adtech-pro' ); ?></option>
 				</select>
 			</p>
 
 			<p class="description">
-				<?php esc_html_e( 'Shortcode:', 'HTG' ); ?> <code>[HTG_quiz]</code>
+				<?php esc_html_e( 'Shortcode:', 'adtech-pro' ); ?> <code>[HTG_quiz]</code>
 			</p>
 		</div>
 
@@ -219,7 +219,7 @@ class HTG_Quiz_System {
 								<span class="HTG-quiz-result-text">
 									<?php echo esc_html( $option ); ?>
 									<?php if ( $user_choice ) : ?>
-										<span class="HTG-quiz-your-vote">✓ <?php esc_html_e( 'Your vote', 'HTG' ); ?></span>
+										<span class="HTG-quiz-your-vote">✓ <?php esc_html_e( 'Your vote', 'adtech-pro' ); ?></span>
 									<?php endif; ?>
 								</span>
 								<span class="HTG-quiz-result-percentage"><?php echo esc_html( $percentage ); ?>%</span>
@@ -227,7 +227,7 @@ class HTG_Quiz_System {
 							<div class="HTG-quiz-result-bar">
 								<div class="HTG-quiz-result-fill" style="width: <?php echo esc_attr( $percentage ); ?>%"></div>
 							</div>
-							<div class="HTG-quiz-result-votes"><?php echo esc_html( number_format_i18n( $option_votes ) ); ?> <?php echo _n( 'vote', 'votes', $option_votes, 'HTG' ); ?></div>
+							<div class="HTG-quiz-result-votes"><?php echo esc_html( number_format_i18n( $option_votes ) ); ?> <?php echo _n( 'vote', 'votes', $option_votes, 'adtech-pro' ); ?></div>
 						</div>
 					<?php endforeach; ?>
 				</div>
@@ -235,12 +235,12 @@ class HTG_Quiz_System {
 
 			<div class="HTG-quiz-footer">
 				<span class="HTG-quiz-total-votes">
-					<?php echo esc_html( number_format_i18n( $total_votes ) ); ?> <?php echo _n( 'vote', 'votes', $total_votes, 'HTG' ); ?>
+					<?php echo esc_html( number_format_i18n( $total_votes ) ); ?> <?php echo _n( 'vote', 'votes', $total_votes, 'adtech-pro' ); ?>
 				</span>
 				<?php if ( ! $user_voted ) : ?>
-					<span class="HTG-quiz-prompt"><?php esc_html_e( 'Share your opinion!', 'HTG' ); ?></span>
+					<span class="HTG-quiz-prompt"><?php esc_html_e( 'Share your opinion!', 'adtech-pro' ); ?></span>
 				<?php else : ?>
-					<span class="HTG-quiz-thanks"><?php esc_html_e( 'Thanks for voting!', 'HTG' ); ?> 🎉</span>
+					<span class="HTG-quiz-thanks"><?php esc_html_e( 'Thanks for voting!', 'adtech-pro' ); ?> 🎉</span>
 				<?php endif; ?>
 			</div>
 
@@ -273,12 +273,12 @@ class HTG_Quiz_System {
 		$option_index = isset( $_POST['option_index'] ) ? intval( $_POST['option_index'] ) : -1;
 
 		if ( ! $post_id || $option_index < 0 ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid request', 'HTG' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid request', 'adtech-pro' ) ) );
 		}
 
 		// Check if user already voted
 		if ( isset( $_COOKIE[ 'HTG_quiz_' . $post_id ] ) ) {
-			wp_send_json_error( array( 'message' => __( 'You already voted', 'HTG' ) ) );
+			wp_send_json_error( array( 'message' => __( 'You already voted', 'adtech-pro' ) ) );
 		}
 
 		// Get current votes
@@ -320,7 +320,7 @@ class HTG_Quiz_System {
 		wp_send_json_success( array(
 			'results'     => $results,
 			'total_votes' => $total_votes,
-			'message'     => __( 'Thanks for voting!', 'HTG' ),
+			'message'     => __( 'Thanks for voting!', 'adtech-pro' ),
 		) );
 	}
 

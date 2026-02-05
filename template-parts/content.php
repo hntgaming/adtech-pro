@@ -56,7 +56,7 @@
 				}
 
 				if ( true == get_theme_mod( 'show_readmore', true ) ) {
-					$readmore_text = get_theme_mod( 'readmore_text', esc_html__( 'Read More', 'HTG' ) ); ?>
+					$readmore_text = get_theme_mod( 'readmore_text', esc_html__( 'Read More', 'adtech-pro' ) ); ?>
 					<a href="<?php the_permalink(); ?>" class="th-readmore"><span class="screen-reader-text"><?php the_title(); ?></span> <?php echo esc_html( $readmore_text ); ?></a>
 				<?php } ?>
 

@@ -29,30 +29,30 @@ class HTG_Newsletter_System {
 	public static function add_customizer_settings( $wp_customize ) {
 		// Newsletter Section
 		$wp_customize->add_section( 'HTG_newsletter', array(
-			'title'    => __( 'Newsletter Settings', 'HTG' ),
+			'title'    => __( 'Newsletter Settings', 'adtech-pro' ),
 			'priority' => 130,
 		) );
 
 		// Newsletter Title
 		$wp_customize->add_setting( 'HTG_newsletter_title', array(
-			'default'           => __( 'Subscribe to Our Newsletter', 'HTG' ),
+			'default'           => __( 'Subscribe to Our Newsletter', 'adtech-pro' ),
 			'sanitize_callback' => 'sanitize_text_field',
 		) );
 
 		$wp_customize->add_control( 'HTG_newsletter_title', array(
-			'label'   => __( 'Newsletter Title', 'HTG' ),
+			'label'   => __( 'Newsletter Title', 'adtech-pro' ),
 			'section' => 'HTG_newsletter',
 			'type'    => 'text',
 		) );
 
 		// Newsletter Description
 		$wp_customize->add_setting( 'HTG_newsletter_description', array(
-			'default'           => __( 'Get the latest stories and insights delivered to your inbox.', 'HTG' ),
+			'default'           => __( 'Get the latest stories and insights delivered to your inbox.', 'adtech-pro' ),
 			'sanitize_callback' => 'sanitize_textarea_field',
 		) );
 
 		$wp_customize->add_control( 'HTG_newsletter_description', array(
-			'label'   => __( 'Newsletter Description', 'HTG' ),
+			'label'   => __( 'Newsletter Description', 'adtech-pro' ),
 			'section' => 'HTG_newsletter',
 			'type'    => 'textarea',
 		) );
@@ -64,8 +64,8 @@ class HTG_Newsletter_System {
 		) );
 
 		$wp_customize->add_control( 'HTG_newsletter_email', array(
-			'label'       => __( 'Notification Email', 'HTG' ),
-			'description' => __( 'Where to send new subscriber notifications', 'HTG' ),
+			'label'       => __( 'Notification Email', 'adtech-pro' ),
+			'description' => __( 'Where to send new subscriber notifications', 'adtech-pro' ),
 			'section'     => 'HTG_newsletter',
 			'type'        => 'email',
 		) );
@@ -77,8 +77,8 @@ class HTG_Newsletter_System {
 		) );
 
 		$wp_customize->add_control( 'HTG_newsletter_auto_insert', array(
-			'label'       => __( 'Auto-Insert in Posts', 'HTG' ),
-			'description' => __( 'Automatically show newsletter signup after content', 'HTG' ),
+			'label'       => __( 'Auto-Insert in Posts', 'adtech-pro' ),
+			'description' => __( 'Automatically show newsletter signup after content', 'adtech-pro' ),
 			'section'     => 'HTG_newsletter',
 			'type'        => 'checkbox',
 		) );
@@ -88,8 +88,8 @@ class HTG_Newsletter_System {
 	 * Render newsletter signup form
 	 */
 	public static function render_newsletter( $style = 'default' ) {
-		$title = get_theme_mod( 'HTG_newsletter_title', __( 'Subscribe to Our Newsletter', 'HTG' ) );
-		$description = get_theme_mod( 'HTG_newsletter_description', __( 'Get the latest stories and insights delivered to your inbox.', 'HTG' ) );
+		$title = get_theme_mod( 'HTG_newsletter_title', __( 'Subscribe to Our Newsletter', 'adtech-pro' ) );
+		$description = get_theme_mod( 'HTG_newsletter_description', __( 'Get the latest stories and insights delivered to your inbox.', 'adtech-pro' ) );
 
 		$styles = array( 'default', 'minimal', 'boxed', 'gradient' );
 		
@@ -117,11 +117,11 @@ class HTG_Newsletter_System {
 							type="email" 
 							name="email" 
 							class="HTG-newsletter-input" 
-							placeholder="<?php esc_attr_e( 'Enter your email address', 'HTG' ); ?>" 
+							placeholder="<?php esc_attr_e( 'Enter your email address', 'adtech-pro' ); ?>" 
 							required
 						>
 						<button type="submit" class="HTG-newsletter-button">
-							<span class="HTG-newsletter-button-text"><?php esc_html_e( 'Subscribe', 'HTG' ); ?></span>
+							<span class="HTG-newsletter-button-text"><?php esc_html_e( 'Subscribe', 'adtech-pro' ); ?></span>
 							<span class="HTG-newsletter-button-icon">→</span>
 						</button>
 					</div>
@@ -129,7 +129,7 @@ class HTG_Newsletter_System {
 					<div class="HTG-newsletter-message" style="display: none;"></div>
 					
 					<p class="HTG-newsletter-privacy">
-						<?php esc_html_e( 'We respect your privacy. Unsubscribe at any time.', 'HTG' ); ?>
+						<?php esc_html_e( 'We respect your privacy. Unsubscribe at any time.', 'adtech-pro' ); ?>
 					</p>
 				</form>
 			</div>
@@ -160,7 +160,7 @@ class HTG_Newsletter_System {
 
 		if ( ! is_email( $email ) ) {
 			wp_send_json_error( array(
-				'message' => __( 'Please enter a valid email address.', 'HTG' ),
+				'message' => __( 'Please enter a valid email address.', 'adtech-pro' ),
 			) );
 		}
 
@@ -179,7 +179,7 @@ class HTG_Newsletter_System {
 
 		if ( $existing ) {
 			wp_send_json_error( array(
-				'message' => __( 'This email is already subscribed!', 'HTG' ),
+				'message' => __( 'This email is already subscribed!', 'adtech-pro' ),
 			) );
 		}
 
@@ -198,7 +198,7 @@ class HTG_Newsletter_System {
 
 		if ( ! $inserted ) {
 			wp_send_json_error( array(
-				'message' => __( 'Something went wrong. Please try again.', 'HTG' ),
+				'message' => __( 'Something went wrong. Please try again.', 'adtech-pro' ),
 			) );
 		}
 
@@ -210,7 +210,7 @@ class HTG_Newsletter_System {
 		update_option( 'HTG_subscriber_count', $count + 1 );
 
 		wp_send_json_success( array(
-			'message' => __( '🎉 Success! Check your email to confirm your subscription.', 'HTG' ),
+			'message' => __( '🎉 Success! Check your email to confirm your subscription.', 'adtech-pro' ),
 		) );
 	}
 
@@ -243,13 +243,13 @@ class HTG_Newsletter_System {
 	 */
 	private static function send_notification_email( $email, $post_id ) {
 		$to = get_theme_mod( 'HTG_newsletter_email', get_option( 'admin_email' ) );
-		$subject = sprintf( __( 'New Newsletter Subscriber: %s', 'HTG' ), $email );
+		$subject = sprintf( __( 'New Newsletter Subscriber: %s', 'adtech-pro' ), $email );
 		
-		$post_title = $post_id ? get_the_title( $post_id ) : __( 'Unknown', 'HTG' );
+		$post_title = $post_id ? get_the_title( $post_id ) : __( 'Unknown', 'adtech-pro' );
 		$post_url = $post_id ? get_permalink( $post_id ) : '';
 		
 		$message = sprintf(
-			__( "New newsletter subscription!\n\nEmail: %s\nSubscribed from: %s\nPost: %s\nTime: %s", 'HTG' ),
+			__( "New newsletter subscription!\n\nEmail: %s\nSubscribed from: %s\nPost: %s\nTime: %s", 'adtech-pro' ),
 			$email,
 			$post_url,
 			$post_title,

@@ -39,7 +39,7 @@ get_header(); ?>
 		if ( ! $magazine_enabled ) :
 			?>
 			<div class="magazine-disabled-notice">
-				<p><?php esc_html_e( 'Magazine layout is disabled. Enable it from H&T AdTech → Magazine settings.', 'HTG' ); ?></p>
+				<p><?php esc_html_e( 'Magazine layout is disabled. Enable it from H&T AdTech → Magazine settings.', 'adtech-pro' ); ?></p>
 			</div>
 			<?php
 		else :
@@ -94,7 +94,7 @@ get_header(); ?>
 										<?php echo esc_html( $category->name ); ?>
 									</a>
 								</h2>
-								<span class="section-count"><?php echo esc_html( $category->count ); ?> <?php esc_html_e( 'Posts', 'HTG' ); ?></span>
+								<span class="section-count"><?php echo esc_html( $category->count ); ?> <?php esc_html_e( 'Posts', 'adtech-pro' ); ?></span>
 							</div>
 
 							<div class="magazine-posts-grid magazine-grid-<?php echo esc_attr( $layout_style ); ?>">
@@ -168,7 +168,7 @@ get_header(); ?>
 													<?php if ( $show_reading_time && function_exists( 'HTG_reading_time' ) ) : ?>
 														<span class="reading-time">
 															<i class="far fa-clock"></i>
-															<?php printf( esc_html__( '%d min read', 'HTG' ), HTG_reading_time() ); ?>
+															<?php printf( esc_html__( '%d min read', 'adtech-pro' ), HTG_reading_time() ); ?>
 														</span>
 													<?php endif; ?>
 												</div>
@@ -179,7 +179,7 @@ get_header(); ?>
 													<?php echo wp_trim_words( get_the_excerpt(), 25 ); ?>
 												</div>
 												<a href="<?php the_permalink(); ?>" class="read-more-btn">
-													<?php esc_html_e( 'Read More', 'HTG' ); ?> <i class="fas fa-arrow-right"></i>
+													<?php esc_html_e( 'Read More', 'adtech-pro' ); ?> <i class="fas fa-arrow-right"></i>
 												</a>
 											<?php endif; ?>
 										</div>
@@ -190,7 +190,7 @@ get_header(); ?>
 
 							<div class="section-view-all">
 								<a href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>" class="view-all-btn">
-									<?php esc_html_e( 'View All', 'HTG' ); ?> <?php echo esc_html( $category->name ); ?> <i class="fas fa-arrow-right"></i>
+									<?php esc_html_e( 'View All', 'adtech-pro' ); ?> <?php echo esc_html( $category->name ); ?> <i class="fas fa-arrow-right"></i>
 								</a>
 							</div>
 						</section>
@@ -207,11 +207,11 @@ get_header(); ?>
 					<div class="empty-icon">
 						<i class="fas fa-newspaper fa-3x"></i>
 					</div>
-					<h2><?php esc_html_e( 'No Categories Configured', 'HTG' ); ?></h2>
-					<p><?php esc_html_e( 'Go to H&T AdTech → Magazine to select categories for your homepage sections.', 'HTG' ); ?></p>
+					<h2><?php esc_html_e( 'No Categories Configured', 'adtech-pro' ); ?></h2>
+					<p><?php esc_html_e( 'Go to H&T AdTech → Magazine to select categories for your homepage sections.', 'adtech-pro' ); ?></p>
 					<?php if ( current_user_can( 'manage_options' ) ) : ?>
 						<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-magazine-settings' ) ); ?>" class="button button-primary">
-							<?php esc_html_e( 'Configure Magazine', 'HTG' ); ?>
+							<?php esc_html_e( 'Configure Magazine', 'adtech-pro' ); ?>
 						</a>
 					<?php endif; ?>
 				</div>

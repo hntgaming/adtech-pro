@@ -63,7 +63,7 @@ class HTG_Ajax_Posts {
 			) );
 		} else {
 			wp_send_json_error( array(
-				'message' => __( 'No more posts to load.', 'HTG' ),
+				'message' => __( 'No more posts to load.', 'adtech-pro' ),
 			) );
 		}
 
@@ -109,7 +109,7 @@ class HTG_Ajax_Posts {
 			) );
 		} else {
 			wp_send_json_error( array(
-				'message' => __( 'No posts found in this category.', 'HTG' ),
+				'message' => __( 'No posts found in this category.', 'adtech-pro' ),
 			) );
 		}
 
@@ -155,7 +155,7 @@ class HTG_Ajax_Posts {
 					<?php if ( function_exists( 'HTG_reading_time' ) ) : ?>
 						<span class="HTG-ajax-post-reading-time">
 							<span class="dashicons dashicons-clock"></span>
-							<?php echo esc_html( HTG_reading_time() ); ?> <?php esc_html_e( 'min read', 'HTG' ); ?>
+							<?php echo esc_html( HTG_reading_time() ); ?> <?php esc_html_e( 'min read', 'adtech-pro' ); ?>
 						</span>
 					<?php endif; ?>
 				</div>
@@ -165,7 +165,7 @@ class HTG_Ajax_Posts {
 				</div>
 
 				<a href="<?php the_permalink(); ?>" class="HTG-ajax-post-link">
-					<?php esc_html_e( 'Read More', 'HTG' ); ?>
+					<?php esc_html_e( 'Read More', 'adtech-pro' ); ?>
 					<span class="dashicons dashicons-arrow-right-alt2"></span>
 				</a>
 			</div>
@@ -196,11 +196,11 @@ class HTG_Ajax_Posts {
 			
 			<?php if ( 'yes' === $atts['show_filters'] && ! empty( $categories ) ) : ?>
 				<div class="HTG-post-filters">
-					<h2 class="HTG-filters-title"><?php esc_html_e( 'Explore by Category', 'HTG' ); ?></h2>
+					<h2 class="HTG-filters-title"><?php esc_html_e( 'Explore by Category', 'adtech-pro' ); ?></h2>
 					
 					<div class="HTG-filter-buttons">
 						<button class="HTG-filter-btn active" data-category="all">
-							<?php esc_html_e( 'All', 'HTG' ); ?>
+							<?php esc_html_e( 'All', 'adtech-pro' ); ?>
 						</button>
 						<?php foreach ( $categories as $category ) : ?>
 							<button class="HTG-filter-btn" data-category="<?php echo esc_attr( $category->term_id ); ?>">
@@ -234,7 +234,7 @@ class HTG_Ajax_Posts {
 				else :
 					?>
 					<div class="HTG-no-posts">
-						<p><?php esc_html_e( 'No posts found.', 'HTG' ); ?></p>
+						<p><?php esc_html_e( 'No posts found.', 'adtech-pro' ); ?></p>
 					</div>
 					<?php
 				endif;
@@ -246,9 +246,9 @@ class HTG_Ajax_Posts {
 			<?php if ( $query->max_num_pages > 1 ) : ?>
 				<div class="HTG-load-more-container">
 					<button class="HTG-load-more-btn" data-page="1" data-max-pages="<?php echo esc_attr( $query->max_num_pages ); ?>">
-						<span class="HTG-load-more-text"><?php esc_html_e( 'Load More Posts', 'HTG' ); ?></span>
+						<span class="HTG-load-more-text"><?php esc_html_e( 'Load More Posts', 'adtech-pro' ); ?></span>
 						<span class="HTG-load-more-loading" style="display: none;">
-							<?php esc_html_e( 'Loading...', 'HTG' ); ?>
+							<?php esc_html_e( 'Loading...', 'adtech-pro' ); ?>
 							<span class="HTG-spinner"></span>
 						</span>
 					</button>

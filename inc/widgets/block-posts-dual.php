@@ -10,8 +10,8 @@ class HTG_Dual_Category_Posts extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'HTG_dual_category_posts', // Base ID
-			esc_html__( 'H&T AdTech Pro: Magazine Posts (Style 2)', 'HTG' ), // Name
-			array( 'description' => esc_html__( 'Displays posts in a two column layout.', 'HTG' ), ) // Args
+			esc_html__( 'H&T AdTech Pro: Magazine Posts (Style 2)', 'adtech-pro' ), // Name
+			array( 'description' => esc_html__( 'Displays posts in a two column layout.', 'adtech-pro' ), ) // Args
 		);
 	}
 
@@ -27,63 +27,63 @@ class HTG_Dual_Category_Posts extends WP_Widget {
 	public function form( $instance ) {
 		//print_r($instance);
 		$defaults = array(
-			'title1'		=>	esc_html__( 'Latest Posts', 'HTG' ),
+			'title1'		=>	esc_html__( 'Latest Posts', 'adtech-pro' ),
 			'category1'		=>	'',
 			'number_posts1'	=> 3,
 			'sticky_posts1' => true,
-			'viewall_text1'	=> esc_html__( 'View All', 'HTG' ),
-			'title2'		=>	esc_html__( 'Latest Posts', 'HTG' ),
+			'viewall_text1'	=> esc_html__( 'View All', 'adtech-pro' ),
+			'title2'		=>	esc_html__( 'Latest Posts', 'adtech-pro' ),
 			'category2'		=>	'',
 			'number_posts2'	=> 3,
 			'sticky_posts2' => true,	
-			'viewall_text2'	=> esc_html__( 'View All', 'HTG' )
+			'viewall_text2'	=> esc_html__( 'View All', 'adtech-pro' )
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 
 	?>
 		<!-- Form for category 1 -->
-		<h3><?php esc_html_e( 'First Set of Posts', 'HTG' ); ?></h3>
+		<h3><?php esc_html_e( 'First Set of Posts', 'adtech-pro' ); ?></h3>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title1' ); ?>"><?php esc_html_e( 'Title:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title1' ); ?>"><?php esc_html_e( 'Title:', 'adtech-pro' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title1' ); ?>" name="<?php echo $this->get_field_name( 'title1' ); ?>" value="<?php echo esc_attr($instance['title1']); ?>"/>
 		</p>
 		<p>
-			<label><?php esc_html_e( 'Select a post category', 'HTG' ); ?></label>
+			<label><?php esc_html_e( 'Select a post category', 'adtech-pro' ); ?></label>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name('category1'), 'selected' => $instance['category1'], 'show_option_all' => 'Show all posts' ) ); ?>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number_posts1' ); ?>"><?php esc_html_e( 'Number of posts:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'number_posts1' ); ?>"><?php esc_html_e( 'Number of posts:', 'adtech-pro' ); ?></label>
 			<input type="number" id="<?php echo $this->get_field_id( 'number_posts1' ); ?>" name="<?php echo $this->get_field_name( 'number_posts1' ); ?>" value="<?php echo absint( $instance['number_posts1'] ); ?>" size="3"/> 
 		</p>
 		<p>
 			<input type="checkbox" <?php checked( $instance['sticky_posts1'], true ) ?> class="checkbox" id="<?php echo $this->get_field_id('sticky_posts1'); ?>" name="<?php echo $this->get_field_name('sticky_posts1'); ?>" />
-			<label for="<?php echo $this->get_field_id('sticky_posts1'); ?>"><?php esc_html_e( 'Ignore sticky posts.', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id('sticky_posts1'); ?>"><?php esc_html_e( 'Ignore sticky posts.', 'adtech-pro' ); ?></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'viewall_text1' ); ?>"><?php esc_html_e( 'View All Text:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'viewall_text1' ); ?>"><?php esc_html_e( 'View All Text:', 'adtech-pro' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'viewall_text1' ); ?>" name="<?php echo $this->get_field_name( 'viewall_text1' ); ?>" value="<?php echo esc_attr( $instance['viewall_text1'] ); ?>"/>
 		</p>
 		<hr />
 		<!-- Form for category 2 -->
-		<h3><?php esc_html_e( 'Second Set of Posts', 'HTG' ); ?></h3>
+		<h3><?php esc_html_e( 'Second Set of Posts', 'adtech-pro' ); ?></h3>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title2' ); ?>"><?php esc_html_e( 'Title:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title2' ); ?>"><?php esc_html_e( 'Title:', 'adtech-pro' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title2' ); ?>" name="<?php echo $this->get_field_name( 'title2' ); ?>" value="<?php echo esc_attr($instance['title2']); ?>"/>
 		</p>
 		<p>
-			<label><?php esc_html_e( 'Select a post category', 'HTG' ); ?></label>
+			<label><?php esc_html_e( 'Select a post category', 'adtech-pro' ); ?></label>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name('category2'), 'selected' => $instance['category2'], 'show_option_all' => 'Show all posts' ) ); ?>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number_posts2' ); ?>"><?php esc_html_e( 'Number of posts:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'number_posts2' ); ?>"><?php esc_html_e( 'Number of posts:', 'adtech-pro' ); ?></label>
 			<input type="number" id="<?php echo $this->get_field_id( 'number_posts2' ); ?>" name="<?php echo $this->get_field_name( 'number_posts2' ); ?>" value="<?php echo absint( $instance['number_posts2'] ); ?>" size="3"/> 
 		</p>
 		<p>
 			<input type="checkbox" <?php checked( $instance['sticky_posts2'], true ) ?> class="checkbox" id="<?php echo $this->get_field_id('sticky_posts2'); ?>" name="<?php echo $this->get_field_name('sticky_posts2'); ?>" />
-			<label for="<?php echo $this->get_field_id('sticky_posts2'); ?>"><?php esc_html_e( 'Ignore sticky posts.', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id('sticky_posts2'); ?>"><?php esc_html_e( 'Ignore sticky posts.', 'adtech-pro' ); ?></label>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'viewall_text2' ); ?>"><?php esc_html_e( 'View All Text:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'viewall_text2' ); ?>"><?php esc_html_e( 'View All Text:', 'adtech-pro' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'viewall_text2' ); ?>" name="<?php echo $this->get_field_name( 'viewall_text2' ); ?>" value="<?php echo esc_attr( $instance['viewall_text2'] ); ?>"/>
 		</p>
 	<?php

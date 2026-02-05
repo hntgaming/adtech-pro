@@ -11,8 +11,8 @@ class HTG_Popular_Posts extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'HTG_popular_posts', // Base ID
-			esc_html__( 'H&T AdTech Pro: Popular Posts', 'HTG' ), // Name
-			array( 'description' => esc_html__( 'Displays popular posts based on the comment count. Use this widget in the main sidebars.', 'HTG' ), ) // Args
+			esc_html__( 'H&T AdTech Pro: Popular Posts', 'adtech-pro' ), // Name
+			array( 'description' => esc_html__( 'Displays popular posts based on the comment count. Use this widget in the main sidebars.', 'adtech-pro' ), ) // Args
 		);
 	}
 
@@ -27,7 +27,7 @@ class HTG_Popular_Posts extends WP_Widget {
 	public function form( $instance ) {
         
 		$defaults = array(
-			'title'		    =>	esc_html__( 'Popular Posts', 'HTG' ),
+			'title'		    =>	esc_html__( 'Popular Posts', 'adtech-pro' ),
 			'category'	    =>	'all',
 			'number_posts'	=>  5,
             'date_range'    =>  ''
@@ -37,19 +37,19 @@ class HTG_Popular_Posts extends WP_Widget {
 	?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'adtech-pro' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>"/>
 		</p>
 		<p>
-			<label><?php esc_html_e( 'Category', 'HTG' ); ?></label>
+			<label><?php esc_html_e( 'Category', 'adtech-pro' ); ?></label>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name('category'), 'selected' => $instance['category'], 'show_option_all' => 'Show popular posts from all categories' ) ); ?>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number_posts' ); ?>"><?php esc_html_e( 'Number of posts:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'number_posts' ); ?>"><?php esc_html_e( 'Number of posts:', 'adtech-pro' ); ?></label>
 			<input type="number" id="<?php echo $this->get_field_id( 'number_posts' ); ?>" name="<?php echo $this->get_field_name( 'number_posts' );?>" value="<?php echo absint( $instance['number_posts'] ) ?>" size="3"/> 
 		</p>
         <p>
-			<label for="<?php echo $this->get_field_id( 'date_range' ); ?>"><?php esc_html_e( 'Enter the number of days to display popular posts:', 'HTG' ); ?></label> 
+			<label for="<?php echo $this->get_field_id( 'date_range' ); ?>"><?php esc_html_e( 'Enter the number of days to display popular posts:', 'adtech-pro' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'date_range' ); ?>" name="<?php echo $this->get_field_name( 'date_range' ); ?>" type="text" value="<?php echo esc_attr( $instance['date_range'] ); ?>">
 		</p>
 

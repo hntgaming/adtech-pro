@@ -31,7 +31,7 @@ class HTG_Author_Box {
 	public static function add_customizer_settings( $wp_customize ) {
 		// Author Box Section
 		$wp_customize->add_section( 'HTG_author_box', array(
-			'title'    => __( 'Author Box Settings', 'HTG' ),
+			'title'    => __( 'Author Box Settings', 'adtech-pro' ),
 			'priority' => 135,
 		) );
 
@@ -42,8 +42,8 @@ class HTG_Author_Box {
 		) );
 
 		$wp_customize->add_control( 'HTG_author_box_enable', array(
-			'label'       => __( 'Enable Author Box', 'HTG' ),
-			'description' => __( 'Show author bio box at the end of posts', 'HTG' ),
+			'label'       => __( 'Enable Author Box', 'adtech-pro' ),
+			'description' => __( 'Show author bio box at the end of posts', 'adtech-pro' ),
 			'section'     => 'HTG_author_box',
 			'type'        => 'checkbox',
 		) );
@@ -55,14 +55,14 @@ class HTG_Author_Box {
 		) );
 
 		$wp_customize->add_control( 'HTG_author_box_style', array(
-			'label'   => __( 'Author Box Style', 'HTG' ),
+			'label'   => __( 'Author Box Style', 'adtech-pro' ),
 			'section' => 'HTG_author_box',
 			'type'    => 'select',
 			'choices' => array(
-				'default'  => __( 'Default', 'HTG' ),
-				'minimal'  => __( 'Minimal', 'HTG' ),
-				'card'     => __( 'Card Style', 'HTG' ),
-				'gradient' => __( 'Gradient Background', 'HTG' ),
+				'default'  => __( 'Default', 'adtech-pro' ),
+				'minimal'  => __( 'Minimal', 'adtech-pro' ),
+				'card'     => __( 'Card Style', 'adtech-pro' ),
+				'gradient' => __( 'Gradient Background', 'adtech-pro' ),
 			),
 		) );
 
@@ -73,7 +73,7 @@ class HTG_Author_Box {
 		) );
 
 		$wp_customize->add_control( 'HTG_author_box_show_post_count', array(
-			'label'   => __( 'Show Post Count', 'HTG' ),
+			'label'   => __( 'Show Post Count', 'adtech-pro' ),
 			'section' => 'HTG_author_box',
 			'type'    => 'checkbox',
 		) );
@@ -85,7 +85,7 @@ class HTG_Author_Box {
 		) );
 
 		$wp_customize->add_control( 'HTG_author_box_show_social', array(
-			'label'   => __( 'Show Social Links', 'HTG' ),
+			'label'   => __( 'Show Social Links', 'adtech-pro' ),
 			'section' => 'HTG_author_box',
 			'type'    => 'checkbox',
 		) );
@@ -97,7 +97,7 @@ class HTG_Author_Box {
 	public static function add_social_fields( $user ) {
 		$social_networks = self::get_social_networks();
 		?>
-		<h2><?php esc_html_e( 'Social Media Profiles', 'HTG' ); ?></h2>
+		<h2><?php esc_html_e( 'Social Media Profiles', 'adtech-pro' ); ?></h2>
 		<table class="form-table">
 			<?php foreach ( $social_networks as $network => $label ) : ?>
 				<tr>
@@ -113,19 +113,19 @@ class HTG_Author_Box {
 							id="<?php echo esc_attr( $network ); ?>" 
 							value="<?php echo esc_attr( get_the_author_meta( $network, $user->ID ) ); ?>" 
 							class="regular-text" 
-							placeholder="<?php echo esc_attr( sprintf( __( 'https://...', 'HTG' ) ) ); ?>"
+							placeholder="<?php echo esc_attr( sprintf( __( 'https://...', 'adtech-pro' ) ) ); ?>"
 						>
 					</td>
 				</tr>
 			<?php endforeach; ?>
 		</table>
 
-		<h2><?php esc_html_e( 'Additional Information', 'HTG' ); ?></h2>
+		<h2><?php esc_html_e( 'Additional Information', 'adtech-pro' ); ?></h2>
 		<table class="form-table">
 			<tr>
 				<th>
 					<label for="job_title">
-						<?php esc_html_e( 'Job Title', 'HTG' ); ?>
+						<?php esc_html_e( 'Job Title', 'adtech-pro' ); ?>
 					</label>
 				</th>
 				<td>
@@ -135,14 +135,14 @@ class HTG_Author_Box {
 						id="job_title" 
 						value="<?php echo esc_attr( get_the_author_meta( 'job_title', $user->ID ) ); ?>" 
 						class="regular-text" 
-						placeholder="<?php esc_attr_e( 'e.g., Senior Writer, Editor', 'HTG' ); ?>"
+						placeholder="<?php esc_attr_e( 'e.g., Senior Writer, Editor', 'adtech-pro' ); ?>"
 					>
 				</td>
 			</tr>
 			<tr>
 				<th>
 					<label for="company">
-						<?php esc_html_e( 'Company', 'HTG' ); ?>
+						<?php esc_html_e( 'Company', 'adtech-pro' ); ?>
 					</label>
 				</th>
 				<td>
@@ -152,7 +152,7 @@ class HTG_Author_Box {
 						id="company" 
 						value="<?php echo esc_attr( get_the_author_meta( 'company', $user->ID ) ); ?>" 
 						class="regular-text" 
-						placeholder="<?php esc_attr_e( 'Your company name', 'HTG' ); ?>"
+						placeholder="<?php esc_attr_e( 'Your company name', 'adtech-pro' ); ?>"
 					>
 				</td>
 			</tr>
@@ -191,13 +191,13 @@ class HTG_Author_Box {
 	 */
 	private static function get_social_networks() {
 		return array(
-			'twitter_url'    => __( 'Twitter/X URL', 'HTG' ),
-			'facebook_url'   => __( 'Facebook URL', 'HTG' ),
-			'linkedin_url'   => __( 'LinkedIn URL', 'HTG' ),
-			'instagram_url'  => __( 'Instagram URL', 'HTG' ),
-			'youtube_url'    => __( 'YouTube URL', 'HTG' ),
-			'github_url'     => __( 'GitHub URL', 'HTG' ),
-			'website_url'    => __( 'Website URL', 'HTG' ),
+			'twitter_url'    => __( 'Twitter/X URL', 'adtech-pro' ),
+			'facebook_url'   => __( 'Facebook URL', 'adtech-pro' ),
+			'linkedin_url'   => __( 'LinkedIn URL', 'adtech-pro' ),
+			'instagram_url'  => __( 'Instagram URL', 'adtech-pro' ),
+			'youtube_url'    => __( 'YouTube URL', 'adtech-pro' ),
+			'github_url'     => __( 'GitHub URL', 'adtech-pro' ),
+			'website_url'    => __( 'Website URL', 'adtech-pro' ),
 		);
 	}
 
@@ -265,7 +265,7 @@ class HTG_Author_Box {
 						<div class="HTG-author-stats">
 							<span class="HTG-author-post-count">
 								<strong><?php echo esc_html( number_format_i18n( $post_count ) ); ?></strong>
-								<?php echo esc_html( _n( 'Article', 'Articles', $post_count, 'HTG' ) ); ?>
+								<?php echo esc_html( _n( 'Article', 'Articles', $post_count, 'adtech-pro' ) ); ?>
 							</span>
 						</div>
 					<?php endif; ?>
@@ -285,7 +285,7 @@ class HTG_Author_Box {
 					<?php endif; ?>
 
 					<a href="<?php echo esc_url( $author_url ); ?>" class="HTG-author-link">
-						<?php esc_html_e( 'View all posts', 'HTG' ); ?>
+						<?php esc_html_e( 'View all posts', 'adtech-pro' ); ?>
 						<span class="HTG-author-link-arrow">→</span>
 					</a>
 				</div>

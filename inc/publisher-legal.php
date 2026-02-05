@@ -28,8 +28,8 @@ class HTG_Publisher_Legal {
 	public static function add_admin_menu() {
 		add_submenu_page(
 			'HTG-dashboard',
-			__( 'Legal Pages', 'HTG' ),
-			__( 'Legal Pages', 'HTG' ),
+			__( 'Legal Pages', 'adtech-pro' ),
+			__( 'Legal Pages', 'adtech-pro' ),
 			'manage_options',
 			'HTG-legal-pages',
 			array( __CLASS__, 'render_admin_page' )
@@ -51,9 +51,9 @@ class HTG_Publisher_Legal {
 			<div class="HTG-admin-header">
 				<h1>
 					<span class="dashicons dashicons-shield"></span>
-					<?php esc_html_e( 'Legal Pages', 'HTG' ); ?>
+					<?php esc_html_e( 'Legal Pages', 'adtech-pro' ); ?>
 				</h1>
-				<p class="HTG-admin-tagline"><?php esc_html_e( 'Generate essential legal pages for AdSense compliance', 'HTG' ); ?></p>
+				<p class="HTG-admin-tagline"><?php esc_html_e( 'Generate essential legal pages for AdSense compliance', 'adtech-pro' ); ?></p>
 			</div>
 
 			<div class="HTG-admin-row">
@@ -64,24 +64,24 @@ class HTG_Publisher_Legal {
 							<div class="HTG-legal-page-icon">
 								<span class="dashicons dashicons-info-outline"></span>
 							</div>
-							<h3><?php esc_html_e( 'Disclaimer', 'HTG' ); ?></h3>
-							<p><?php esc_html_e( 'Protects you from liability for information published on your site.', 'HTG' ); ?></p>
+							<h3><?php esc_html_e( 'Disclaimer', 'adtech-pro' ); ?></h3>
+							<p><?php esc_html_e( 'Protects you from liability for information published on your site.', 'adtech-pro' ); ?></p>
 							
 							<?php if ( $disclaimer_page ) : ?>
 								<div class="HTG-page-exists">
 									<span class="dashicons dashicons-yes-alt"></span>
-									<?php esc_html_e( 'Page exists', 'HTG' ); ?>
+									<?php esc_html_e( 'Page exists', 'adtech-pro' ); ?>
 									<div style="margin-top: 8px;">
-										<a href="<?php echo esc_url( get_permalink( $disclaimer_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_permalink( $disclaimer_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'adtech-pro' ); ?></a>
 										&nbsp;|&nbsp;
-										<a href="<?php echo esc_url( get_edit_post_link( $disclaimer_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_edit_post_link( $disclaimer_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'adtech-pro' ); ?></a>
 									</div>
 								</div>
 							<?php else : ?>
 								<form method="post" style="margin-top: 15px;">
 									<?php wp_nonce_field( 'HTG_generate_legal_page', 'HTG_legal_nonce' ); ?>
 									<input type="hidden" name="page_type" value="disclaimer">
-									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'HTG' ); ?></button>
+									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'adtech-pro' ); ?></button>
 								</form>
 							<?php endif; ?>
 						</div>
@@ -91,24 +91,24 @@ class HTG_Publisher_Legal {
 							<div class="HTG-legal-page-icon">
 								<span class="dashicons dashicons-megaphone"></span>
 							</div>
-							<h3><?php esc_html_e( 'Advertiser Disclosure', 'HTG' ); ?></h3>
-							<p><?php esc_html_e( 'Required for affiliate marketing and ad revenue transparency.', 'HTG' ); ?></p>
+							<h3><?php esc_html_e( 'Advertiser Disclosure', 'adtech-pro' ); ?></h3>
+							<p><?php esc_html_e( 'Required for affiliate marketing and ad revenue transparency.', 'adtech-pro' ); ?></p>
 							
 							<?php if ( $disclosure_page ) : ?>
 								<div class="HTG-page-exists">
 									<span class="dashicons dashicons-yes-alt"></span>
-									<?php esc_html_e( 'Page exists', 'HTG' ); ?>
+									<?php esc_html_e( 'Page exists', 'adtech-pro' ); ?>
 									<div style="margin-top: 8px;">
-										<a href="<?php echo esc_url( get_permalink( $disclosure_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_permalink( $disclosure_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'adtech-pro' ); ?></a>
 										&nbsp;|&nbsp;
-										<a href="<?php echo esc_url( get_edit_post_link( $disclosure_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_edit_post_link( $disclosure_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'adtech-pro' ); ?></a>
 									</div>
 								</div>
 							<?php else : ?>
 								<form method="post" style="margin-top: 15px;">
 									<?php wp_nonce_field( 'HTG_generate_legal_page', 'HTG_legal_nonce' ); ?>
 									<input type="hidden" name="page_type" value="disclosure">
-									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'HTG' ); ?></button>
+									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'adtech-pro' ); ?></button>
 								</form>
 							<?php endif; ?>
 						</div>
@@ -118,24 +118,24 @@ class HTG_Publisher_Legal {
 							<div class="HTG-legal-page-icon">
 								<span class="dashicons dashicons-media-document"></span>
 							</div>
-							<h3><?php esc_html_e( 'Terms of Service', 'HTG' ); ?></h3>
-							<p><?php esc_html_e( 'Establishes rules for using your website and protects your content.', 'HTG' ); ?></p>
+							<h3><?php esc_html_e( 'Terms of Service', 'adtech-pro' ); ?></h3>
+							<p><?php esc_html_e( 'Establishes rules for using your website and protects your content.', 'adtech-pro' ); ?></p>
 							
 							<?php if ( $terms_page ) : ?>
 								<div class="HTG-page-exists">
 									<span class="dashicons dashicons-yes-alt"></span>
-									<?php esc_html_e( 'Page exists', 'HTG' ); ?>
+									<?php esc_html_e( 'Page exists', 'adtech-pro' ); ?>
 									<div style="margin-top: 8px;">
-										<a href="<?php echo esc_url( get_permalink( $terms_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_permalink( $terms_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'adtech-pro' ); ?></a>
 										&nbsp;|&nbsp;
-										<a href="<?php echo esc_url( get_edit_post_link( $terms_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_edit_post_link( $terms_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'adtech-pro' ); ?></a>
 									</div>
 								</div>
 							<?php else : ?>
 								<form method="post" style="margin-top: 15px;">
 									<?php wp_nonce_field( 'HTG_generate_legal_page', 'HTG_legal_nonce' ); ?>
 									<input type="hidden" name="page_type" value="terms">
-									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'HTG' ); ?></button>
+									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'adtech-pro' ); ?></button>
 								</form>
 							<?php endif; ?>
 						</div>
@@ -145,24 +145,24 @@ class HTG_Publisher_Legal {
 							<div class="HTG-legal-page-icon">
 								<span class="dashicons dashicons-privacy"></span>
 							</div>
-							<h3><?php esc_html_e( 'Privacy Policy', 'HTG' ); ?></h3>
-							<p><?php esc_html_e( 'Required by GDPR, CCPA, and AdSense. Explains data collection.', 'HTG' ); ?></p>
+							<h3><?php esc_html_e( 'Privacy Policy', 'adtech-pro' ); ?></h3>
+							<p><?php esc_html_e( 'Required by GDPR, CCPA, and AdSense. Explains data collection.', 'adtech-pro' ); ?></p>
 							
 							<?php if ( $privacy_page ) : ?>
 								<div class="HTG-page-exists">
 									<span class="dashicons dashicons-yes-alt"></span>
-									<?php esc_html_e( 'Page exists', 'HTG' ); ?>
+									<?php esc_html_e( 'Page exists', 'adtech-pro' ); ?>
 									<div style="margin-top: 8px;">
-										<a href="<?php echo esc_url( get_permalink( $privacy_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_permalink( $privacy_page->ID ) ); ?>" target="_blank"><?php esc_html_e( 'View', 'adtech-pro' ); ?></a>
 										&nbsp;|&nbsp;
-										<a href="<?php echo esc_url( get_edit_post_link( $privacy_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'HTG' ); ?></a>
+										<a href="<?php echo esc_url( get_edit_post_link( $privacy_page->ID ) ); ?>"><?php esc_html_e( 'Edit', 'adtech-pro' ); ?></a>
 									</div>
 								</div>
 							<?php else : ?>
 								<form method="post" style="margin-top: 15px;">
 									<?php wp_nonce_field( 'HTG_generate_legal_page', 'HTG_legal_nonce' ); ?>
 									<input type="hidden" name="page_type" value="privacy">
-									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'HTG' ); ?></button>
+									<button type="submit" name="generate_page" class="button button-primary"><?php esc_html_e( 'Generate Page', 'adtech-pro' ); ?></button>
 								</form>
 							<?php endif; ?>
 						</div>
@@ -171,9 +171,9 @@ class HTG_Publisher_Legal {
 					<div class="HTG-legal-notice">
 						<h3 style="display: flex; align-items: center; gap: 8px;">
 							<span class="dashicons dashicons-warning" style="color: #f59e0b;"></span>
-							<?php esc_html_e( 'Important Notice', 'HTG' ); ?>
+							<?php esc_html_e( 'Important Notice', 'adtech-pro' ); ?>
 						</h3>
-						<p><?php esc_html_e( 'These pages are templates. You MUST customize them with your actual business information, contact details, and specific practices. Consider consulting with a lawyer for your specific needs.', 'HTG' ); ?></p>
+						<p><?php esc_html_e( 'These pages are templates. You MUST customize them with your actual business information, contact details, and specific practices. Consider consulting with a lawyer for your specific needs.', 'adtech-pro' ); ?></p>
 					</div>
 				</div>
 			</div>

@@ -12,8 +12,8 @@ class HTG_Tabbed_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'HTG_tabbed_widget', // Base ID
-			esc_html__( 'H&T AdTech Pro: Popular Posts, Tags, Comments', 'HTG' ), // Name
-			array( 'description' => esc_html__( 'Displays popular posts, comments, tags in a tabbed pane.', 'HTG' ), ) // Args
+			esc_html__( 'H&T AdTech Pro: Popular Posts, Tags, Comments', 'adtech-pro' ), // Name
+			array( 'description' => esc_html__( 'Displays popular posts, comments, tags in a tabbed pane.', 'adtech-pro' ), ) // Args
 		);
 	}
 
@@ -31,15 +31,15 @@ class HTG_Tabbed_Widget extends WP_Widget {
 		$noc = ! empty( $instance['noc'] ) ? absint( $instance['noc'] ) : 5; ?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'nop' ); ?>"><?php esc_html_e( 'Number of popular posts:', 'HTG' ); ?></label> 
+			<label for="<?php echo $this->get_field_id( 'nop' ); ?>"><?php esc_html_e( 'Number of popular posts:', 'adtech-pro' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'nop' ); ?>" name="<?php echo $this->get_field_name( 'nop' ); ?>" type="text" value="<?php echo esc_attr( $nop ); ?>">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'date_range' ); ?>"><?php esc_html_e( 'Enter the number of days to display popular posts:', 'HTG' ); ?></label> 
+			<label for="<?php echo $this->get_field_id( 'date_range' ); ?>"><?php esc_html_e( 'Enter the number of days to display popular posts:', 'adtech-pro' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'date_range' ); ?>" name="<?php echo $this->get_field_name( 'date_range' ); ?>" type="text" value="<?php echo esc_attr( $date_range ); ?>">
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'noc' ); ?>"><?php esc_html_e( 'Number of comments:', 'HTG' ); ?></label> 
+			<label for="<?php echo $this->get_field_id( 'noc' ); ?>"><?php esc_html_e( 'Number of comments:', 'adtech-pro' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'noc' ); ?>" name="<?php echo $this->get_field_name( 'noc' ); ?>" type="text" value="<?php echo esc_attr( $noc ); ?>">
 		</p>
 		
@@ -87,9 +87,9 @@ class HTG_Tabbed_Widget extends WP_Widget {
 		<div class="hm-tabs-wdt">
 
 		<ul class="hm-tab-nav">
-			<li class="hm-tab"><a class="hm-tab-anchor" href="#HTG-popular"><?php esc_html_e( 'Popular', 'HTG' ); ?></a></li>
-			<li class="hm-tab"><a class="hm-tab-anchor" href="#HTG-comments"><?php esc_html_e( 'Comments', 'HTG' ); ?></a></li>
-			<li class="hm-tab"><a class="hm-tab-anchor" href="#HTG-tags"><?php esc_html_e( 'Tags', 'HTG' ); ?></a></li>
+			<li class="hm-tab"><a class="hm-tab-anchor" href="#HTG-popular"><?php esc_html_e( 'Popular', 'adtech-pro' ); ?></a></li>
+			<li class="hm-tab"><a class="hm-tab-anchor" href="#HTG-comments"><?php esc_html_e( 'Comments', 'adtech-pro' ); ?></a></li>
+			<li class="hm-tab"><a class="hm-tab-anchor" href="#HTG-tags"><?php esc_html_e( 'Tags', 'adtech-pro' ); ?></a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -164,7 +164,7 @@ class HTG_Tabbed_Widget extends WP_Widget {
 							</div>
 						<?php }
 					} else {
-						esc_html_e( 'No comments found.', 'HTG' );
+						esc_html_e( 'No comments found.', 'adtech-pro' );
 					}
 				?>
 			</div><!-- .tab-pane #HTG-comments -->
@@ -178,7 +178,7 @@ class HTG_Tabbed_Widget extends WP_Widget {
 							<?php     
 						endforeach;       
 					} else {          
-						esc_html_e( 'No tags created.', 'HTG');           
+						esc_html_e( 'No tags created.', 'adtech-pro');           
 					}            
 				?>
 			</div><!-- .tab-pane #HTG-tags-->

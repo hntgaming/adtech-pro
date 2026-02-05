@@ -11,8 +11,8 @@ class HTG_Single_Category_Posts extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'HTG_single_category_posts', // Base ID
-			esc_html__( 'H&T AdTech Pro: Magazine Posts (Style 1)', 'HTG' ), // Name
-			array( 'description' => esc_html__( 'Displays latest posts or posts from a choosen category.', 'HTG' ), ) // Args
+			esc_html__( 'H&T AdTech Pro: Magazine Posts (Style 1)', 'adtech-pro' ), // Name
+			array( 'description' => esc_html__( 'Displays latest posts or posts from a choosen category.', 'adtech-pro' ), ) // Args
 		);
 	}
 
@@ -26,23 +26,23 @@ class HTG_Single_Category_Posts extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$defaults = array(
-			'title'			=>	esc_html__( 'Latest Posts', 'HTG' ),
+			'title'			=>	esc_html__( 'Latest Posts', 'adtech-pro' ),
 			'category'		=>	'all',
-			'viewall_text'	=> esc_html__( 'View All', 'HTG' )
+			'viewall_text'	=> esc_html__( 'View All', 'adtech-pro' )
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 	?>
 
 	<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'HTG' ); ?></label>
+		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'adtech-pro' ); ?></label>
 		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>"/>
 	</p>
 	<p>
-		<label><?php esc_html_e( 'Select a post category', 'HTG' ); ?></label>
+		<label><?php esc_html_e( 'Select a post category', 'adtech-pro' ); ?></label>
 		<?php wp_dropdown_categories( array( 'name' => $this->get_field_name('category'), 'selected' => $instance['category'], 'show_option_all' => 'Show all posts' ) ); ?>
 	</p>
 	<p>
-		<label for="<?php echo $this->get_field_id( 'viewall_text' ); ?>"><?php esc_html_e( 'View All Text:', 'HTG' ); ?></label>
+		<label for="<?php echo $this->get_field_id( 'viewall_text' ); ?>"><?php esc_html_e( 'View All Text:', 'adtech-pro' ); ?></label>
 		<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'viewall_text' ); ?>" name="<?php echo $this->get_field_name( 'viewall_text' ); ?>" value="<?php echo esc_attr( $instance['viewall_text'] ); ?>"/>
 	</p>	
 

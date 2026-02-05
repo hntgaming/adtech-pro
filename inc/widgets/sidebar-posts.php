@@ -11,8 +11,8 @@ class HTG_Sidebar_Posts extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'sidebar_posts', // Base ID
-			esc_html__( 'H&T AdTech Pro: Sidebar Posts', 'HTG' ), // Name
-			array( 'description' => esc_html__( 'Displays latest posts or posts from a choosen category.Use this widget in the main sidebars.', 'HTG' ), ) // Args
+			esc_html__( 'H&T AdTech Pro: Sidebar Posts', 'adtech-pro' ), // Name
+			array( 'description' => esc_html__( 'Displays latest posts or posts from a choosen category.Use this widget in the main sidebars.', 'adtech-pro' ), ) // Args
 		);
 	}
 
@@ -27,7 +27,7 @@ class HTG_Sidebar_Posts extends WP_Widget {
 	public function form( $instance ) {
 		//print_r($instance);
 		$defaults = array(
-			'title'		=>	esc_html__( 'Latest Posts', 'HTG' ),
+			'title'		=>	esc_html__( 'Latest Posts', 'adtech-pro' ),
 			'category'	=>	'all',
 			'number_posts'	=> 5,
 			'sticky_posts' => true,
@@ -37,20 +37,20 @@ class HTG_Sidebar_Posts extends WP_Widget {
 	?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'adtech-pro' ); ?></label>
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo esc_attr( $instance['title'] ); ?>"/>
 		</p>
 		<p>
-			<label><?php esc_html_e( 'Select a post category', 'HTG' ); ?></label>
+			<label><?php esc_html_e( 'Select a post category', 'adtech-pro' ); ?></label>
 			<?php wp_dropdown_categories( array( 'name' => $this->get_field_name('category'), 'selected' => $instance['category'], 'show_option_all' => 'Show all posts' ) ); ?>
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number_posts' ); ?>"><?php esc_html_e( 'Number of posts:', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'number_posts' ); ?>"><?php esc_html_e( 'Number of posts:', 'adtech-pro' ); ?></label>
 			<input type="number" id="<?php echo $this->get_field_id( 'number_posts' ); ?>" name="<?php echo $this->get_field_name( 'number_posts' );?>" value="<?php echo absint( $instance['number_posts'] ) ?>" size="3"/> 
 		</p>
 		<p>
 			<input type="checkbox" <?php checked( $instance['sticky_posts'], true ) ?> class="checkbox" id="<?php echo $this->get_field_id('sticky_posts'); ?>" name="<?php echo $this->get_field_name('sticky_posts'); ?>" />
-			<label for="<?php echo $this->get_field_id('sticky_posts'); ?>"><?php esc_html_e( 'Ignore sticky posts.', 'HTG' ); ?></label>
+			<label for="<?php echo $this->get_field_id('sticky_posts'); ?>"><?php esc_html_e( 'Ignore sticky posts.', 'adtech-pro' ); ?></label>
 		</p>
 
 	<?php

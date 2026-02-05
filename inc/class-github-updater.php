@@ -50,7 +50,7 @@ class HTG_GitHub_Updater {
 	 *
 	 * @var string
 	 */
-	private $current_version = '2.4.5';
+	private $current_version = '2.5.0';
 
 	/**
 	 * GitHub API URL
@@ -353,16 +353,16 @@ class HTG_GitHub_Updater {
 				<?php
 				printf(
 					/* translators: 1: New version number, 2: Current version number */
-					esc_html__( 'A new version %1$s is available. You are running version %2$s.', 'HTG' ),
+					esc_html__( 'A new version %1$s is available. You are running version %2$s.', 'adtech-pro' ),
 					'<strong>' . esc_html( $release['version'] ) . '</strong>',
 					'<strong>' . esc_html( $this->current_version ) . '</strong>'
 				);
 				?>
 				<a href="<?php echo esc_url( $update_url ); ?>" class="button button-primary" style="margin-left: 10px;">
-					<?php esc_html_e( 'Update Now', 'HTG' ); ?>
+					<?php esc_html_e( 'Update Now', 'adtech-pro' ); ?>
 				</a>
 				<a href="<?php echo esc_url( $release['html_url'] ); ?>" target="_blank" style="margin-left: 5px;">
-					<?php esc_html_e( 'View Release Notes', 'HTG' ); ?>
+					<?php esc_html_e( 'View Release Notes', 'adtech-pro' ); ?>
 				</a>
 			</p>
 		</div>
@@ -455,7 +455,7 @@ class HTG_GitHub_Updater {
 	 */
 	public function manual_check() {
 		if ( ! current_user_can( 'update_themes' ) ) {
-			wp_die( esc_html__( 'You do not have permission to perform this action.', 'HTG' ) );
+			wp_die( esc_html__( 'You do not have permission to perform this action.', 'adtech-pro' ) );
 		}
 
 		check_admin_referer( 'htg_check_updates' );

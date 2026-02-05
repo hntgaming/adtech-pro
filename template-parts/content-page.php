@@ -28,7 +28,7 @@
 			the_content();
 
 			wp_link_pages( array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'HTG' ),
+				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'adtech-pro' ),
 				'after'  => '</div>',
 			) );
 		?>
@@ -42,7 +42,7 @@
 				edit_post_link(
 					sprintf(
 						/* translators: %s: Name of current post */
-						esc_html__( 'Edit %s', 'HTG' ),
+						esc_html__( 'Edit %s', 'adtech-pro' ),
 						the_title( '<span class="screen-reader-text">"', '"</span>', false )
 					),
 					'<span class="edit-link">',

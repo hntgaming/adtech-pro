@@ -37,7 +37,7 @@ if ( function_exists( 'wp_body_open' ) ) {
 <?php do_action( 'HTG_before_site' ); ?>
 
 <div id="page" class="site HTG-wrapper">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'HTG' ); ?></a>
+	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'adtech-pro' ); ?></a>
 
 	<?php do_action( 'HTG_before_header' ); ?>
 
@@ -50,7 +50,7 @@ if ( function_exists( 'wp_body_open' ) ) {
 					<div class="hm-nwrap">
 						<?php 
 							// Mobile Menu Button Label: Top Menu
-							$HTG_top_menu_btn_text = get_theme_mod( 'HTG_top_menu_btn_text', esc_html__( 'Top Menu', 'HTG') );
+							$HTG_top_menu_btn_text = get_theme_mod( 'HTG_top_menu_btn_text', esc_html__( 'Top Menu', 'adtech-pro') );
 						?>
 						<a href="#" class="navbutton" id="top-nav-button">
 							<?php 
@@ -132,7 +132,7 @@ if ( function_exists( 'wp_body_open' ) ) {
 					<?php wp_nav_menu( array( 'theme_location' => 'menu-1', 'menu_id' => 'primary-menu' ) ); ?>
 					
 					<?php if ( true == get_theme_mod( 'show_nav_search', true ) ) : ?>
-						<button class="hm-search-button-icon" aria-label="<?php esc_attr_e( 'Open search', 'HTG' ); ?>"></button>
+						<button class="hm-search-button-icon" aria-label="<?php esc_attr_e( 'Open search', 'adtech-pro' ); ?>"></button>
 						<div class="hm-search-box-container">
 							<div class="hm-search-box">
 								<?php get_search_form(); ?>
@@ -144,7 +144,7 @@ if ( function_exists( 'wp_body_open' ) ) {
 			<div class="hm-nwrap">
 				<?php 
 					// Mobile Menu Button Label: Main Menu
-					$HTG_main_menu_btn_text = get_theme_mod( 'HTG_main_menu_btn_text', esc_html__( 'Main Menu', 'HTG') );
+					$HTG_main_menu_btn_text = get_theme_mod( 'HTG_main_menu_btn_text', esc_html__( 'Main Menu', 'adtech-pro') );
 				?>
 				<a href="#" class="navbutton" id="main-nav-button">
 					<?php 

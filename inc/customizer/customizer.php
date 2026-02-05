@@ -27,29 +27,29 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			<div class="HTG-customizer-notice" style="background: linear-gradient(135deg, #240b50 0%, #3d1a75 100%); color: #fff; padding: 20px; border-radius: 8px; margin-bottom: 15px;">
 				<h3 style="color: #fff; margin-top: 0; font-size: 16px;">
 					<span class="dashicons dashicons-admin-generic" style="font-size: 20px; vertical-align: middle;"></span>
-					<?php esc_html_e( 'All Theme Settings in Admin Panel!', 'HTG' ); ?>
+					<?php esc_html_e( 'All Theme Settings in Admin Panel!', 'adtech-pro' ); ?>
 				</h3>
 				<p style="margin: 10px 0; line-height: 1.6; font-size: 14px;">
-					<?php esc_html_e( 'All theme customization options are available in the professional Admin Panel.', 'HTG' ); ?>
+					<?php esc_html_e( 'All theme customization options are available in the professional Admin Panel.', 'adtech-pro' ); ?>
 				</p>
 				<p style="margin: 10px 0; line-height: 1.6; font-size: 14px;">
-					<strong><?php esc_html_e( 'Configure:', 'HTG' ); ?></strong><br>
-					• <?php esc_html_e( 'Colors, Fonts, Layout', 'HTG' ); ?><br>
-					• <?php esc_html_e( 'Header, Footer, Slider', 'HTG' ); ?><br>
-					• <?php esc_html_e( 'Blog, Posts, Pages', 'HTG' ); ?><br>
-					• <?php esc_html_e( 'Ads, Magazine, Engagement', 'HTG' ); ?>
+					<strong><?php esc_html_e( 'Configure:', 'adtech-pro' ); ?></strong><br>
+					• <?php esc_html_e( 'Colors, Fonts, Layout', 'adtech-pro' ); ?><br>
+					• <?php esc_html_e( 'Header, Footer, Slider', 'adtech-pro' ); ?><br>
+					• <?php esc_html_e( 'Blog, Posts, Pages', 'adtech-pro' ); ?><br>
+					• <?php esc_html_e( 'Ads, Magazine, Engagement', 'adtech-pro' ); ?>
 				</p>
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-general-settings' ) ); ?>" 
 				   class="button button-primary button-hero" 
 				   style="background: #80d3f5; border-color: #80d3f5; color: #240b50; text-shadow: none; margin-top: 10px; font-weight: 600;">
 					<span class="dashicons dashicons-admin-settings" style="vertical-align: middle;"></span>
-					<?php esc_html_e( 'Go to Admin Panel Settings', 'HTG' ); ?>
+					<?php esc_html_e( 'Go to Admin Panel Settings', 'adtech-pro' ); ?>
 				</a>
 			</div>
 			<div style="padding: 15px; background: #f9f9f9; border-left: 4px solid #80d3f5; margin-top: 15px;">
 				<p style="margin: 0; font-size: 13px; color: #666;">
-					<strong><?php esc_html_e( 'Note:', 'HTG' ); ?></strong>
-					<?php esc_html_e( 'Use this Customizer only for Site Name, Tagline, Logo, and Site Icon. All other settings are in H&T AdTech Admin Panel.', 'HTG' ); ?>
+					<strong><?php esc_html_e( 'Note:', 'adtech-pro' ); ?></strong>
+					<?php esc_html_e( 'Use this Customizer only for Site Name, Tagline, Logo, and Site Icon. All other settings are in H&T AdTech Admin Panel.', 'adtech-pro' ); ?>
 				</p>
 			</div>
 			<?php
@@ -83,7 +83,7 @@ function HTG_sections_register( $wp_customize ) {
 	// Add admin panel redirect notice (only if custom control class exists)
 	if ( class_exists( 'HTG_Redirect_Notice_Control' ) ) {
 		$wp_customize->add_section( 'HTG_admin_redirect', array(
-			'title'    => esc_html__( 'Theme Settings', 'HTG' ),
+			'title'    => esc_html__( 'Theme Settings', 'adtech-pro' ),
 			'priority' => 1,
 		) );
 

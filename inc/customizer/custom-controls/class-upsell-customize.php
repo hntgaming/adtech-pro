@@ -73,8 +73,8 @@ final class HTG_Upsell_Customize {
 				$manager,
 				'HTG_upsell',
 				array(
-					'title'    => esc_html__( 'Ready for more?', 'HTG' ),
-					'pro_text' => esc_html__( 'Get HTG Pro', 'HTG' ),
+					'title'    => esc_html__( 'Ready for more?', 'adtech-pro' ),
+					'pro_text' => esc_html__( 'Get HTG Pro', 'adtech-pro' ),
 					'pro_url'  => 'https://themezhut.com/themes/HTG-pro/',
 					'priority' => 1
 				)

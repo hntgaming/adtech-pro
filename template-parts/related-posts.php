@@ -7,7 +7,7 @@ if ( $categories ) { ?>
     <div class="hm-related-posts">
     
     <div class="wt-container">
-        <h4 class="widget-title"><?php _e( 'Related Posts', 'HTG' ); ?></h4>
+        <h4 class="widget-title"><?php _e( 'Related Posts', 'adtech-pro' ); ?></h4>
     </div>
 
     <div class="hmrp-container">

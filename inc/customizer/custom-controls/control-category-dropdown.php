@@ -13,7 +13,7 @@ class HTG_Customize_Category_Control extends WP_Customize_Control {
             array(
                 'name'              => '_customize-dropdown-categories-' . $this->id,
                 'echo'              => 0,
-                'show_option_none'  => esc_attr__( '&mdash; Show All Posts &mdash;', 'HTG' ),
+                'show_option_none'  => esc_attr__( '&mdash; Show All Posts &mdash;', 'adtech-pro' ),
                 'option_none_value' => '0',
                 'selected'          => $this->value(),
             )

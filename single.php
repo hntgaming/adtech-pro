@@ -33,9 +33,9 @@ get_header(); ?>
 
 			if ( true == get_theme_mod( 'postsnav_sw', true ) ) :
 				the_post_navigation( array(
-					'next_text' => '<span class="meta-nav" aria-hidden="true">' . esc_html__( 'Next Article', 'HTG' ) . '</span> ' .
+					'next_text' => '<span class="meta-nav" aria-hidden="true">' . esc_html__( 'Next Article', 'adtech-pro' ) . '</span> ' .
 						'<span class="post-title">%title</span>',
-					'prev_text' => '<span class="meta-nav" aria-hidden="true">' . esc_html__( 'Previous Article', 'HTG' ) . '</span> ' .
+					'prev_text' => '<span class="meta-nav" aria-hidden="true">' . esc_html__( 'Previous Article', 'adtech-pro' ) . '</span> ' .
 						'<span class="post-title">%title</span>',
 				) );
 			endif;

@@ -16,7 +16,7 @@ class HTG_Admin_Dashboard {
 	/**
 	 * Theme version
 	 */
-	const VERSION = '2.3.0';
+	const VERSION = '2.5.0';
 
 	/**
 	 * Initialize the admin dashboard
@@ -31,8 +31,8 @@ class HTG_Admin_Dashboard {
 	 */
 	public static function add_admin_menu() {
 		add_menu_page(
-			__( 'H&T AdTech', 'HTG' ),
-			__( 'H&T AdTech', 'HTG' ),
+			__( 'H&T AdTech', 'adtech-pro' ),
+			__( 'H&T AdTech', 'adtech-pro' ),
 			'manage_options',
 			'HTG-dashboard',
 			array( __CLASS__, 'render_dashboard' ),
@@ -75,10 +75,10 @@ class HTG_Admin_Dashboard {
 			<!-- Header -->
 			<div class="HTG-admin-header">
 				<h1>
-					<?php esc_html_e( 'H&T AdTech Pro', 'HTG' ); ?>
+					<?php esc_html_e( 'H&T AdTech Pro', 'adtech-pro' ); ?>
 					<span class="HTG-admin-badge"><?php echo esc_html( 'v' . self::VERSION ); ?></span>
 				</h1>
-				<p class="HTG-admin-tagline"><?php esc_html_e( 'Enterprise Publishing Platform for High-Traffic Publishers', 'HTG' ); ?></p>
+				<p class="HTG-admin-tagline"><?php esc_html_e( 'Enterprise Publishing Platform for High-Traffic Publishers', 'adtech-pro' ); ?></p>
 			</div>
 
 			<!-- Quick Stats Row -->
@@ -89,7 +89,7 @@ class HTG_Admin_Dashboard {
 					</div>
 					<div class="HTG-stat-content">
 						<div class="HTG-stat-value"><?php echo esc_html( number_format( wp_count_posts()->publish ) ); ?></div>
-						<div class="HTG-stat-label"><?php esc_html_e( 'Published Posts', 'HTG' ); ?></div>
+						<div class="HTG-stat-label"><?php esc_html_e( 'Published Posts', 'adtech-pro' ); ?></div>
 					</div>
 				</div>
 
@@ -99,7 +99,7 @@ class HTG_Admin_Dashboard {
 					</div>
 					<div class="HTG-stat-content">
 						<div class="HTG-stat-value"><?php echo esc_html( number_format( wp_count_terms( 'category' ) ) ); ?></div>
-						<div class="HTG-stat-label"><?php esc_html_e( 'Categories', 'HTG' ); ?></div>
+						<div class="HTG-stat-label"><?php esc_html_e( 'Categories', 'adtech-pro' ); ?></div>
 					</div>
 				</div>
 
@@ -109,7 +109,7 @@ class HTG_Admin_Dashboard {
 					</div>
 					<div class="HTG-stat-content">
 						<div class="HTG-stat-value"><?php echo esc_html( number_format( wp_count_comments()->approved ) ); ?></div>
-						<div class="HTG-stat-label"><?php esc_html_e( 'Comments', 'HTG' ); ?></div>
+						<div class="HTG-stat-label"><?php esc_html_e( 'Comments', 'adtech-pro' ); ?></div>
 					</div>
 				</div>
 
@@ -122,7 +122,7 @@ class HTG_Admin_Dashboard {
 						$user_count = count_users();
 						?>
 						<div class="HTG-stat-value"><?php echo esc_html( number_format( $user_count['total_users'] ) ); ?></div>
-						<div class="HTG-stat-label"><?php esc_html_e( 'Total Users', 'HTG' ); ?></div>
+						<div class="HTG-stat-label"><?php esc_html_e( 'Total Users', 'adtech-pro' ); ?></div>
 					</div>
 				</div>
 			</div>
@@ -134,42 +134,42 @@ class HTG_Admin_Dashboard {
 					<div class="HTG-card-header">
 						<h2>
 							<span class="dashicons dashicons-dashboard"></span>
-							<?php esc_html_e( 'Quick Actions', 'HTG' ); ?>
+							<?php esc_html_e( 'Quick Actions', 'adtech-pro' ); ?>
 						</h2>
 					</div>
 					<div class="HTG-card-body">
 						<div class="HTG-quick-actions">
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-general-settings' ) ); ?>" class="HTG-quick-action">
 								<span class="dashicons dashicons-admin-generic"></span>
-								<span><?php esc_html_e( 'General Settings', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'General Settings', 'adtech-pro' ); ?></span>
 							</a>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-simple-ads' ) ); ?>" class="HTG-quick-action">
 								<span class="dashicons dashicons-megaphone"></span>
-								<span><?php esc_html_e( 'Ad Management', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'Ad Management', 'adtech-pro' ); ?></span>
 							</a>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-appearance' ) ); ?>" class="HTG-quick-action">
 								<span class="dashicons dashicons-admin-appearance"></span>
-								<span><?php esc_html_e( 'Appearance', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'Appearance', 'adtech-pro' ); ?></span>
 							</a>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-magazine-settings' ) ); ?>" class="HTG-quick-action">
 								<span class="dashicons dashicons-layout"></span>
-								<span><?php esc_html_e( 'Magazine', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'Magazine', 'adtech-pro' ); ?></span>
 							</a>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-engagement-settings' ) ); ?>" class="HTG-quick-action">
 								<span class="dashicons dashicons-awards"></span>
-								<span><?php esc_html_e( 'Engagement', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'Engagement', 'adtech-pro' ); ?></span>
 							</a>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-legal-pages' ) ); ?>" class="HTG-quick-action">
 								<span class="dashicons dashicons-shield"></span>
-								<span><?php esc_html_e( 'Legal Pages', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'Legal Pages', 'adtech-pro' ); ?></span>
 							</a>
 							<a href="<?php echo esc_url( admin_url( 'post-new.php' ) ); ?>" class="HTG-quick-action">
 								<span class="dashicons dashicons-plus-alt"></span>
-								<span><?php esc_html_e( 'New Post', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'New Post', 'adtech-pro' ); ?></span>
 							</a>
 							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="HTG-quick-action" target="_blank">
 								<span class="dashicons dashicons-external"></span>
-								<span><?php esc_html_e( 'View Site', 'HTG' ); ?></span>
+								<span><?php esc_html_e( 'View Site', 'adtech-pro' ); ?></span>
 							</a>
 						</div>
 					</div>
@@ -180,10 +180,10 @@ class HTG_Admin_Dashboard {
 					<div class="HTG-card-header">
 						<h2>
 							<span class="dashicons dashicons-megaphone"></span>
-							<?php esc_html_e( 'Ad Slots Overview', 'HTG' ); ?>
+							<?php esc_html_e( 'Ad Slots Overview', 'adtech-pro' ); ?>
 						</h2>
 						<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-simple-ads' ) ); ?>" class="button button-small">
-							<?php esc_html_e( 'Manage', 'HTG' ); ?>
+							<?php esc_html_e( 'Manage', 'adtech-pro' ); ?>
 						</a>
 					</div>
 					<div class="HTG-card-body">
@@ -199,7 +199,7 @@ class HTG_Admin_Dashboard {
 					<div class="HTG-card-header">
 						<h2>
 							<span class="dashicons dashicons-info-outline"></span>
-							<?php esc_html_e( 'Site Information', 'HTG' ); ?>
+							<?php esc_html_e( 'Site Information', 'adtech-pro' ); ?>
 						</h2>
 					</div>
 					<div class="HTG-card-body">
@@ -212,7 +212,7 @@ class HTG_Admin_Dashboard {
 					<div class="HTG-card-header">
 						<h2>
 							<span class="dashicons dashicons-performance"></span>
-							<?php esc_html_e( 'Environment Status', 'HTG' ); ?>
+							<?php esc_html_e( 'Environment Status', 'adtech-pro' ); ?>
 						</h2>
 					</div>
 					<div class="HTG-card-body">
@@ -227,40 +227,40 @@ class HTG_Admin_Dashboard {
 					<div class="HTG-card-header">
 						<h2>
 							<span class="dashicons dashicons-welcome-learn-more"></span>
-							<?php esc_html_e( 'Getting Started', 'HTG' ); ?>
+							<?php esc_html_e( 'Getting Started', 'adtech-pro' ); ?>
 						</h2>
 					</div>
 					<div class="HTG-card-body">
 						<div class="HTG-info-grid">
 							<div class="HTG-info-item">
-								<h3><?php esc_html_e( '1. Configure Settings', 'HTG' ); ?></h3>
-								<p><?php esc_html_e( 'Set up your site layout, header, and display preferences in General Settings.', 'HTG' ); ?></p>
+								<h3><?php esc_html_e( '1. Configure Settings', 'adtech-pro' ); ?></h3>
+								<p><?php esc_html_e( 'Set up your site layout, header, and display preferences in General Settings.', 'adtech-pro' ); ?></p>
 								<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-general-settings' ) ); ?>" class="button button-primary">
-									<?php esc_html_e( 'General Settings', 'HTG' ); ?>
+									<?php esc_html_e( 'General Settings', 'adtech-pro' ); ?>
 								</a>
 							</div>
 
 							<div class="HTG-info-item">
-								<h3><?php esc_html_e( '2. Add Your Ads', 'HTG' ); ?></h3>
-								<p><?php esc_html_e( 'Paste your Google AdSense or Ad Manager codes in the ad slots.', 'HTG' ); ?></p>
+								<h3><?php esc_html_e( '2. Add Your Ads', 'adtech-pro' ); ?></h3>
+								<p><?php esc_html_e( 'Paste your Google AdSense or Ad Manager codes in the ad slots.', 'adtech-pro' ); ?></p>
 								<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-simple-ads' ) ); ?>" class="button">
-									<?php esc_html_e( 'Ad Management', 'HTG' ); ?>
+									<?php esc_html_e( 'Ad Management', 'adtech-pro' ); ?>
 								</a>
 							</div>
 
 							<div class="HTG-info-item">
-								<h3><?php esc_html_e( '3. Customize Design', 'HTG' ); ?></h3>
-								<p><?php esc_html_e( 'Adjust colors, fonts, and styling to match your brand identity.', 'HTG' ); ?></p>
+								<h3><?php esc_html_e( '3. Customize Design', 'adtech-pro' ); ?></h3>
+								<p><?php esc_html_e( 'Adjust colors, fonts, and styling to match your brand identity.', 'adtech-pro' ); ?></p>
 								<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-appearance' ) ); ?>" class="button">
-									<?php esc_html_e( 'Appearance', 'HTG' ); ?>
+									<?php esc_html_e( 'Appearance', 'adtech-pro' ); ?>
 								</a>
 							</div>
 
 							<div class="HTG-info-item">
-								<h3><?php esc_html_e( '4. Create Content', 'HTG' ); ?></h3>
-								<p><?php esc_html_e( 'Start publishing quality content to grow your audience and revenue.', 'HTG' ); ?></p>
+								<h3><?php esc_html_e( '4. Create Content', 'adtech-pro' ); ?></h3>
+								<p><?php esc_html_e( 'Start publishing quality content to grow your audience and revenue.', 'adtech-pro' ); ?></p>
 								<a href="<?php echo esc_url( admin_url( 'post-new.php' ) ); ?>" class="button">
-									<?php esc_html_e( 'New Post', 'HTG' ); ?>
+									<?php esc_html_e( 'New Post', 'adtech-pro' ); ?>
 								</a>
 							</div>
 						</div>
@@ -271,11 +271,11 @@ class HTG_Admin_Dashboard {
 			<!-- Footer -->
 			<div class="HTG-admin-footer">
 				<p>
-					<?php esc_html_e( 'H&T AdTech Pro', 'HTG' ); ?> <?php echo esc_html( self::VERSION ); ?> &mdash;
+					<?php esc_html_e( 'H&T AdTech Pro', 'adtech-pro' ); ?> <?php echo esc_html( self::VERSION ); ?> &mdash;
 					<?php
 					printf(
 						/* translators: %s: H&T GAMING website URL */
-						esc_html__( 'Built by %s', 'HTG' ),
+						esc_html__( 'Built by %s', 'adtech-pro' ),
 						'<a href="https://hntgaming.me" target="_blank" rel="noopener">H&T GAMING</a>'
 					);
 					?>
@@ -290,7 +290,7 @@ class HTG_Admin_Dashboard {
 	 */
 	private static function render_active_ad_slots() {
 		if ( ! function_exists( 'HTG_get_ad_slots' ) ) {
-			echo '<p class="HTG-no-data">' . esc_html__( 'Ad system not available.', 'HTG' ) . '</p>';
+			echo '<p class="HTG-no-data">' . esc_html__( 'Ad system not available.', 'adtech-pro' ) . '</p>';
 			return;
 		}
 
@@ -321,7 +321,7 @@ class HTG_Admin_Dashboard {
 		echo '</div>';
 		
 		echo '<div class="HTG-ad-slots-summary">';
-		echo '<strong>' . esc_html( $active_count ) . '</strong> / ' . esc_html( $total_slots ) . ' ' . esc_html__( 'ad slots configured', 'HTG' );
+		echo '<strong>' . esc_html( $active_count ) . '</strong> / ' . esc_html( $total_slots ) . ' ' . esc_html__( 'ad slots configured', 'adtech-pro' );
 		echo '</div>';
 	}
 
@@ -331,22 +331,22 @@ class HTG_Admin_Dashboard {
 	private static function render_site_info() {
 		$info_items = array(
 			array(
-				'label' => __( 'Site Name', 'HTG' ),
+				'label' => __( 'Site Name', 'adtech-pro' ),
 				'value' => get_bloginfo( 'name' ),
 				'icon'  => 'admin-home',
 			),
 			array(
-				'label' => __( 'Site URL', 'HTG' ),
+				'label' => __( 'Site URL', 'adtech-pro' ),
 				'value' => home_url(),
 				'icon'  => 'admin-links',
 			),
 			array(
-				'label' => __( 'Theme Version', 'HTG' ),
+				'label' => __( 'Theme Version', 'adtech-pro' ),
 				'value' => self::VERSION,
 				'icon'  => 'admin-appearance',
 			),
 			array(
-				'label' => __( 'WordPress', 'HTG' ),
+				'label' => __( 'WordPress', 'adtech-pro' ),
 				'value' => get_bloginfo( 'version' ),
 				'icon'  => 'wordpress-alt',
 			),
@@ -385,25 +385,25 @@ class HTG_Admin_Dashboard {
 		
 		$status_items = array(
 			array(
-				'label'  => __( 'PHP Version', 'HTG' ),
+				'label'  => __( 'PHP Version', 'adtech-pro' ),
 				'value'  => $php_version,
 				'status' => $php_status,
 				'icon'   => 'editor-code',
 			),
 			array(
-				'label'  => __( 'Memory Limit', 'HTG' ),
+				'label'  => __( 'Memory Limit', 'adtech-pro' ),
 				'value'  => $memory_limit,
 				'status' => $memory_status,
 				'icon'   => 'performance',
 			),
 			array(
-				'label'  => __( 'Max Execution', 'HTG' ),
+				'label'  => __( 'Max Execution', 'adtech-pro' ),
 				'value'  => $max_execution . 's',
 				'status' => $exec_status,
 				'icon'   => 'clock',
 			),
 			array(
-				'label'  => __( 'Max Upload', 'HTG' ),
+				'label'  => __( 'Max Upload', 'adtech-pro' ),
 				'value'  => $upload_size,
 				'status' => 'good',
 				'icon'   => 'upload',
