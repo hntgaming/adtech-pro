@@ -50,7 +50,7 @@ class HTG_GitHub_Updater {
 	 *
 	 * @var string
 	 */
-	private $current_version = '2.4.4';
+	private $current_version = '2.4.5';
 
 	/**
 	 * GitHub API URL
@@ -382,8 +382,16 @@ class HTG_GitHub_Updater {
 	 * Clear update cache
 	 */
 	public function clear_cache() {
+		// Clear our custom transient
 		delete_transient( $this->transient_key );
+		
+		// Clear WordPress theme update transients
 		delete_site_transient( 'update_themes' );
+		delete_transient( 'update_themes' );
+		
+		// Also clear theme-specific transients
+		delete_option( '_site_transient_update_themes' );
+		delete_option( '_transient_update_themes' );
 	}
 	
 	/**
@@ -391,20 +399,44 @@ class HTG_GitHub_Updater {
 	 */
 	public function maybe_force_check() {
 		if ( isset( $_GET['htg_force_update_check'] ) && current_user_can( 'update_themes' ) ) {
+			// Clear all caches
 			$this->clear_cache();
-			$this->get_github_release( true );
 			
-			// Redirect to remove query param
-			$redirect = remove_query_arg( 'htg_force_update_check' );
-			$redirect = add_query_arg( 'htg_cache_cleared', '1', $redirect );
+			// Get fresh release data
+			$release = $this->get_github_release( true );
+			
+			// Force WordPress to rebuild update data
+			wp_clean_themes_cache( true );
+			
+			// Store release info in a temporary option for display
+			if ( $release ) {
+				update_option( 'htg_last_update_check', array(
+					'version' => $release['version'],
+					'current' => $this->current_version,
+					'time'    => current_time( 'mysql' ),
+				), false );
+			}
+			
+			// Redirect to update-core.php to show updates
+			$redirect = admin_url( 'update-core.php?htg_checked=1' );
 			wp_safe_redirect( $redirect );
 			exit;
 		}
 		
 		// Show notice after cache clear
-		if ( isset( $_GET['htg_cache_cleared'] ) ) {
+		if ( isset( $_GET['htg_checked'] ) ) {
 			add_action( 'admin_notices', function() {
-				echo '<div class="notice notice-success is-dismissible"><p><strong>H&T AdTech Pro:</strong> Update cache cleared. Refresh the page to see the latest version.</p></div>';
+				$check_data = get_option( 'htg_last_update_check' );
+				if ( $check_data ) {
+					$has_update = version_compare( $check_data['version'], $check_data['current'], '>' );
+					if ( $has_update ) {
+						echo '<div class="notice notice-warning"><p><strong>H&T AdTech Pro:</strong> Update available! Version <strong>' . esc_html( $check_data['version'] ) . '</strong> (you have ' . esc_html( $check_data['current'] ) . '). Scroll down to update.</p></div>';
+					} else {
+						echo '<div class="notice notice-success is-dismissible"><p><strong>H&T AdTech Pro:</strong> You are running the latest version (' . esc_html( $check_data['current'] ) . ').</p></div>';
+					}
+				} else {
+					echo '<div class="notice notice-info is-dismissible"><p><strong>H&T AdTech Pro:</strong> Update check complete. Check below for available updates.</p></div>';
+				}
 			} );
 		}
 	}

@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.4.4
+Stable tag: 2.4.5
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,12 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.4.5 =
+* Fix: Force update check now properly clears all WordPress theme caches
+* Fix: Update check redirects to update-core.php to show available updates
+* New: Shows version comparison after checking (current vs available)
+* Improved: Uses wp_clean_themes_cache() for reliable cache clearing
 
 = 2.4.4 =
 * Major: Complete rewrite of responsive table CSS for better mobile experience
