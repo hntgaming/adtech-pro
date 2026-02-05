@@ -36,7 +36,7 @@ class HTG_GitHub_Updater {
 	 *
 	 * @var string
 	 */
-	private $theme_slug = 'hitmag';
+	private $theme_slug = 'adtech-pro';
 
 	/**
 	 * Theme display name
@@ -50,7 +50,7 @@ class HTG_GitHub_Updater {
 	 *
 	 * @var string
 	 */
-	private $current_version = '2.3.2';
+	private $current_version = '2.4.0';
 
 	/**
 	 * GitHub API URL
