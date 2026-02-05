@@ -589,6 +589,23 @@ function HTG_render_changelog_tab() {
 		<div class="HTG-changelog-list">
 			<div class="HTG-changelog-item">
 				<div class="HTG-changelog-version">
+					<span class="version">2.5.2</span>
+					<span class="date"><?php esc_html_e( 'January 2026', 'adtech-pro' ); ?></span>
+				</div>
+				<div class="HTG-changelog-content">
+					<h4><?php esc_html_e( 'Comprehensive CSS Audit & Uniform Styling', 'adtech-pro' ); ?></h4>
+					<ul>
+						<li><?php esc_html_e( 'Fixed light backgrounds (#ECF0F1) in navigation and tab widgets', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed invisible borders (#1a1f36) to visible teal accent', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed WooCommerce prices, labels, and links for dark theme', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed light borders to dark theme compatible colors', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Fixed tab widget text and thumb swiper background', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Consistent color palette site-wide (22+ issues resolved)', 'adtech-pro' ); ?></li>
+					</ul>
+				</div>
+			</div>
+			<div class="HTG-changelog-item">
+				<div class="HTG-changelog-version">
 					<span class="version">2.5.1</span>
 					<span class="date"><?php esc_html_e( 'January 2026', 'adtech-pro' ); ?></span>
 				</div>

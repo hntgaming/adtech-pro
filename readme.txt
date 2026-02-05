@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.5.1
+Stable tag: 2.5.2
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,18 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.5.2 =
+* Fix: Top navigation dropdown had light background (#ECF0F1) - now uses dark #1a1a1a
+* Fix: Tab widget had light background and dark text - now properly styled for dark theme
+* Fix: Invisible borders using #1a1f36 changed to visible #00d4aa accent (widget titles, page titles, blockquotes)
+* Fix: Light borders (#ededed, #dddddd, #c0c0c0) changed to dark theme compatible colors
+* Fix: WooCommerce prices, labels, and links now visible on dark background
+* Fix: WooCommerce review avatars, select2 dropdowns, disabled buttons styled for dark theme
+* Fix: Thumb swiper background changed from light #ddd to dark #1a1a1a
+* Fix: Page links visited color changed from invisible #000000 to visible #e0e0e0
+* Improved: Comprehensive CSS audit ensuring uniform styling site-wide
+* Improved: Consistent color palette throughout (103 accent uses, 29 background uses)
 
 = 2.5.1 =
 * Fix: Post navigation hover styles - Changed from span:hover to a:hover for proper anchor behavior
