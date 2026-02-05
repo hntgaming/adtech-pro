@@ -611,7 +611,6 @@ function HTG_dynamic_css() {
 	.HTG-dark-mode-toggle,
 	.nav-links .current,
 	.page-numbers:hover,
-	.hm-share-facebook,
 	.comment-reply-link:hover {
 		background-color: {$primary_color};
 	}

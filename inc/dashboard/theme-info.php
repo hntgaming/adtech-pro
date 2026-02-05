@@ -267,8 +267,8 @@ function HTG_render_welcome_tab() {
 				<div class="HTG-start-icon">
 					<span class="dashicons dashicons-share"></span>
 				</div>
-				<h3><?php esc_html_e( 'Social & Newsletter', 'adtech-pro' ); ?></h3>
-				<p><?php esc_html_e( 'Add social share buttons to posts and collect email subscribers.', 'adtech-pro' ); ?></p>
+				<h3><?php esc_html_e( 'Newsletter', 'adtech-pro' ); ?></h3>
+				<p><?php esc_html_e( 'Collect email subscribers with beautiful newsletter forms.', 'adtech-pro' ); ?></p>
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=HTG-engagement-settings' ) ); ?>" class="button">
 					<?php esc_html_e( 'Enable', 'adtech-pro' ); ?>
 				</a>
@@ -444,7 +444,6 @@ function HTG_render_features_tab() {
 				<h3><?php esc_html_e( 'Reader Engagement', 'adtech-pro' ); ?></h3>
 				<ul>
 					<li><?php esc_html_e( 'Email newsletter signup form', 'adtech-pro' ); ?></li>
-					<li><?php esc_html_e( 'Social share buttons on posts', 'adtech-pro' ); ?></li>
 					<li><?php esc_html_e( 'Reading progress indicator', 'adtech-pro' ); ?></li>
 					<li><?php esc_html_e( 'Estimated reading time', 'adtech-pro' ); ?></li>
 					<li><?php esc_html_e( 'Related posts section', 'adtech-pro' ); ?></li>
@@ -683,7 +682,7 @@ function HTG_render_changelog_tab() {
 					<ul>
 						<li><?php esc_html_e( 'Simple Ad Management system', 'adtech-pro' ); ?></li>
 						<li><?php esc_html_e( 'Legal Pages generator', 'adtech-pro' ); ?></li>
-						<li><?php esc_html_e( 'Engagement tools (newsletter, social share)', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Engagement tools (newsletter, reading progress)', 'adtech-pro' ); ?></li>
 						<li><?php esc_html_e( 'Magazine homepage template', 'adtech-pro' ); ?></li>
 						<li><?php esc_html_e( 'Dark mode optimization', 'adtech-pro' ); ?></li>
 					</ul>

@@ -19,7 +19,7 @@ Key Features:
 - 8 ad placement areas (header, sidebar, in-content, footer)
 - Dark theme design with customizable colors
 - Grid and list post layouts
-- Newsletter signup and social share buttons
+- Newsletter signup integration
 - Legal page templates (Privacy, Terms, Disclaimer)
 - Mobile-responsive design
 - SEO-friendly markup
@@ -3563,67 +3563,6 @@ html {
   margin-bottom: 2.3em;
 }
 
-.entry-footer .HTG-social-sharing {
-  margin-top: 1.5em;
-}
-
-.hm-share {
-  margin-right: 10px;
-  padding: 7px 13px;
-  color: #fff;
-  border-radius: 3px;
-  line-height: 15px;
-  display: inline-block;
-  font-size: 11px;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-.hm-share:visited {
-  color: #fff;
-}
-.hm-share:hover {
-  color: #fff;
-  opacity: 0.8;
-}
-
-.hm-share-facebook {
-  background: #3b5998;
-}
-
-.hm-share-facebook:before {
-  content: "\f39e";
-  font-family: "Font Awesome 6 Brands";
-  font-weight: 400;
-  display: inline-block;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  font-size: 11px;
-  margin: 0;
-}
-
-.hm-share-twitter {
-  background: #33ccff;
-}
-
-.hm-share-twitter:before {
-  content: "\e61b";
-  font-family: "Font Awesome 6 Brands";
-  font-weight: 400;
-  display: inline-block;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  font-size: 11px;
-  margin: 0;
-}
-
-.hm-share-facebook:before,
-.hm-share-twitter:before,
-.hm-share-googleplus:before {
-  line-height: 15px;
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
-  margin-right: 0.6em;
-  padding-right: 0.6em;
-}
 
 /**
  * Block Styles 

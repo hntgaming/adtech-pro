@@ -357,20 +357,3 @@ function HTG_reading_time() {
 	
 	return $reading_time;
 }
-
-/**
- * Social share counts (simplified)
- */
-function HTG_get_share_count( $post_id ) {
-	// In production, integrate with actual social APIs
-	$count_key = 'HTG_social_shares';
-	$count = get_post_meta( $post_id, $count_key, true );
-	
-	if ( empty( $count ) ) {
-		$count = rand( 50, 500 ); // Mock data for demo
-		update_post_meta( $post_id, $count_key, $count );
-	}
-	
-	return $count;
-}
-

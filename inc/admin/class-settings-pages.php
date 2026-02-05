@@ -535,11 +535,6 @@ class HTG_Settings_Pages {
 			update_option( 'HTG_newsletter_enable', isset( $_POST['HTG_newsletter_enable'] ) ? 1 : 0 );
 			update_option( 'HTG_newsletter_title', sanitize_text_field( $_POST['HTG_newsletter_title'] ?? '' ) );
 			update_option( 'HTG_newsletter_description', sanitize_textarea_field( $_POST['HTG_newsletter_description'] ?? '' ) );
-			update_option( 'HTG_social_share_enable', isset( $_POST['HTG_social_share_enable'] ) ? 1 : 0 );
-			update_option( 'HTG_social_share_facebook', isset( $_POST['HTG_social_share_facebook'] ) ? 1 : 0 );
-			update_option( 'HTG_social_share_twitter', isset( $_POST['HTG_social_share_twitter'] ) ? 1 : 0 );
-			update_option( 'HTG_social_share_linkedin', isset( $_POST['HTG_social_share_linkedin'] ) ? 1 : 0 );
-			update_option( 'HTG_social_share_whatsapp', isset( $_POST['HTG_social_share_whatsapp'] ) ? 1 : 0 );
 			update_option( 'HTG_reading_time_enable', isset( $_POST['HTG_reading_time_enable'] ) ? 1 : 0 );
 			update_option( 'HTG_progress_bar_enable', isset( $_POST['HTG_progress_bar_enable'] ) ? 1 : 0 );
 			update_option( 'HTG_progress_bar_color', sanitize_hex_color( $_POST['HTG_progress_bar_color'] ?? '#00d4aa' ) );
@@ -551,7 +546,6 @@ class HTG_Settings_Pages {
 		$newsletter_enable = get_option( 'HTG_newsletter_enable', 1 );
 		$newsletter_title = get_option( 'HTG_newsletter_title', 'Subscribe to Our Newsletter' );
 		$newsletter_description = get_option( 'HTG_newsletter_description', 'Get the latest updates delivered to your inbox.' );
-		$social_share_enable = get_option( 'HTG_social_share_enable', 1 );
 		$reading_time_enable = get_option( 'HTG_reading_time_enable', 1 );
 		$progress_bar_enable = get_option( 'HTG_progress_bar_enable', 1 );
 		$progress_bar_color = get_option( 'HTG_progress_bar_color', '#00d4aa' );
@@ -562,7 +556,7 @@ class HTG_Settings_Pages {
 					<span class="dashicons dashicons-awards"></span>
 					<?php esc_html_e( 'Engagement Settings', 'adtech-pro' ); ?>
 				</h1>
-				<p class="HTG-admin-tagline"><?php esc_html_e( 'Configure reader engagement features and social tools', 'adtech-pro' ); ?></p>
+				<p class="HTG-admin-tagline"><?php esc_html_e( 'Configure reader engagement features', 'adtech-pro' ); ?></p>
 			</div>
 			
 			<div class="HTG-admin-row">
@@ -572,7 +566,6 @@ class HTG_Settings_Pages {
 					<div class="HTG-settings-tabs" style="margin: 20px 40px;">
 						<h2 class="nav-tab-wrapper">
 							<a href="#newsletter" class="nav-tab nav-tab-active"><?php esc_html_e( 'Newsletter', 'adtech-pro' ); ?></a>
-							<a href="#social-share" class="nav-tab"><?php esc_html_e( 'Social Share', 'adtech-pro' ); ?></a>
 							<a href="#reading" class="nav-tab"><?php esc_html_e( 'Reading Experience', 'adtech-pro' ); ?></a>
 						</h2>
 						
@@ -604,42 +597,6 @@ class HTG_Settings_Pages {
 							</table>
 						</div>
 						
-						<!-- Social Share Tab -->
-						<div id="social-share" class="HTG-tab-content" style="display: none;">
-							<table class="form-table">
-								<tr>
-									<th scope="row"><?php esc_html_e( 'Enable Social Share', 'adtech-pro' ); ?></th>
-									<td>
-										<label class="HTG-toggle">
-											<input type="checkbox" name="HTG_social_share_enable" value="1" <?php checked( $social_share_enable, 1 ); ?>>
-											<span class="HTG-toggle-slider"></span>
-										</label>
-										<p class="description"><?php esc_html_e( 'Show social share buttons on posts.', 'adtech-pro' ); ?></p>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row"><?php esc_html_e( 'Networks', 'adtech-pro' ); ?></th>
-									<td>
-										<label style="display: block; margin-bottom: 10px;">
-											<input type="checkbox" name="HTG_social_share_facebook" value="1" <?php checked( get_option( 'HTG_social_share_facebook', 1 ), 1 ); ?>>
-											<?php esc_html_e( 'Facebook', 'adtech-pro' ); ?>
-										</label>
-										<label style="display: block; margin-bottom: 10px;">
-											<input type="checkbox" name="HTG_social_share_twitter" value="1" <?php checked( get_option( 'HTG_social_share_twitter', 1 ), 1 ); ?>>
-											<?php esc_html_e( 'X (Twitter)', 'adtech-pro' ); ?>
-										</label>
-										<label style="display: block; margin-bottom: 10px;">
-											<input type="checkbox" name="HTG_social_share_linkedin" value="1" <?php checked( get_option( 'HTG_social_share_linkedin', 1 ), 1 ); ?>>
-											<?php esc_html_e( 'LinkedIn', 'adtech-pro' ); ?>
-										</label>
-										<label style="display: block;">
-											<input type="checkbox" name="HTG_social_share_whatsapp" value="1" <?php checked( get_option( 'HTG_social_share_whatsapp', 1 ), 1 ); ?>>
-											<?php esc_html_e( 'WhatsApp', 'adtech-pro' ); ?>
-										</label>
-									</td>
-								</tr>
-							</table>
-						</div>
 						
 						<!-- Reading Experience Tab -->
 						<div id="reading" class="HTG-tab-content" style="display: none;">

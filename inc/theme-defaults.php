@@ -98,7 +98,6 @@ function HTG_get_theme_defaults() {
 		'HTG_post_show_related'       => 1,             // Related posts enabled
 		'HTG_post_related_count'      => 6,             // 6 related posts
 		'HTG_post_show_tags'          => 1,             // Show tags
-		'HTG_post_social_share'       => 1,             // Social share enabled
 		'HTG_post_reading_progress'   => 1,             // Progress bar enabled
 		
 		// ===========================================
@@ -120,11 +119,6 @@ function HTG_get_theme_defaults() {
 		'HTG_newsletter_enable'       => 1,             // Newsletter enabled
 		'HTG_newsletter_title'        => 'Subscribe to Our Newsletter',
 		'HTG_newsletter_description'  => 'Get the latest updates delivered to your inbox.',
-		'HTG_social_share_enable'     => 1,             // Social share enabled
-		'HTG_social_share_facebook'   => 1,
-		'HTG_social_share_twitter'    => 1,
-		'HTG_social_share_linkedin'   => 1,
-		'HTG_social_share_whatsapp'   => 1,
 		'HTG_reading_time_enable'     => 1,             // Reading time enabled
 		'HTG_progress_bar_enable'     => 1,             // Progress bar enabled
 		'HTG_progress_bar_color'      => '#00d4aa',     // Teal progress bar

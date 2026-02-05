@@ -430,21 +430,6 @@ li.hm-tab {
 .hm-rel-post:nth-of-type(3n) {
   margin-left: 0;
 }
-.hm-share {
-  margin-left: 10px;
-  margin-right: 0;
-  text-align: right;
-}
-.hm-share-facebook:before,
-.hm-share-twitter:before,
-.hm-share-googleplus:before {
-  border-left: 1px solid rgba(255, 255, 255, 0.3);
-  border-right: none;
-  margin-left: 0.6em;
-  margin-right: 0;
-  padding-left: 0.6em;
-  padding-right: 0;
-}
 .comment-list article,
 .comment-list .pingback,
 .comment-list .trackback {

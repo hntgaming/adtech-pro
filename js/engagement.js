@@ -1,6 +1,6 @@
 /**
  * Engagement Features JavaScript
- * Quiz, Accordion, Newsletter, Progress Bar, Social Share
+ * Quiz, Accordion, Newsletter, Progress Bar
  *
  * @package HTG
  * @since 2.1.0
@@ -252,85 +252,6 @@
 	}
 
 	/* ===========================================
-	   Sticky Social Share
-	   =========================================== */
-
-	function initStickyShare() {
-		if (!document.body.classList.contains('single-post') && !document.body.classList.contains('single')) {
-			return;
-		}
-
-		// Create sticky share bar
-		const shareBar = document.createElement('div');
-		shareBar.className = 'HTG-sticky-share';
-		
-		const postTitle = encodeURIComponent(document.title);
-		const postUrl = encodeURIComponent(window.location.href);
-		
-		const shareButtons = [
-			{
-				network: 'facebook',
-				url: `https://www.facebook.com/sharer/sharer.php?u=${postUrl}`,
-				icon: 'f',
-				label: 'Share on Facebook'
-			},
-			{
-				network: 'twitter',
-				url: `https://twitter.com/intent/tweet?url=${postUrl}&text=${postTitle}`,
-				icon: '𝕏',
-				label: 'Share on Twitter'
-			},
-			{
-				network: 'linkedin',
-				url: `https://www.linkedin.com/shareArticle?mini=true&url=${postUrl}&title=${postTitle}`,
-				icon: 'in',
-				label: 'Share on LinkedIn'
-			},
-			{
-				network: 'whatsapp',
-				url: `https://wa.me/?text=${postTitle}%20${postUrl}`,
-				icon: 'W',
-				label: 'Share on WhatsApp'
-			}
-		];
-
-		shareButtons.forEach(function(button) {
-			const link = document.createElement('a');
-			link.href = button.url;
-			link.className = 'HTG-share-btn-sticky HTG-share-' + button.network;
-			link.target = '_blank';
-			link.rel = 'noopener noreferrer';
-			link.setAttribute('aria-label', button.label);
-			link.textContent = button.icon;
-			
-			link.addEventListener('click', function(e) {
-				e.preventDefault();
-				window.open(this.href, 'share-dialog', 'width=600,height=400');
-			});
-			
-			shareBar.appendChild(link);
-		});
-
-		document.body.appendChild(shareBar);
-
-		// Show/hide on scroll
-		let lastScrollTop = 0;
-		window.addEventListener('scroll', function() {
-			const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-			
-			if (scrollTop > 300) {
-				shareBar.style.opacity = '1';
-				shareBar.style.pointerEvents = 'auto';
-			} else {
-				shareBar.style.opacity = '0';
-				shareBar.style.pointerEvents = 'none';
-			}
-			
-			lastScrollTop = scrollTop;
-		});
-	}
-
-	/* ===========================================
 	   AJAX Post Loading (innovation4world inspired)
 	   =========================================== */
 
@@ -526,7 +447,6 @@
 		initAccordionSystem();
 		initNewsletterSystem();
 		initProgressBar();
-		initStickyShare();
 		initAjaxPosts();
 
 	// Add smooth scroll for all links
@@ -560,7 +480,6 @@
 		initAccordionSystem: initAccordionSystem,
 		initNewsletterSystem: initNewsletterSystem,
 		initProgressBar: initProgressBar,
-		initStickyShare: initStickyShare,
 		initAjaxPosts: initAjaxPosts
 	};
 

@@ -13,7 +13,7 @@ H&T AdTech Pro is distributed under the terms of the GNU GPL
 
 == Description ==
 
-H&T AdTech Pro is an enterprise-grade WordPress theme designed for high-traffic publishers who demand excellence in monetization, performance, and user experience. Built for AdSense, Google Ad Manager, and programmatic advertising with 22 strategic ad slots, real-time analytics dashboard, magazine layouts, interactive engagement tools, and Core Web Vitals optimization (94/100 score). Perfect for publishers like BBC, CNN, and TechCrunch. Features include: policy-compliant ad placements, AJAX post loading, one-click legal pages generator, enhanced author box, reading progress bar, sticky social share, dark mode, and professional analytics. Learn more at https://hntgaming.me
+H&T AdTech Pro is an enterprise-grade WordPress theme designed for high-traffic publishers who demand excellence in monetization, performance, and user experience. Built for AdSense, Google Ad Manager, and programmatic advertising with 22 strategic ad slots, real-time analytics dashboard, magazine layouts, interactive engagement tools, and Core Web Vitals optimization (94/100 score). Perfect for publishers like BBC, CNN, and TechCrunch. Features include: policy-compliant ad placements, AJAX post loading, one-click legal pages generator, enhanced author box, reading progress bar, dark mode, and professional analytics. Learn more at https://hntgaming.me
 
 == Installation ==
 
