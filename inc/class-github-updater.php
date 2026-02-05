@@ -50,7 +50,7 @@ class HTG_GitHub_Updater {
 	 *
 	 * @var string
 	 */
-	private $current_version = '2.3.1';
+	private $current_version = '2.3.2';
 
 	/**
 	 * GitHub API URL
@@ -215,10 +215,12 @@ class HTG_GitHub_Updater {
 		// Compare versions
 		if ( version_compare( $release['version'], $this->current_version, '>' ) ) {
 			$transient->response[ $this->theme_slug ] = array(
-				'theme'       => $this->theme_slug,
-				'new_version' => $release['version'],
-				'url'         => $release['html_url'],
-				'package'     => $release['download_url'],
+				'theme'        => $this->theme_slug,
+				'new_version'  => $release['version'],
+				'url'          => $release['html_url'],
+				'package'      => $release['download_url'],
+				'requires'     => '6.0',
+				'requires_php' => '7.4',
 			);
 		}
 
@@ -248,23 +250,29 @@ class HTG_GitHub_Updater {
 			return $result;
 		}
 
-		$theme = wp_get_theme( $this->theme_slug );
+		$theme = wp_get_theme( get_template() );
+		$screenshot_url = get_template_directory_uri() . '/screenshot.png';
 
 		return (object) array(
-			'name'           => $theme->get( 'Name' ),
+			'name'           => $this->theme_name,
 			'slug'           => $this->theme_slug,
 			'version'        => $release['version'],
-			'author'         => $theme->get( 'Author' ),
-			'author_profile' => $theme->get( 'AuthorURI' ),
-			'requires'       => $theme->get( 'RequiresWP' ),
-			'requires_php'   => $theme->get( 'RequiresPHP' ),
-			'homepage'       => $theme->get( 'ThemeURI' ),
+			'author'         => '<a href="https://hntgaming.me">H&T GAMING</a>',
+			'author_profile' => 'https://hntgaming.me',
+			'requires'       => '6.0',
+			'requires_php'   => '7.4',
+			'homepage'       => 'https://hntgaming.me',
+			'screenshot_url' => $screenshot_url,
 			'sections'       => array(
-				'description' => $theme->get( 'Description' ),
+				'description' => $theme->exists() ? $theme->get( 'Description' ) : 'A modern dark-themed magazine WordPress theme optimized for ad monetization.',
 				'changelog'   => $this->format_changelog( $release['body'] ),
 			),
 			'download_link'  => $release['download_url'],
 			'last_updated'   => $release['published_at'],
+			'banners'        => array(
+				'low'  => $screenshot_url,
+				'high' => $screenshot_url,
+			),
 		);
 	}
 
