@@ -32,18 +32,25 @@ class HTG_GitHub_Updater {
 	private $github_repo = 'adtech-pro';
 
 	/**
-	 * Theme slug
+	 * Theme slug (folder name)
 	 *
 	 * @var string
 	 */
 	private $theme_slug = 'hitmag';
 
 	/**
+	 * Theme display name
+	 *
+	 * @var string
+	 */
+	private $theme_name = 'H&T AdTech Pro';
+
+	/**
 	 * Current theme version
 	 *
 	 * @var string
 	 */
-	private $current_version;
+	private $current_version = '2.3.1';
 
 	/**
 	 * GitHub API URL
@@ -77,8 +84,13 @@ class HTG_GitHub_Updater {
 	 * Constructor
 	 */
 	public function __construct() {
-		$theme = wp_get_theme( $this->theme_slug );
-		$this->current_version = $theme->get( 'Version' );
+		// Get version from style.css
+		$theme = wp_get_theme( get_template() );
+		if ( $theme->exists() ) {
+			$this->current_version = $theme->get( 'Version' );
+			$this->theme_name = $theme->get( 'Name' );
+		}
+		
 		$this->api_url = "https://api.github.com/repos/{$this->github_username}/{$this->github_repo}/releases/latest";
 		
 		// Get access token from options (for private repos)
@@ -319,12 +331,11 @@ class HTG_GitHub_Updater {
 		}
 
 		$update_url = admin_url( 'update-core.php' );
-		$theme_name = wp_get_theme( $this->theme_slug )->get( 'Name' );
 
 		?>
 		<div class="notice notice-warning is-dismissible htg-update-notice">
 			<p>
-				<strong><?php echo esc_html( $theme_name ); ?></strong>: 
+				<strong><?php echo esc_html( $this->theme_name ); ?></strong>: 
 				<?php
 				printf(
 					/* translators: 1: New version number, 2: Current version number */
