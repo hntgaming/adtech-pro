@@ -588,6 +588,21 @@ function HTG_render_changelog_tab() {
 		<div class="HTG-changelog-list">
 			<div class="HTG-changelog-item">
 				<div class="HTG-changelog-version">
+					<span class="version">2.5.3</span>
+					<span class="date"><?php esc_html_e( 'January 2026', 'adtech-pro' ); ?></span>
+				</div>
+				<div class="HTG-changelog-content">
+					<h4><?php esc_html_e( 'Social Share Feature Removed', 'adtech-pro' ); ?></h4>
+					<ul>
+						<li><?php esc_html_e( 'Removed social share feature entirely (CSS, JS, admin settings)', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Removed sticky social share sidebar on single posts', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Cleaned up 298 lines of dead code', 'adtech-pro' ); ?></li>
+						<li><?php esc_html_e( 'Engagement page now focuses on Newsletter and Reading Experience', 'adtech-pro' ); ?></li>
+					</ul>
+				</div>
+			</div>
+			<div class="HTG-changelog-item">
+				<div class="HTG-changelog-version">
 					<span class="version">2.5.2</span>
 					<span class="date"><?php esc_html_e( 'January 2026', 'adtech-pro' ); ?></span>
 				</div>

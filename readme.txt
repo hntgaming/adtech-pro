@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,13 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.5.3 =
+* Removed: Social share feature entirely (CSS, JS, admin settings, defaults)
+* Removed: Sticky social share sidebar on single posts
+* Removed: Social share buttons (Facebook, Twitter, LinkedIn, WhatsApp)
+* Updated: Engagement admin page now focuses on Newsletter and Reading Experience
+* Cleaned: 298 lines of dead code removed
 
 = 2.5.2 =
 * Fix: Top navigation dropdown had light background (#ECF0F1) - now uses dark #1a1a1a

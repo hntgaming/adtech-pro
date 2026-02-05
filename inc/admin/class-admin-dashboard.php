@@ -16,7 +16,7 @@ class HTG_Admin_Dashboard {
 	/**
 	 * Theme version
 	 */
-	const VERSION = '2.5.2';
+	const VERSION = '2.5.3';
 
 	/**
 	 * Initialize the admin dashboard
