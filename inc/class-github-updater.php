@@ -50,7 +50,7 @@ class HTG_GitHub_Updater {
 	 *
 	 * @var string
 	 */
-	private $current_version = '2.4.3';
+	private $current_version = '2.4.4';
 
 	/**
 	 * GitHub API URL

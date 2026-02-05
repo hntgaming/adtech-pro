@@ -4,7 +4,7 @@ Theme URI: https://hntgaming.me/themes/adtech-pro
 Author: H&T GAMING
 Author URI: https://hntgaming.me/
 Description: A modern dark-themed magazine theme for bloggers, news sites, and content publishers. Features a magazine-style homepage with featured slider and category sections, built-in ad placement areas for AdSense or any ad network, and tools to help grow your audience. Includes newsletter signup, social sharing, reading progress bar, and a legal page generator for Privacy Policy and Terms pages.
-Version: 2.4.3
+Version: 2.4.4
 Tested up to: 6.8
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -626,133 +626,43 @@ td {
 
 /* ========================================
    RESPONSIVE TABLE STYLES
-   Updated: January 2026
-   Fixes table overflow on mobile devices
+   Updated: February 2026 v2.4.4
+   Complete mobile table fix
    ======================================== */
 
-/* Wrapper for horizontal scroll on mobile */
+/* Base table styles */
 .entry-content table,
 .wp-block-table table,
 figure.wp-block-table table {
-  display: block;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  max-width: 100%;
-}
-
-/* Table wrapper for Gutenberg blocks */
-.wp-block-table {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 0 0 1.5em;
-}
-
-.wp-block-table table {
+  width: 100%;
+  border-collapse: collapse;
   margin: 0;
 }
 
-/* Responsive table styles */
-@media screen and (max-width: 782px) {
-  table {
-    display: block;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    white-space: nowrap;
-  }
-  
-  table th,
-  table td {
-    padding: 8px 10px;
-    font-size: 13px;
-    min-width: 100px;
-  }
-  
-  /* Prevent text from wrapping in cells */
-  table td {
-    white-space: normal;
-    word-wrap: break-word;
-  }
+/* Scrollable wrapper for ALL tables */
+.entry-content figure.wp-block-table,
+.entry-content .wp-block-table,
+figure.wp-block-table,
+.wp-block-table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 0 1.5em;
+  position: relative;
 }
 
-/* Extra small screens - card layout for tables */
-@media screen and (max-width: 600px) {
-  /* Allow horizontal scroll with visual indicator */
-  .entry-content table,
-  .wp-block-table {
-    position: relative;
-  }
-  
-  .entry-content table::after,
-  .wp-block-table::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 30px;
-    background: linear-gradient(to right, transparent, rgba(10, 10, 10, 0.8));
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.3s;
-  }
-  
-  table th,
-  table td {
-    padding: 6px 8px;
-    font-size: 12px;
-    min-width: 80px;
-  }
-  
-  /* Make first column sticky for reference */
-  table th:first-child,
-  table td:first-child {
-    position: sticky;
-    left: 0;
-    background: #1a1a1a;
-    z-index: 1;
-    border-right: 2px solid #00d4aa;
-  }
-  
-  table td:first-child {
-    background: #0f0f0f;
-    font-weight: 600;
-  }
+/* Table inside wrapper - keep as table display */
+figure.wp-block-table > table,
+.wp-block-table > table,
+.entry-content figure.wp-block-table > table {
+  display: table;
+  width: max-content;
+  min-width: 100%;
 }
 
-/* Scrollbar styling for tables */
-.entry-content table::-webkit-scrollbar,
-.wp-block-table::-webkit-scrollbar {
-  height: 8px;
-}
-
-.entry-content table::-webkit-scrollbar-track,
-.wp-block-table::-webkit-scrollbar-track {
-  background: #1a1a1a;
-  border-radius: 4px;
-}
-
-.entry-content table::-webkit-scrollbar-thumb,
-.wp-block-table::-webkit-scrollbar-thumb {
-  background: #00d4aa;
-  border-radius: 4px;
-}
-
-.entry-content table::-webkit-scrollbar-thumb:hover,
-.wp-block-table::-webkit-scrollbar-thumb:hover {
-  background: #00b894;
-}
-
-/* Table caption styling */
-table caption,
-.wp-block-table figcaption {
-  font-size: 14px;
-  color: #a0a8c0;
-  text-align: center;
-  padding: 10px;
-  font-style: italic;
-}
-
-/* Striped table rows for better readability */
+/* Striped table rows */
 .entry-content table tbody tr:nth-child(odd),
 .wp-block-table table tbody tr:nth-child(odd) {
   background: #0f0f0f;
@@ -763,38 +673,231 @@ table caption,
   background: #151515;
 }
 
-/* Hover effect on table rows */
+/* Hover effect */
 .entry-content table tbody tr:hover,
 .wp-block-table table tbody tr:hover {
-  background: #1a1f36;
+  background: #1a1f36 !important;
 }
 
-/* Fix for figure element wrapping tables */
-figure.wp-block-table {
-  margin: 0 0 1.5em;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+/* Table caption */
+table caption,
+.wp-block-table figcaption {
+  font-size: 14px;
+  color: #a0a8c0;
+  text-align: center;
+  padding: 10px;
+  font-style: italic;
 }
 
-/* Ensure table displays correctly inside figure */
-figure.wp-block-table > table {
-  display: table;
-  width: 100%;
-  min-width: 600px;
+/* Custom scrollbar */
+.wp-block-table::-webkit-scrollbar,
+figure.wp-block-table::-webkit-scrollbar {
+  height: 10px;
 }
 
-/* Mobile scroll hint indicator */
-@media screen and (max-width: 600px) {
+.wp-block-table::-webkit-scrollbar-track,
+figure.wp-block-table::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 5px;
+}
+
+.wp-block-table::-webkit-scrollbar-thumb,
+figure.wp-block-table::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00d4aa, #00b894);
+  border-radius: 5px;
+  border: 2px solid #1a1a1a;
+}
+
+/* ===== TABLET RESPONSIVE (max-width: 992px) ===== */
+@media screen and (max-width: 992px) {
+  .entry-content table th,
+  .entry-content table td,
+  .wp-block-table table th,
+  .wp-block-table table td {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
+/* ===== MOBILE RESPONSIVE (max-width: 768px) ===== */
+@media screen and (max-width: 768px) {
+  /* Scroll hint banner */
+  figure.wp-block-table::before,
   .wp-block-table::before {
-    content: '← Scroll →';
+    content: '👆 Swipe left/right to see full table';
     display: block;
     text-align: center;
+    font-size: 12px;
+    color: #ffffff;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #1a1f36, #00d4aa);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  
+  /* Table cells */
+  .entry-content table th,
+  .entry-content table td,
+  .wp-block-table table th,
+  .wp-block-table table td {
+    padding: 8px 10px;
+    font-size: 13px;
+    min-width: 120px;
+    white-space: nowrap;
+  }
+  
+  /* Allow text wrap in table cells for readability */
+  .entry-content table td,
+  .wp-block-table table td {
+    white-space: normal;
+    min-width: 100px;
+    max-width: 200px;
+  }
+  
+  /* First column - sticky */
+  .entry-content table th:first-child,
+  .entry-content table td:first-child,
+  .wp-block-table table th:first-child,
+  .wp-block-table table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: #1a1a1a !important;
+    font-weight: 600;
+    min-width: 100px;
+    max-width: 140px;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.4);
+  }
+  
+  .entry-content table td:first-child,
+  .wp-block-table table td:first-child {
+    background: #0f0f0f !important;
+  }
+  
+  /* Fade overlay on right side */
+  figure.wp-block-table::after,
+  .wp-block-table::after {
+    content: '';
+    position: absolute;
+    top: 40px;
+    right: 0;
+    bottom: 10px;
+    width: 40px;
+    background: linear-gradient(to right, transparent, rgba(10, 10, 10, 0.9));
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+/* ===== SMALL MOBILE (max-width: 480px) ===== */
+@media screen and (max-width: 480px) {
+  /* Smaller scroll hint */
+  figure.wp-block-table::before,
+  .wp-block-table::before {
+    content: '← Scroll table →';
     font-size: 11px;
-    color: #00d4aa;
-    padding: 5px;
-    background: #1a1a1a;
-    border-radius: 4px 4px 0 0;
-    margin-bottom: -1px;
+    padding: 6px 10px;
+  }
+  
+  /* Smaller cells */
+  .entry-content table th,
+  .entry-content table td,
+  .wp-block-table table th,
+  .wp-block-table table td {
+    padding: 6px 8px;
+    font-size: 11px;
+    min-width: 80px;
+  }
+  
+  /* Smaller sticky column */
+  .entry-content table th:first-child,
+  .entry-content table td:first-child,
+  .wp-block-table table th:first-child,
+  .wp-block-table table td:first-child {
+    min-width: 80px;
+    max-width: 100px;
+    font-size: 10px;
+  }
+  
+  /* Adjust header text */
+  .entry-content table th,
+  .wp-block-table table th {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+}
+
+/* ===== EXTRA SMALL (max-width: 360px) ===== */
+@media screen and (max-width: 360px) {
+  figure.wp-block-table::before,
+  .wp-block-table::before {
+    content: '← Scroll →';
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+  
+  .entry-content table th,
+  .entry-content table td,
+  .wp-block-table table th,
+  .wp-block-table table td {
+    padding: 5px 6px;
+    font-size: 10px;
+    min-width: 70px;
+  }
+  
+  .entry-content table th:first-child,
+  .entry-content table td:first-child,
+  .wp-block-table table th:first-child,
+  .wp-block-table table td:first-child {
+    min-width: 60px;
+    max-width: 80px;
+  }
+}
+
+/* ===== NATIVE HTML TABLES (not in block wrapper) ===== */
+.entry-content > table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .entry-content > table {
+    margin: 0 -15px 1.5em -15px;
+    padding: 0 15px;
+    width: calc(100% + 30px);
+  }
+}
+
+/* ===== MARKDOWN/CLASSIC EDITOR TABLES ===== */
+.entry-content > table:not(.wp-block-table table) {
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .entry-content > table:not(.wp-block-table table) {
+    display: block;
+    overflow-x: auto;
+    border-radius: 0;
+  }
+  
+  .entry-content > table:not(.wp-block-table table) th:first-child,
+  .entry-content > table:not(.wp-block-table table) td:first-child {
+    position: sticky;
+    left: 0;
+    background: #1a1a1a !important;
+    z-index: 2;
+    box-shadow: 3px 0 6px rgba(0, 0, 0, 0.4);
+  }
+  
+  .entry-content > table:not(.wp-block-table table) td:first-child {
+    background: #0f0f0f !important;
   }
 }
 

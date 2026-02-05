@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.4.3
+Stable tag: 2.4.4
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,16 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.4.4 =
+* Major: Complete rewrite of responsive table CSS for better mobile experience
+* New: "Swipe to see full table" hint banner on mobile
+* New: Sticky first column with shadow effect for reference while scrolling
+* New: Gradient fade overlay on right side indicating more content
+* New: Responsive breakpoints for tablet (992px), mobile (768px), small (480px), extra-small (360px)
+* Fix: Table text wrapping and cell sizing for different screen sizes
+* Fix: Tables now properly scrollable on all mobile devices
+* Improved: Custom scrollbar styling for tables
 
 = 2.4.3 =
 * Fix: Improved update detection - reduced cache from 12 hours to 1 hour
