@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.4.0
+Stable tag: 2.4.2
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,21 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 2.4.2 =
+* Fix: Tables now properly responsive on mobile devices - horizontal scroll with sticky first column
+* New: Scroll hint indicator on mobile for tables ("← Scroll →")
+* New: Styled scrollbar for table containers
+* New: Striped table rows and hover effects for better readability
+* New: Gradient fade indicator showing more content is available
+* Improved: Table cells have proper padding and font sizing on all screen sizes
+
+= 2.4.1 =
+* New: Logo auto-resize feature - automatically resizes logos to optimal dimensions (2x for retina)
+* New: Logo background removal - optional PNG conversion with solid color background removal
+* New: Logo Settings tab in Appearance settings with configurable max width/height
+* New: Responsive logo sizing for mobile devices
+* Improved: Logo CSS filtering for better display consistency
 
 = 1.4.3 =
 * New: Added an option to improve featured image quality by using larger image sizes (Customizer > Blog Options).

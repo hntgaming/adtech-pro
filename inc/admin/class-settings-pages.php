@@ -127,6 +127,14 @@ class HTG_Settings_Pages {
 			update_option( 'HTG_font_size_base', absint( $_POST['HTG_font_size_base'] ?? HTG_get_default( 'HTG_font_size_base' ) ) );
 			update_option( 'HTG_custom_css', wp_strip_all_tags( $_POST['HTG_custom_css'] ?? '' ) );
 			
+			// Logo settings
+			update_option( 'HTG_logo_max_width', absint( $_POST['HTG_logo_max_width'] ?? 300 ) );
+			update_option( 'HTG_logo_max_height', absint( $_POST['HTG_logo_max_height'] ?? 100 ) );
+			update_option( 'HTG_logo_auto_resize', isset( $_POST['HTG_logo_auto_resize'] ) ? 1 : 0 );
+			update_option( 'HTG_logo_remove_bg', isset( $_POST['HTG_logo_remove_bg'] ) ? 1 : 0 );
+			update_option( 'HTG_logo_bg_color', sanitize_hex_color( $_POST['HTG_logo_bg_color'] ?? '#ffffff' ) );
+			update_option( 'HTG_logo_bg_tolerance', absint( $_POST['HTG_logo_bg_tolerance'] ?? 30 ) );
+			
 			echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__( 'Appearance settings saved!', 'HTG' ) . '</strong></p></div>';
 		}
 
@@ -157,6 +165,7 @@ class HTG_Settings_Pages {
 						<h2 class="nav-tab-wrapper">
 							<a href="#colors" class="nav-tab nav-tab-active"><?php esc_html_e( 'Colors', 'HTG' ); ?></a>
 							<a href="#typography" class="nav-tab"><?php esc_html_e( 'Typography', 'HTG' ); ?></a>
+							<a href="#logo" class="nav-tab"><?php esc_html_e( 'Logo', 'HTG' ); ?></a>
 							<a href="#custom-css" class="nav-tab"><?php esc_html_e( 'Custom CSS', 'HTG' ); ?></a>
 						</h2>
 						
@@ -249,6 +258,86 @@ class HTG_Settings_Pages {
 							</table>
 						</div>
 						
+						<!-- Logo Tab -->
+						<div id="logo" class="HTG-tab-content" style="display: none;">
+							<?php
+							$logo_max_width = get_option( 'HTG_logo_max_width', 300 );
+							$logo_max_height = get_option( 'HTG_logo_max_height', 100 );
+							$logo_auto_resize = get_option( 'HTG_logo_auto_resize', 1 );
+							$logo_remove_bg = get_option( 'HTG_logo_remove_bg', 0 );
+							$logo_bg_color = get_option( 'HTG_logo_bg_color', '#ffffff' );
+							$logo_bg_tolerance = get_option( 'HTG_logo_bg_tolerance', 30 );
+							?>
+							<p class="description" style="margin-bottom: 20px; font-size: 14px;">
+								<?php esc_html_e( 'Configure automatic logo resizing and optimization. Upload your logo via Customize → Site Identity.', 'adtech-pro' ); ?>
+							</p>
+							<table class="form-table">
+								<tr>
+									<th scope="row">
+										<label for="HTG_logo_max_width"><?php esc_html_e( 'Max Logo Width', 'adtech-pro' ); ?></label>
+									</th>
+									<td>
+										<input type="number" name="HTG_logo_max_width" id="HTG_logo_max_width" value="<?php echo esc_attr( $logo_max_width ); ?>" min="50" max="600" class="small-text" /> px
+										<p class="description"><?php esc_html_e( 'Maximum display width for logo. Recommended: 200-400px', 'adtech-pro' ); ?></p>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row">
+										<label for="HTG_logo_max_height"><?php esc_html_e( 'Max Logo Height', 'adtech-pro' ); ?></label>
+									</th>
+									<td>
+										<input type="number" name="HTG_logo_max_height" id="HTG_logo_max_height" value="<?php echo esc_attr( $logo_max_height ); ?>" min="30" max="200" class="small-text" /> px
+										<p class="description"><?php esc_html_e( 'Maximum display height for logo. Recommended: 60-120px', 'adtech-pro' ); ?></p>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php esc_html_e( 'Auto Resize on Upload', 'adtech-pro' ); ?></th>
+									<td>
+										<label class="HTG-toggle">
+											<input type="checkbox" name="HTG_logo_auto_resize" value="1" <?php checked( $logo_auto_resize, 1 ); ?>>
+											<span class="HTG-toggle-slider"></span>
+										</label>
+										<p class="description"><?php esc_html_e( 'Automatically resize large logos to optimal dimensions (2x for retina displays).', 'adtech-pro' ); ?></p>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row"><?php esc_html_e( 'Remove Background', 'adtech-pro' ); ?></th>
+									<td>
+										<label class="HTG-toggle">
+											<input type="checkbox" name="HTG_logo_remove_bg" id="HTG_logo_remove_bg" value="1" <?php checked( $logo_remove_bg, 1 ); ?>>
+											<span class="HTG-toggle-slider"></span>
+										</label>
+										<p class="description"><?php esc_html_e( 'Convert to PNG and attempt to remove solid background. Works best with logos that have solid white or black backgrounds.', 'adtech-pro' ); ?></p>
+									</td>
+								</tr>
+								<tr class="htg-bg-removal-options" style="<?php echo $logo_remove_bg ? '' : 'display:none;'; ?>">
+									<th scope="row">
+										<label for="HTG_logo_bg_color"><?php esc_html_e( 'Background Color', 'adtech-pro' ); ?></label>
+									</th>
+									<td>
+										<input type="color" name="HTG_logo_bg_color" id="HTG_logo_bg_color" value="<?php echo esc_attr( $logo_bg_color ); ?>" />
+										<p class="description"><?php esc_html_e( 'Select the background color to remove from your logo.', 'adtech-pro' ); ?></p>
+									</td>
+								</tr>
+								<tr class="htg-bg-removal-options" style="<?php echo $logo_remove_bg ? '' : 'display:none;'; ?>">
+									<th scope="row">
+										<label for="HTG_logo_bg_tolerance"><?php esc_html_e( 'Color Tolerance', 'adtech-pro' ); ?></label>
+									</th>
+									<td>
+										<input type="range" name="HTG_logo_bg_tolerance" id="HTG_logo_bg_tolerance" value="<?php echo esc_attr( $logo_bg_tolerance ); ?>" min="5" max="80" style="width: 200px; vertical-align: middle;" />
+										<span id="htg-tolerance-value" style="margin-left: 10px; font-weight: bold;"><?php echo esc_html( $logo_bg_tolerance ); ?></span>
+										<p class="description"><?php esc_html_e( 'Higher values remove more colors similar to background. Default: 30', 'adtech-pro' ); ?></p>
+									</td>
+								</tr>
+							</table>
+							<div class="htg-logo-notice" style="background: #1a1f36; border-left: 4px solid #00d4aa; padding: 12px 15px; margin-top: 20px; border-radius: 4px;">
+								<p style="margin: 0; color: #a0a8c0;">
+									<strong style="color: #fff;"><?php esc_html_e( 'Note:', 'adtech-pro' ); ?></strong>
+									<?php esc_html_e( 'Background removal works best with solid color backgrounds. For logos with gradients or complex backgrounds, we recommend using a dedicated image editor for best results.', 'adtech-pro' ); ?>
+								</p>
+							</div>
+						</div>
+						
 						<!-- Custom CSS Tab -->
 						<div id="custom-css" class="HTG-tab-content" style="display: none;">
 							<table class="form-table">
@@ -288,6 +377,14 @@ class HTG_Settings_Pages {
 			if (typeof $.fn.wpColorPicker !== 'undefined') {
 				$('.HTG-color-picker').wpColorPicker();
 			}
+			
+			// Logo settings toggles
+			$('#HTG_logo_remove_bg').on('change', function() {
+				$('.htg-bg-removal-options').toggle(this.checked);
+			});
+			$('#HTG_logo_bg_tolerance').on('input', function() {
+				$('#htg-tolerance-value').text(this.value);
+			});
 		});
 		</script>
 		<?php

@@ -405,6 +405,11 @@ require get_template_directory() . '/inc/class-meta-boxes.php';
 require get_template_directory() . '/inc/custom-header.php';
 
 /**
+ * Logo handler - auto-resize and optimization
+ */
+require get_template_directory() . '/inc/logo-handler.php';
+
+/**
  * Custom template tags for this theme.
  */
 require get_template_directory() . '/inc/template-tags.php';
