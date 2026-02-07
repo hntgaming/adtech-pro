@@ -172,11 +172,11 @@ class HTG_Dual_Category_Posts extends WP_Widget {
 		<!-- Category 1 -->
 		<div class="hm-dualc-left">
 			<?php 
-				if ( ! empty( $title1 ) ) {
-					echo $before_title . $title1 . $after_title;
-				}
+			if ( ! empty( $title1 ) ) {
+				echo $before_title . $title1 . $after_title;
+			}
 
-				HTG_viewall_link( $category1, $viewall_text2 );
+				HTG_viewall_link( $category1, $viewall_text1 );
 			?>
 
             <?php $hmp_count = 1; ?>

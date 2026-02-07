@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 2.5.3
+Stable tag: 3.0.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,68 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.0 =
+* Major: Unified CSS Design System — consolidated 4 competing CSS color systems into a single design-token architecture
+* Major: Refactored color-palettes.php — now outputs style.css-compatible design tokens instead of conflicting !important overrides
+* Major: Legal Pages Generator rewritten — all 5 pages now production-grade GDPR/CCPA/ePrivacy compliant
+* New: Cookie Policy page generator with full cookie inventory (Strictly Necessary, Analytics, Advertising, Functionality)
+* New: Privacy Policy covers Google AdSense, Google AdX, Google Authorized Buyers, Prebid.js header bidding, and Google Analytics (GA4)
+* New: GDPR rights (Articles 7, 15-21), CCPA/CPRA rights (right to know, delete, opt-out of sale/sharing), GPC signal support
+* New: wp_add_privacy_policy_content hook — theme now contributes AdTech privacy disclosures to WordPress Privacy Policy Guide
+* New: Widget / Card Background color picker in Customizer (Colors & Branding > Custom Colors)
+* New: HTG Dark default color palette matching design tokens (#00d4aa teal accent, #0a0a0a backgrounds)
+* Fix: Eliminated ~200 lines of over-engineered footer widget CSS (glass-morphism, gradient borders, arrow pseudo-elements)
+* Fix: Footer widgets now inherit standard .widget styling via CSS variables — no extra CSS needed
+* Fix: Replaced 11 instances of old purple rgba(36, 11, 80, ...) shadows with neutral rgba(0, 0, 0, ...)
+* Fix: Replaced hardcoded #5dbde8 gradient in dark-mode.css with var(--htg-accent-hover)
+* Fix: Replaced purple box-shadows in magazine.css with teal-tinted shadows
+* Fix: Updated editor stylesheets (editor-blocks.css, editor-style.css, rtl.css) from red #e74c3c to teal #00d4aa
+* Fix: Customizer notice gradient updated from purple to dark navy/black matching brand
+* Fix: Disabled legacy styles.php color output (was injecting red #E74C3C defaults)
+* Fix: Simplified functions.php dynamic CSS — now outputs typography only, colors deferred to color-palettes.php
+* Fix: Customizer JS palette definitions rewritten to match 8 palettes in color-palettes.php
+* Fix: Customizer live preview now correctly updates design token CSS variables
+* Fix: Removed duplicate footer link/text color overrides in dark theme section
+* Performance: Removed ~900 lines of dead/duplicate CSS from style.css
+* Compliance: Terms of Service updated with advertising, ad-blocking, ad fraud, and IP sections
+* Compliance: Advertiser Disclosure updated with programmatic advertising, header bidding, and FTC disclosure
+* Compliance: Disclaimer updated with advertising disclaimer and fair use sections
+
+= 2.5.4 =
+* Security: Fixed stored XSS in ad manager - all POST data now properly sanitized with wp_unslash()
+* Security: Removed HTG_AD_CODE_TRUSTED constant that bypassed ad code sanitization
+* Security: Fixed XSS in author box - author description now escaped with wp_kses_post()
+* Security: Added ABSPATH checks to 8 PHP files missing direct access protection
+* Fix: Breadcrumbs now correctly read admin panel settings instead of theme_mod only
+* Fix: Removed dead theme_mod_default filter in sync-theme-settings (filter doesn't exist)
+* Fix: Post view counter now skips admin users, bots, and prefetch requests
+* Fix: AJAX posts - wp_reset_postdata() now executes before wp_send_json (was unreachable)
+* Fix: Typography function no longer double-hooked (was loading fonts twice)
+* Fix: Dual category widget - fixed copy-paste bug using wrong viewall text variable
+* Fix: Related posts query - 'cat' parameter now correctly receives integer instead of array
+* Fix: Related posts - added no_found_rows for better performance, escaped output
+* Fix: extras.php - null check for $post prevents fatal error on 404 pages
+* Fix: Removed duplicate excerpt_length filter (was overridden by settings-output)
+* Fix: engagement.js - all global variable access guarded with typeof checks
+* Fix: engagement.js - all DOM queries null-safe, scroll handler throttled with rAF
+* Fix: navigation.js - toggleFocus crash fixed with null check in ancestor walk
+* Fix: navigation.js - added aria-expanded attributes for mobile menu accessibility
+* Fix: Newsletter table creation cached - dbDelta no longer runs on every AJAX request
+* Fix: Slider config uses wp_json_encode instead of json_encode (XSS prevention)
+* CSS: Engagement components fully dark-themed (was white/light backgrounds on dark site)
+* CSS: Fixed CSS variable casing mismatch (--HTG-primary vs --htg-primary)
+* CSS: Fixed invalid text-align: none (changed to initial)
+* CSS: Fixed Font Awesome 5 references to Font Awesome 6 (widget chevrons, blockquotes)
+* CSS: Fixed .hm-nwrap breakpoint order (768px was overriding 992px rule)
+* CSS: Newsletter success/error messages now use dark theme colors
+* CSS: Filter buttons, post cards, no-posts state all dark-themed
+* CSS: Improved WCAG color contrast (muted text changed from #475569/#64748b to #b0b0b0)
+* Performance: Removed Open Sans font (loaded but never used, saving bandwidth)
+* Performance: Removed skip-link-focus-fix.js (IE-only, dead code)
+* Performance: Removed html5shiv.js (IE < 9, no longer supported)
+* Performance: Added static caching to HTG_get_theme_defaults()
+* Performance: Removed NodeList forEach polyfill from navigation.js (unused with modern JS)
 
 = 2.5.3 =
 * Removed: Social share feature entirely (CSS, JS, admin settings, defaults)

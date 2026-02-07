@@ -1,138 +1,187 @@
 /**
- * File customizer.js.
- *
  * Theme Customizer enhancements for a better user experience.
  *
  * Contains handlers to make Theme Customizer preview reload changes asynchronously.
+ * Palette definitions mirror color-palettes.php for live preview.
+ *
+ * @package HTG_AdTech_Pro
+ * @since 2.3.0
  */
 
 ( function( $ ) {
 
-	// Define color palettes
+	// Palette definitions — must stay in sync with HTG_get_color_palettes() in PHP
 	var colorPalettes = {
-		ht_gaming: {
-			primary: '#240b50',
-			secondary: '#80d3f5',
-			accent1: '#faa98f',
-			accent2: '#b9eacc',
-			heading: '#222222',
-			body_text: '#404040',
-			link: '#80d3f5',
-			link_hover: '#240b50',
-			body_bg: '#ffffff',
-			content_bg: '#ffffff',
-			footer_bg: '#240b50'
-		},
-		news_red: {
-			primary: '#e74c3c',
-			secondary: '#c0392b',
-			accent1: '#ff6b6b',
-			accent2: '#ffa07a',
-			heading: '#2c3e50',
-			body_text: '#34495e',
-			link: '#e74c3c',
-			link_hover: '#c0392b',
-			body_bg: '#f8f9fa',
-			content_bg: '#ffffff',
-			footer_bg: '#2c3e50'
-		},
-		tech_blue: {
-			primary: '#3498db',
-			secondary: '#2980b9',
-			accent1: '#5dade2',
-			accent2: '#85c1e9',
-			heading: '#1a1a1a',
-			body_text: '#333333',
-			link: '#3498db',
-			link_hover: '#2980b9',
-			body_bg: '#ffffff',
-			content_bg: '#ffffff',
-			footer_bg: '#1a1a1a'
-		},
-		business: {
-			primary: '#2c3e50',
-			secondary: '#34495e',
-			accent1: '#95a5a6',
-			accent2: '#bdc3c7',
-			heading: '#2c3e50',
-			body_text: '#34495e',
-			link: '#3498db',
-			link_hover: '#2c3e50',
-			body_bg: '#ecf0f1',
-			content_bg: '#ffffff',
-			footer_bg: '#2c3e50'
-		},
-		dark_mode: {
-			primary: '#bb86fc',
-			secondary: '#03dac6',
-			accent1: '#cf6679',
-			accent2: '#03dac6',
+		htg_dark: {
+			primary: '#00d4aa',
+			secondary: '#00b894',
+			accent1: '#1a1f36',
 			heading: '#ffffff',
 			body_text: '#e0e0e0',
-			link: '#bb86fc',
-			link_hover: '#03dac6',
-			body_bg: '#121212',
-			content_bg: '#1e1e1e',
-			footer_bg: '#000000'
+			link: '#00d4aa',
+			link_hover: '#00b894',
+			body_bg: '#0a0a0a',
+			content_bg: '#121212',
+			footer_bg: '#000000',
+			card_bg: '#1a1a1a',
+			border: '#2a2a2a'
+		},
+		neon_cyber: {
+			primary: '#00ffd5',
+			secondary: '#bf00ff',
+			accent1: '#ff00a0',
+			heading: '#ffffff',
+			body_text: '#c0c0c0',
+			link: '#00ffd5',
+			link_hover: '#bf00ff',
+			body_bg: '#000000',
+			content_bg: '#0a0a0a',
+			footer_bg: '#000000',
+			card_bg: '#111111',
+			border: '#1a1a1a'
+		},
+		midnight_ocean: {
+			primary: '#0ea5e9',
+			secondary: '#38bdf8',
+			accent1: '#0284c7',
+			heading: '#f0f9ff',
+			body_text: '#94a3b8',
+			link: '#0ea5e9',
+			link_hover: '#38bdf8',
+			body_bg: '#0c1222',
+			content_bg: '#151d2e',
+			footer_bg: '#070b14',
+			card_bg: '#1a2435',
+			border: '#1e3a5f'
+		},
+		crimson_night: {
+			primary: '#ef4444',
+			secondary: '#f97316',
+			accent1: '#dc2626',
+			heading: '#fef2f2',
+			body_text: '#a8a29e',
+			link: '#ef4444',
+			link_hover: '#f97316',
+			body_bg: '#1c1917',
+			content_bg: '#292524',
+			footer_bg: '#0c0a09',
+			card_bg: '#2d2926',
+			border: '#44403c'
+		},
+		forest_depths: {
+			primary: '#10b981',
+			secondary: '#06b6d4',
+			accent1: '#059669',
+			heading: '#ecfdf5',
+			body_text: '#9ca3af',
+			link: '#10b981',
+			link_hover: '#06b6d4',
+			body_bg: '#0a0f0d',
+			content_bg: '#111916',
+			footer_bg: '#050807',
+			card_bg: '#162019',
+			border: '#1f352b'
+		},
+		golden_dusk: {
+			primary: '#f59e0b',
+			secondary: '#eab308',
+			accent1: '#d97706',
+			heading: '#fffbeb',
+			body_text: '#a1a1aa',
+			link: '#f59e0b',
+			link_hover: '#eab308',
+			body_bg: '#0f0d09',
+			content_bg: '#1a1713',
+			footer_bg: '#080704',
+			card_bg: '#211e18',
+			border: '#3d3730'
+		},
+		royal_violet: {
+			primary: '#a855f7',
+			secondary: '#ec4899',
+			accent1: '#9333ea',
+			heading: '#faf5ff',
+			body_text: '#a1a1aa',
+			link: '#a855f7',
+			link_hover: '#ec4899',
+			body_bg: '#0f0a15',
+			content_bg: '#1a1225',
+			footer_bg: '#08050c',
+			card_bg: '#1f1529',
+			border: '#3b2d4d'
+		},
+		slate_minimal: {
+			primary: '#64748b',
+			secondary: '#3b82f6',
+			accent1: '#475569',
+			heading: '#f8fafc',
+			body_text: '#94a3b8',
+			link: '#3b82f6',
+			link_hover: '#60a5fa',
+			body_bg: '#0f1115',
+			content_bg: '#171b21',
+			footer_bg: '#0a0c0f',
+			card_bg: '#1e2329',
+			border: '#2d333b'
 		}
 	};
 
-	// Function to apply colors
-	function applyColors(palette) {
-		// Remove existing custom style
-		$('#HTG-custom-colors-preview').remove();
+	/**
+	 * Apply palette colors to the preview via CSS variables.
+	 * Bridges palette values to the design token names used in style.css.
+	 */
+	function applyColors( palette ) {
+		$( '#HTG-custom-colors-preview' ).remove();
 
-		// Build CSS
 		var css = '<style id="HTG-custom-colors-preview">';
 		css += ':root {';
-		css += '--htg-primary: ' + palette.primary + ';';
-		css += '--htg-secondary: ' + palette.secondary + ';';
-		css += '--htg-accent-1: ' + palette.accent1 + ';';
-		css += '--htg-accent-2: ' + palette.accent2 + ';';
+		css += '--htg-accent: ' + palette.primary + ';';
+		css += '--htg-accent-hover: ' + palette.secondary + ';';
+		css += '--htg-navy: ' + palette.accent1 + ';';
+		css += '--htg-text-primary: ' + palette.heading + ';';
+		css += '--htg-text-body: ' + palette.body_text + ';';
+		css += '--htg-bg-primary: ' + palette.body_bg + ';';
+		css += '--htg-bg-card: ' + palette.content_bg + ';';
+		css += '--htg-bg-elevated: ' + palette.card_bg + ';';
+		css += '--htg-border: ' + palette.border + ';';
 		css += '}';
-		
-		// Apply colors
-		css += 'body { color: ' + palette.body_text + ' !important; background-color: ' + palette.body_bg + ' !important; }';
-		css += 'h1, h2, h3, h4, h5, h6, .entry-title, .entry-title a, .widget-title { color: ' + palette.heading + ' !important; }';
-		css += 'a { color: ' + palette.link + ' !important; }';
-		css += 'a:hover { color: ' + palette.link_hover + ' !important; }';
-		css += '.site-title a, button, input[type="button"], input[type="reset"], input[type="submit"], .cat-links a, .search-form .search-submit { background-color: ' + palette.primary + ' !important; }';
-		css += '.site-footer, .widget-title, .footer-widget-title { border-color: ' + palette.primary + ' !important; }';
-		css += '.footer-widget-area a:hover, .site-info a { color: ' + palette.secondary + ' !important; }';
-		css += '.site-content { background-color: ' + palette.content_bg + ' !important; }';
+
+		// Force structural backgrounds with !important for live preview
+		css += 'body, html { background-color: ' + palette.body_bg + ' !important; color: ' + palette.body_text + '; }';
+		css += '#page, .site, .site-content { background-color: ' + palette.body_bg + ' !important; }';
+		css += '.site-footer, .footer-widget-area { background-color: ' + palette.footer_bg + ' !important; }';
 		css += '</style>';
 
-		$('head').append(css);
+		$( 'head' ).append( css );
 	}
 
-	// Site title and description.
+	// ===================================
+	// SITE IDENTITY (postMessage transport)
+	// ===================================
 	wp.customize( 'blogname', function( value ) {
 		value.bind( function( to ) {
 			$( '.site-title a' ).text( to );
 		} );
 	} );
-	
+
 	wp.customize( 'blogdescription', function( value ) {
 		value.bind( function( to ) {
 			$( '.site-description' ).text( to );
 		} );
 	} );
 
-	// Header text color.
 	wp.customize( 'header_textcolor', function( value ) {
 		value.bind( function( to ) {
 			if ( 'blank' === to ) {
 				$( '.site-title a, .site-description' ).css( {
-					'clip': 'rect(1px, 1px, 1px, 1px)',
-					'position': 'absolute'
+					clip: 'rect(1px, 1px, 1px, 1px)',
+					position: 'absolute'
 				} );
 			} else {
 				$( '.site-title a, .site-description' ).css( {
-					'clip': 'auto',
-					'position': 'relative'
-				} );
-				$( '.site-title a, .site-description' ).css( {
-					'color': to
+					clip: 'auto',
+					position: 'relative',
+					color: to
 				} );
 			}
 		} );
@@ -144,121 +193,48 @@
 	wp.customize( 'HTG_color_scheme', function( value ) {
 		value.bind( function( scheme ) {
 			if ( scheme === 'custom' ) {
-				// Remove preview styles for custom
-				$('#HTG-custom-colors-preview').remove();
+				$( '#HTG-custom-colors-preview' ).remove();
 				return;
 			}
 
-			// Get palette and apply
-			var palette = colorPalettes[scheme];
+			var palette = colorPalettes[ scheme ];
 			if ( palette ) {
-				applyColors(palette);
-				
-				// Also update the individual color controls
-				wp.customize('HTG_primary_color').set(palette.primary);
-				wp.customize('HTG_secondary_color').set(palette.secondary);
-				wp.customize('HTG_accent_color_1').set(palette.accent1);
-				wp.customize('HTG_accent_color_2').set(palette.accent2);
-				wp.customize('HTG_heading_color').set(palette.heading);
-				wp.customize('HTG_body_text_color').set(palette.body_text);
-				wp.customize('HTG_link_color').set(palette.link);
-				wp.customize('HTG_link_hover_color').set(palette.link_hover);
-				wp.customize('HTG_body_background_color').set(palette.body_bg);
-				wp.customize('HTG_content_background_color').set(palette.content_bg);
-				wp.customize('HTG_footer_background_color').set(palette.footer_bg);
+				applyColors( palette );
 			}
 		} );
 	} );
 
 	// ===================================
-	// INDIVIDUAL COLOR HANDLERS
+	// CUSTOM COLOR HANDLERS (for Custom scheme)
 	// ===================================
-	
-	// Primary color
-	wp.customize( 'HTG_primary_color', function( value ) {
+	wp.customize( 'HTG_custom_primary', function( value ) {
 		value.bind( function( to ) {
-			$('<style id="HTG-primary-preview">' +
-				'.site-title a, button, input[type="button"], input[type="reset"], input[type="submit"], ' +
-				'.cat-links a, .search-form .search-submit, .nav-links .current, .widget_tag_cloud .tagcloud a ' +
-				'{ background-color: ' + to + ' !important; }' +
-				'.site-footer, .widget-title, .footer-widget-title { border-color: ' + to + ' !important; }' +
-			'</style>').appendTo('head');
-			$('#HTG-primary-preview').remove();
-			$('<style id="HTG-primary-preview">' +
-				'.site-title a, button, input[type="button"], input[type="reset"], input[type="submit"], ' +
-				'.cat-links a, .search-form .search-submit, .nav-links .current, .widget_tag_cloud .tagcloud a ' +
-				'{ background-color: ' + to + ' !important; }' +
-				'.site-footer, .widget-title, .footer-widget-title { border-color: ' + to + ' !important; }' +
-			'</style>').appendTo('head');
+			document.documentElement.style.setProperty( '--htg-accent', to );
 		} );
 	} );
 
-	// Secondary color
-	wp.customize( 'HTG_secondary_color', function( value ) {
+	wp.customize( 'HTG_custom_secondary', function( value ) {
 		value.bind( function( to ) {
-			$('#HTG-secondary-preview').remove();
-			$('<style id="HTG-secondary-preview">' +
-				'.footer-widget-area a:hover, .site-info a { color: ' + to + ' !important; }' +
-			'</style>').appendTo('head');
+			document.documentElement.style.setProperty( '--htg-accent-hover', to );
 		} );
 	} );
 
-	// Heading color
-	wp.customize( 'HTG_heading_color', function( value ) {
+	wp.customize( 'HTG_custom_body_bg', function( value ) {
 		value.bind( function( to ) {
-			$('#HTG-heading-preview').remove();
-			$('<style id="HTG-heading-preview">' +
-				'h1, h2, h3, h4, h5, h6, .entry-title, .entry-title a, .widget-title { color: ' + to + ' !important; }' +
-			'</style>').appendTo('head');
+			document.documentElement.style.setProperty( '--htg-bg-primary', to );
+			$( 'body' ).css( 'background-color', to );
 		} );
 	} );
 
-	// Body text color
-	wp.customize( 'HTG_body_text_color', function( value ) {
+	wp.customize( 'HTG_custom_content_bg', function( value ) {
 		value.bind( function( to ) {
-			$('#HTG-body-text-preview').remove();
-			$('<style id="HTG-body-text-preview">' +
-				'body { color: ' + to + ' !important; }' +
-			'</style>').appendTo('head');
+			document.documentElement.style.setProperty( '--htg-bg-card', to );
 		} );
 	} );
 
-	// Link color
-	wp.customize( 'HTG_link_color', function( value ) {
+	wp.customize( 'HTG_custom_card_bg', function( value ) {
 		value.bind( function( to ) {
-			$('#HTG-link-preview').remove();
-			$('<style id="HTG-link-preview">' +
-				'a { color: ' + to + ' !important; }' +
-			'</style>').appendTo('head');
-		} );
-	} );
-
-	// Link hover color
-	wp.customize( 'HTG_link_hover_color', function( value ) {
-		value.bind( function( to ) {
-			$('#HTG-link-hover-preview').remove();
-			$('<style id="HTG-link-hover-preview">' +
-				'a:hover, a:focus, a:active { color: ' + to + ' !important; }' +
-			'</style>').appendTo('head');
-		} );
-	} );
-
-	// Background colors
-	wp.customize( 'HTG_body_background_color', function( value ) {
-		value.bind( function( to ) {
-			$('body').css('background-color', to);
-		} );
-	} );
-
-	wp.customize( 'HTG_content_background_color', function( value ) {
-		value.bind( function( to ) {
-			$('.site-content').css('background-color', to);
-		} );
-	} );
-
-	wp.customize( 'HTG_footer_background_color', function( value ) {
-		value.bind( function( to ) {
-			$('.site-footer').css('background-color', to);
+			document.documentElement.style.setProperty( '--htg-bg-elevated', to );
 		} );
 	} );
 

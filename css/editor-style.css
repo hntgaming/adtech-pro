@@ -335,7 +335,7 @@ blockquote, q {
   font-size: 18px;
   font-style: italic;
   background: #f8f8f8;
-  border-left: 3px solid #e74c3c;
+  border-left: 3px solid #00d4aa;
 }
 blockquote:before, blockquote:after, q:before, q:after {
   content: "";
@@ -436,7 +436,7 @@ a:visited {
   color: #2980b9;
 }
 a:hover, a:focus, a:active {
-  color: #e74c3c;
+  color: #00d4aa;
   text-decoration: none;
 }
 a:focus {

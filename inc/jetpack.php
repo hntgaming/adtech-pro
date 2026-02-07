@@ -7,6 +7,10 @@
  * @package HTG_AdTech_Pro
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Jetpack setup function.
  *

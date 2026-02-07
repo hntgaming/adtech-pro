@@ -9,6 +9,10 @@
  * @since HTG 1.3.0
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( function_exists( 'register_block_style' ) ) {
 
 	/**

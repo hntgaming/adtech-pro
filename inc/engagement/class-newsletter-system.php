@@ -215,9 +215,15 @@ class HTG_Newsletter_System {
 	}
 
 	/**
-	 * Create subscribers table
+	 * Create subscribers table (cached check - only runs dbDelta once)
 	 */
 	private static function maybe_create_subscribers_table() {
+		// Only create table once per version
+		$db_version = '1.0.0';
+		if ( get_option( 'HTG_subscribers_db_version' ) === $db_version ) {
+			return;
+		}
+		
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'HTG_subscribers';
 		$charset_collate = $wpdb->get_charset_collate();
@@ -236,6 +242,8 @@ class HTG_Newsletter_System {
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
+		
+		update_option( 'HTG_subscribers_db_version', $db_version );
 	}
 
 	/**

@@ -225,7 +225,6 @@ function HTG_apply_typography() {
 	<?php
 }
 add_action( 'wp_enqueue_scripts', 'HTG_apply_typography', 1 );
-add_action( 'wp_head', 'HTG_apply_typography', 103 );
 
 /**
  * Apply Blog Layout Settings
@@ -315,7 +314,7 @@ function HTG_slider_config() {
 	$settings = HTG_slider_settings();
 	?>
 	<script>
-	var HTG_slider_config = <?php echo json_encode( $settings ); ?>;
+	var HTG_slider_config = <?php echo wp_json_encode( $settings ); ?>;
 	</script>
 	<?php
 }

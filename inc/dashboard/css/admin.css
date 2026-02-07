@@ -15,7 +15,7 @@
 	--htg-primary-hover: #252b47;
 	--htg-secondary: #00d4aa;
 	--htg-secondary-hover: #00b894;
-	--htg-accent: #6c5ce7;
+	--htg-accent: #00d4aa;
 	--htg-bg: #f0f2f5;
 	--htg-card: #ffffff;
 	--htg-border: #e1e5eb;
@@ -433,7 +433,7 @@
 }
 
 .HTG-feature-icon.ad { background: linear-gradient(135deg, #f59e0b, #d97706); }
-.HTG-feature-icon.design { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+.HTG-feature-icon.design { background: linear-gradient(135deg, #1a1f36, #00d4aa); }
 .HTG-feature-icon.performance { background: linear-gradient(135deg, #10b981, #059669); }
 .HTG-feature-icon.engagement { background: linear-gradient(135deg, #ec4899, #be185d); }
 .HTG-feature-icon.seo { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }

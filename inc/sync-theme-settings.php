@@ -183,19 +183,28 @@ add_action( 'added_option', function( $option_name, $value ) {
 
 /**
  * Override ad-related theme_mods to use options
- * Uses a general filter for all HTG_ad_* theme mods
+ * Register individual theme_mod filters for each ad-related setting
  */
-function HTG_override_ad_theme_mods( $value, $name, $default ) {
-	// Only handle ad-related theme_mods
-	if ( strpos( $name, 'HTG_ad_' ) === 0 ) {
-		$option_value = get_option( $name, $default );
-		if ( false !== $option_value ) {
-			return $option_value;
-		}
+function HTG_register_ad_theme_mod_overrides() {
+	$ad_options = array(
+		'HTG_ad_head_code', 'HTG_ad_footer_code', 'HTG_ad_header_above',
+		'HTG_ad_header_below', 'HTG_ad_before_content', 'HTG_ad_after_content',
+		'HTG_ad_in_article', 'HTG_ad_in_article_position', 'HTG_ad_sidebar_top',
+		'HTG_ad_sidebar_sticky', 'HTG_ad_homepage_top', 'HTG_ad_before_footer',
+		'HTG_ad_labels_enable',
+	);
+	
+	foreach ( $ad_options as $option_name ) {
+		add_filter( 'theme_mod_' . $option_name, function( $value ) use ( $option_name ) {
+			$option_value = get_option( $option_name, null );
+			if ( $option_value !== null && $option_value !== false ) {
+				return $option_value;
+			}
+			return $value;
+		});
 	}
-	return $value;
 }
-add_filter( 'theme_mod_default', 'HTG_override_ad_theme_mods', 10, 3 );
+HTG_register_ad_theme_mod_overrides();
 
 /**
  * Helper function to get any theme setting (from either admin panel or customizer)

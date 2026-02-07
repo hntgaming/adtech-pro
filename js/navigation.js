@@ -5,21 +5,6 @@
  * navigation support for dropdown menus.
  */
 
-// polyfill forEach
-// https://developer.mozilla.org/en-US/docs/Web/API/NodeList/forEach#Polyfill
-if ( window.NodeList && ! NodeList.prototype.forEach ) {
-	NodeList.prototype.forEach = function( callback, thisArg ) {
-		var i;
-		var len = this.length;
-
-		thisArg = thisArg || window;
-
-		for ( i = 0; i < len; i++ ) {
-			callback.call( thisArg, this[ i ], i, this );
-		}
-	};
-}
-
 ( function() {
 
 	const navigationIds = ['site-navigation', 'top-navigation'];
@@ -62,7 +47,7 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 			if ( event.type === 'focus' || event.type === 'blur' ) {
 				let self = this;
 				// Move up through the ancestors of the current link until we hit .nav-menu.
-				while ( ! self.classList.contains( 'nav-menu' ) ) {
+				while ( self && self.classList && ! self.classList.contains( 'nav-menu' ) ) {
 					// On li elements toggle the class .focus.
 					if ( 'li' === self.tagName.toLowerCase() ) {
 						self.classList.toggle( 'focus' );
@@ -76,6 +61,7 @@ if ( window.NodeList && ! NodeList.prototype.forEach ) {
 
 jQuery(document).ready(function(){
 
+	// Main Navigation Mobile Toggle
 	var mobMainNav = jQuery('.responsive-mainnav'),
 		mainNavUl = mobMainNav.find('ul#primary-menu'),
 		mNavWrapper = jQuery('<div class="hm-nwrap"></div>');
@@ -83,26 +69,33 @@ jQuery(document).ready(function(){
 	mNavWrapper.appendTo(mobMainNav);
 	jQuery('#site-navigation ul:first-child').clone().appendTo(mNavWrapper);
 
-	jQuery('#main-nav-button').on( "click", function(event){
+	var mainNavButton = jQuery('#main-nav-button');
+	mainNavButton.attr('aria-expanded', 'false');
+
+	mainNavButton.on( "click", function(event){
 		event.preventDefault();
-		mobMainNav.slideToggle(0);
+		var isOpen = mobMainNav.is(':visible');
+		jQuery(this).attr('aria-expanded', isOpen ? 'false' : 'true');
+		mobMainNav.slideToggle(200);
 		mainNavUl.show();
 	});
-	
-});
 
-jQuery(document).ready(function(){
-
+	// Top Navigation Mobile Toggle
 	var mobTopNav = jQuery('.responsive-topnav'),
-	topNavUl = mobTopNav.find('ul#top-menu'),
-	tNavWrapper = jQuery('<div class="hm-nwrap"></div>');
+		topNavUl = mobTopNav.find('ul#top-menu'),
+		tNavWrapper = jQuery('<div class="hm-nwrap"></div>');
 
 	tNavWrapper.appendTo(mobTopNav);
 	jQuery('#top-navigation ul:first-child').clone().appendTo(tNavWrapper);
 
-	jQuery('#top-nav-button').on( "click", function(event){
+	var topNavButton = jQuery('#top-nav-button');
+	topNavButton.attr('aria-expanded', 'false');
+
+	topNavButton.on( "click", function(event){
 		event.preventDefault();
-		mobTopNav.slideToggle(0);
+		var isOpen = mobTopNav.is(':visible');
+		jQuery(this).attr('aria-expanded', isOpen ? 'false' : 'true');
+		mobTopNav.slideToggle(200);
 		topNavUl.show();
 	});
 	

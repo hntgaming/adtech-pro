@@ -313,23 +313,38 @@ add_action( 'wp_enqueue_scripts', 'HTG_magazine_styles' );
 
 /**
  * Advanced post views counter
+ * Skips admin users, bots, and prefetch requests
  */
 function HTG_set_post_views() {
-	if ( is_single() ) {
-		global $post;
-		$post_id = $post->ID;
-		$count_key = 'HTG_post_views_count';
-		$count = get_post_meta( $post_id, $count_key, true );
-		
-		if ( empty( $count ) ) {
-			$count = 0;
-			delete_post_meta( $post_id, $count_key );
-			add_post_meta( $post_id, $count_key, '0' );
-		} else {
-			$count++;
-			update_post_meta( $post_id, $count_key, $count );
-		}
+	if ( ! is_single() ) {
+		return;
 	}
+	
+	// Don't count admin views
+	if ( current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	
+	// Don't count bot/crawler views
+	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/bot|crawl|slurp|spider|mediapartners/i', $_SERVER['HTTP_USER_AGENT'] ) ) {
+		return;
+	}
+	
+	// Don't count prefetch requests
+	if ( isset( $_SERVER['HTTP_X_PURPOSE'] ) && 'preview' === $_SERVER['HTTP_X_PURPOSE'] ) {
+		return;
+	}
+	
+	$post_id = get_the_ID();
+	if ( ! $post_id ) {
+		return;
+	}
+	
+	$count_key = 'HTG_post_views_count';
+	$count = (int) get_post_meta( $post_id, $count_key, true );
+	
+	$count++;
+	update_post_meta( $post_id, $count_key, $count );
 }
 add_action( 'wp_head', 'HTG_set_post_views' );
 
@@ -352,7 +367,7 @@ function HTG_get_post_views( $post_id ) {
  */
 function HTG_reading_time() {
 	$content = get_post_field( 'post_content', get_the_ID() );
-	$word_count = str_word_count( strip_tags( $content ) );
+	$word_count = str_word_count( wp_strip_all_tags( $content ) );
 	$reading_time = ceil( $word_count / 200 ); // Average reading speed: 200 words/minute
 	
 	return $reading_time;

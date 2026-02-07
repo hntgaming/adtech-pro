@@ -16,8 +16,8 @@
 	--htg-primary-hover: #252b47;
 	--htg-secondary: #00d4aa;
 	--htg-secondary-hover: #00b894;
-	--htg-accent: #6c5ce7;
-	--htg-accent-hover: #5f4dd1;
+	--htg-accent: #00d4aa;
+	--htg-accent-hover: #00b894;
 	
 	/* Dark Theme Background */
 	--htg-bg-dark: #0a0a0a;
@@ -49,7 +49,7 @@
 	/* Gradients */
 	--htg-gradient-primary: linear-gradient(135deg, #1a1f36 0%, #2d3556 100%);
 	--htg-gradient-secondary: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
-	--htg-gradient-accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+	--htg-gradient-accent: linear-gradient(135deg, #1a1f36 0%, #00d4aa 100%);
 	--htg-gradient-dark: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 	
 	/* Shadows */

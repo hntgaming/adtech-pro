@@ -7,6 +7,10 @@
  * @package HTG_AdTech_Pro
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 if ( ! function_exists( 'HTG_posted_datetime' ) ) :
 
 function HTG_posted_datetime() {

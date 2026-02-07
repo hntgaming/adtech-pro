@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 function HTG_kirki_config() {
 	$args = array(
         'url_path'       => get_template_directory_uri() . '/inc/kirki/',

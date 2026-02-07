@@ -21,18 +21,22 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return array All default values
  */
 function HTG_get_theme_defaults() {
-	return array(
+	static $defaults = null;
+	if ( $defaults !== null ) {
+		return $defaults;
+	}
+	$defaults = array(
 		// ===========================================
 		// COLOR SETTINGS (Dark Theme Optimized)
 		// ===========================================
 		'HTG_primary_color'           => '#1a1f36',     // Dark navy - headers, buttons
 		'HTG_secondary_color'         => '#00d4aa',     // Teal - accents, links
-		'HTG_accent_color_1'          => '#6c5ce7',     // Purple - gradients, badges
+		'HTG_accent_color_1'          => '#00d4aa',     // Teal - gradients, badges
 		'HTG_accent_color_2'          => '#00b894',     // Green - success states
 		'HTG_heading_color'           => '#ffffff',     // White headings for dark theme
 		'HTG_body_text_color'         => '#e0e0e0',     // Light gray body text
 		'HTG_link_color'              => '#00d4aa',     // Teal links
-		'HTG_link_hover_color'        => '#6c5ce7',     // Purple hover
+		'HTG_link_hover_color'        => '#ffffff',     // White hover (brightens on dark)
 		'HTG_body_background_color'   => '#0a0a0a',     // Near black background
 		'HTG_content_background_color'=> '#121212',     // Dark card background
 		'HTG_footer_background_color' => '#000000',     // Black footer
@@ -173,8 +177,9 @@ function HTG_get_theme_defaults() {
 		// ===========================================
 		// COLOR SCHEME
 		// ===========================================
-		'HTG_color_scheme'            => 'neon_cyber',  // Default color scheme
+		'HTG_color_scheme'            => 'htg_dark',    // Default color scheme
 	);
+	return $defaults;
 }
 
 /**

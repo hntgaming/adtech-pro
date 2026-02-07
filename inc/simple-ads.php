@@ -14,10 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Sanitize ad code
  */
 function HTG_sanitize_ad_code( $ad_code ) {
-	if ( ! current_user_can( 'manage_options' ) && ! defined( 'HTG_AD_CODE_TRUSTED' ) ) {
-		return wp_kses_post( $ad_code );
-	}
-	
+	// Always sanitize with ad-specific allowed HTML (never bypass)
 	$allowed_html = array(
 		'script' => array(
 			'async' => true, 'src' => true, 'defer' => true,
@@ -55,10 +52,6 @@ function HTG_get_ad_code( $slot, $wrap = true ) {
 	
 	if ( empty( $ad_code ) ) {
 		return '';
-	}
-	
-	if ( ! defined( 'HTG_AD_CODE_TRUSTED' ) ) {
-		define( 'HTG_AD_CODE_TRUSTED', true );
 	}
 	
 	// Raw output for global codes
@@ -177,31 +170,31 @@ function HTG_render_ad_manager_page() {
 		// Global settings
 		update_option( 'HTG_ad_labels_enable', isset( $_POST['HTG_ad_labels_enable'] ) ? 1 : 0 );
 		
-		// Global codes
-		update_option( 'HTG_ad_head_code', $_POST['HTG_ad_head_code'] ?? '' );
-		update_option( 'HTG_ad_footer_code', $_POST['HTG_ad_footer_code'] ?? '' );
+		// Global codes - sanitize with wp_unslash before storing
+		update_option( 'HTG_ad_head_code', wp_unslash( $_POST['HTG_ad_head_code'] ?? '' ) );
+		update_option( 'HTG_ad_footer_code', wp_unslash( $_POST['HTG_ad_footer_code'] ?? '' ) );
 		
 		// Header ads
-		update_option( 'HTG_ad_header_above', $_POST['HTG_ad_header_above'] ?? '' );
-		update_option( 'HTG_ad_header_below', $_POST['HTG_ad_header_below'] ?? '' );
+		update_option( 'HTG_ad_header_above', wp_unslash( $_POST['HTG_ad_header_above'] ?? '' ) );
+		update_option( 'HTG_ad_header_below', wp_unslash( $_POST['HTG_ad_header_below'] ?? '' ) );
 		
 		// Content ads
-		update_option( 'HTG_ad_before_content', $_POST['HTG_ad_before_content'] ?? '' );
-		update_option( 'HTG_ad_after_content', $_POST['HTG_ad_after_content'] ?? '' );
+		update_option( 'HTG_ad_before_content', wp_unslash( $_POST['HTG_ad_before_content'] ?? '' ) );
+		update_option( 'HTG_ad_after_content', wp_unslash( $_POST['HTG_ad_after_content'] ?? '' ) );
 		
 		// In-article
-		update_option( 'HTG_ad_in_article', $_POST['HTG_ad_in_article'] ?? '' );
+		update_option( 'HTG_ad_in_article', wp_unslash( $_POST['HTG_ad_in_article'] ?? '' ) );
 		update_option( 'HTG_ad_in_article_position', absint( $_POST['HTG_ad_in_article_position'] ?? 3 ) );
 		
 		// Sidebar
-		update_option( 'HTG_ad_sidebar_top', $_POST['HTG_ad_sidebar_top'] ?? '' );
-		update_option( 'HTG_ad_sidebar_sticky', $_POST['HTG_ad_sidebar_sticky'] ?? '' );
+		update_option( 'HTG_ad_sidebar_top', wp_unslash( $_POST['HTG_ad_sidebar_top'] ?? '' ) );
+		update_option( 'HTG_ad_sidebar_sticky', wp_unslash( $_POST['HTG_ad_sidebar_sticky'] ?? '' ) );
 		
 		// Homepage
-		update_option( 'HTG_ad_homepage_top', $_POST['HTG_ad_homepage_top'] ?? '' );
+		update_option( 'HTG_ad_homepage_top', wp_unslash( $_POST['HTG_ad_homepage_top'] ?? '' ) );
 		
 		// Footer
-		update_option( 'HTG_ad_before_footer', $_POST['HTG_ad_before_footer'] ?? '' );
+		update_option( 'HTG_ad_before_footer', wp_unslash( $_POST['HTG_ad_before_footer'] ?? '' ) );
 		
 		echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__( 'Settings saved.', 'adtech-pro' ) . '</p></div>';
 	}

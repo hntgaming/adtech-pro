@@ -320,7 +320,7 @@ function HTG_scripts() {
 
 	wp_enqueue_script( 'HTG-navigation', get_template_directory_uri() . '/js/navigation.js', array('jquery'), $theme_version, true );
 
-	wp_enqueue_script( 'HTG-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), $theme_version, true );
+	// skip-link-focus-fix.js removed — was IE-only, no longer needed
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -338,9 +338,7 @@ function HTG_scripts() {
 		wp_enqueue_style( 'jquery-magnific-popup', get_template_directory_uri() . '/css/magnific-popup.css', array(), '' );
 	}
 
-    wp_enqueue_script( 'html5shiv',get_template_directory_uri().'/js/html5shiv.min.js');
-    wp_script_add_data( 'html5shiv', 'conditional', 'lt IE 9' );	
-
+	// html5shiv removed — IE < 9 is no longer supported
 }
 add_action( 'wp_enqueue_scripts', 'HTG_scripts' );
 
@@ -528,46 +526,19 @@ function HTG_simple_ads_assets() {
 add_action( 'wp_enqueue_scripts', 'HTG_simple_ads_assets', 20 );
 
 /**
- * Generate dynamic CSS from customizer settings
+ * Generate dynamic CSS — Typography only
+ * 
+ * Color output is handled by the unified palette system in color-palettes.php.
+ * This function only outputs typography settings (fonts, font-size scale).
  */
 function HTG_dynamic_css() {
-	// Get color settings - DARK MODE GAMING PALETTE
-	// Matching the sleek footer dark aesthetic site-wide
-	$primary_color = get_theme_mod( 'HTG_primary_color', '#00d4aa' );       // Vibrant Teal (Primary accent)
-	$secondary_color = get_theme_mod( 'HTG_secondary_color', '#6c5ce7' );   // Electric Purple (Secondary accent)
-	$accent_color_1 = get_theme_mod( 'HTG_accent_color_1', '#ff6b6b' );     // Coral Red (CTA warmth)
-	$accent_color_2 = get_theme_mod( 'HTG_accent_color_2', '#ffd93d' );     // Gold (Highlights)
-	$heading_color = get_theme_mod( 'HTG_heading_color', '#ffffff' );       // White headings
-	$body_text_color = get_theme_mod( 'HTG_body_text_color', '#e0e0e0' );   // Light gray text
-	$link_color = get_theme_mod( 'HTG_link_color', '#00d4aa' );             // Teal links
-	$link_hover_color = get_theme_mod( 'HTG_link_hover_color', '#6c5ce7' ); // Purple hover
-	$body_bg = get_theme_mod( 'HTG_body_background_color', '#0a0a0a' );     // Deep black background
-	$content_bg = get_theme_mod( 'HTG_content_background_color', '#121212' ); // Slightly lighter content
-	$footer_bg = get_theme_mod( 'HTG_footer_background_color', '#000000' ); // Pure black footer
-	
 	// Typography
 	$heading_font = get_theme_mod( 'HTG_heading_font', 'Ubuntu' );
 	$body_font = get_theme_mod( 'HTG_body_font', 'Lato' );
 	$font_size_scale = get_theme_mod( 'HTG_font_size_scale', 100 );
 	
-	// Build CSS
 	$css = "
-	/* Dynamic H&T Gaming Brand Colors */
-	:root {
-		--HTG-primary: {$primary_color};
-		--HTG-secondary: {$secondary_color};
-		--HTG-accent-1: {$accent_color_1};
-		--HTG-accent-2: {$accent_color_2};
-		--HTG-heading: {$heading_color};
-		--HTG-body-text: {$body_text_color};
-		--HTG-link: {$link_color};
-		--HTG-link-hover: {$link_hover_color};
-		--HTG-body-bg: {$body_bg};
-		--HTG-content-bg: {$content_bg};
-		--HTG-footer-bg: {$footer_bg};
-	}
-	
-	/* Typography */
+	/* Typography Scale */
 	html {
 		font-size: {$font_size_scale}%;
 	}
@@ -597,92 +568,6 @@ function HTG_dynamic_css() {
 		}
 		";
 	}
-	
-	// Apply colors
-	$css .= "
-	/* Primary Brand Color Applications */
-	.main-navigation a:hover,
-	.main-navigation .current_page_item > a,
-	.main-navigation .current-menu-item > a,
-	button,
-	input[type='submit'],
-	input[type='button'],
-	.th-readmore,
-	.HTG-dark-mode-toggle,
-	.nav-links .current,
-	.page-numbers:hover,
-	.comment-reply-link:hover {
-		background-color: {$primary_color};
-	}
-	
-	/* Site Title - Text color, not background */
-	.site-title a {
-		color: {$primary_color};
-		background-color: transparent !important;
-	}
-	
-	/* Widget Titles - Border only, no background */
-	.widget-title,
-	.footer-widget-title {
-		border-bottom-color: {$primary_color};
-		background-color: transparent;
-	}
-	
-	.site-title a:hover,
-	a,
-	.cat-links a,
-	.breadcrumb-trail a,
-	.HTG-dark-mode-toggle:hover {
-		color: {$secondary_color};
-	}
-	
-	a:hover,
-	a:focus,
-	.entry-title a:hover,
-	.main-navigation a:hover,
-	button:hover,
-	input[type='submit']:hover,
-	.th-readmore:hover {
-		color: {$link_hover_color};
-		background-color: transparent;
-	}
-	
-	/* Headings */
-	h1, h2, h3, h4, h5, h6,
-	.entry-title,
-	.entry-title a {
-		color: {$heading_color};
-	}
-	
-	/* Body Text */
-	body,
-	p,
-	.entry-content {
-		color: {$body_text_color};
-	}
-	
-	/* Backgrounds */
-	body {
-		background-color: {$body_bg};
-	}
-	
-	.HTG-wrapper,
-	.site-header {
-		background-color: {$content_bg};
-	}
-	
-	.site-footer,
-	.footer-widget-area {
-		background-color: {$footer_bg};
-	}
-	
-	/* Widget Titles with Brand Color */
-	.widget-title,
-	.footer-widget-title,
-	.arc-page-title {
-		border-bottom-color: {$primary_color};
-	}
-	";
 	
 	wp_add_inline_style( 'HTG-style', $css );
 }

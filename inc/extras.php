@@ -7,6 +7,10 @@
  * @package HTG_AdTech_Pro
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Adds custom classes to the array of body classes.
  *
@@ -16,7 +20,7 @@
 function HTG_body_classes( $classes ) {
 	global $post;
 
-	if ( false == get_theme_mod( 'HTG_boxed_layout', true ) ) {
+	if ( false === get_theme_mod( 'HTG_boxed_layout', true ) ) {
 		$classes[] = 'HTG-full-width';
 	}
 
@@ -35,20 +39,20 @@ function HTG_body_classes( $classes ) {
 		$classes[] = esc_attr( $archive_sidebar_align );
 	}
 
-	if ( is_single() ) {
+	if ( is_single() && $post ) {
 		$post_specific_layout = get_post_meta( $post->ID, '_HTG_layout_meta', true );
-		if ( empty( $post_specific_layout ) || $post_specific_layout == 'th-default-layout' ) {
+		if ( empty( $post_specific_layout ) || $post_specific_layout === 'th-default-layout' ) {
 			$classes[] = esc_attr( get_option( 'post_sidebar_align', 'th-right-sidebar' ) );
 		} else {
 			$classes[] = esc_attr( $post_specific_layout );
 		}
 	}
 
-	if( is_page_template( 'template-magazine.php' ) ) {
+	if ( is_page_template( 'template-magazine.php' ) ) {
 		$classes[] = 'th-right-sidebar';
-	} elseif ( is_page() ) {
+	} elseif ( is_page() && $post ) {
 		$page_specific_layout = get_post_meta( $post->ID, '_HTG_layout_meta', true );
-		if ( empty( $page_specific_layout ) || $page_specific_layout == 'th-default-layout' ) {
+		if ( empty( $page_specific_layout ) || $page_specific_layout === 'th-default-layout' ) {
 			$classes[] = esc_attr( get_option( 'page_sidebar_align', 'th-right-sidebar' ) );
 		} else {
 			$classes[] = esc_attr( $page_specific_layout );
@@ -69,17 +73,7 @@ function HTG_pingback_header() {
 }
 add_action( 'wp_head', 'HTG_pingback_header' );
 
-/**
- * Add a custom excerpt length.
- */
-function HTG_excerpt_length( $length ) {
-	if( is_admin() ) {
-		return $length;
-	}
-	$custom_length = get_theme_mod( 'excerpt_length', 30 );
-	return absint( $custom_length );
-}
-add_filter( 'excerpt_length', 'HTG_excerpt_length', 999 );
+// Excerpt length is handled by inc/settings-output.php (HTG_update_excerpt_length)
 
 /**
  * Changes the excerpt more text.
@@ -118,19 +112,19 @@ function HTG_get_layout() {
 		$layout = $archive_sidebar_align;
 	}
 
-	if ( is_single() ) {
+	if ( is_single() && $post ) {
 		$post_specific_layout = get_post_meta( $post->ID, '_HTG_layout_meta', true );
-		if ( empty( $post_specific_layout ) || $post_specific_layout == 'th-default-layout' ) {
+		if ( empty( $post_specific_layout ) || $post_specific_layout === 'th-default-layout' ) {
 			$layout = get_option( 'post_sidebar_align', 'th-right-sidebar' );
 		} else {
 			$layout = $post_specific_layout;
 		}
 	}
-	if( is_page_template( 'template-magazine.php' ) ) {
+	if ( is_page_template( 'template-magazine.php' ) ) {
 		$layout = 'th-right-sidebar';
-	} elseif ( is_page() ) {
+	} elseif ( is_page() && $post ) {
 		$page_specific_layout = get_post_meta( $post->ID, '_HTG_layout_meta', true );
-		if ( empty( $page_specific_layout ) || $page_specific_layout == 'th-default-layout' ) {
+		if ( empty( $page_specific_layout ) || $page_specific_layout === 'th-default-layout' ) {
 			$layout = get_option( 'page_sidebar_align', 'th-right-sidebar' );
 		} else {
 			$layout = $page_specific_layout;

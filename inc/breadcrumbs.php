@@ -15,8 +15,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Display breadcrumbs
  */
 function HTG_breadcrumbs() {
-	// Check if breadcrumbs are enabled
-	if ( ! get_theme_mod( 'HTG_enable_breadcrumbs', true ) ) {
+	// Check if breadcrumbs are enabled (admin panel first, then theme_mod fallback)
+	$enabled = get_option( 'HTG_breadcrumbs_enable', null );
+	if ( $enabled === null ) {
+		$enabled = get_theme_mod( 'HTG_enable_breadcrumbs', true );
+	}
+	if ( ! $enabled ) {
+		return;
+	}
+
+	// Allow filtering
+	if ( ! apply_filters( 'HTG_display_breadcrumbs', true ) ) {
 		return;
 	}
 
@@ -25,7 +34,8 @@ function HTG_breadcrumbs() {
 		return;
 	}
 
-	$separator = ' <span class="breadcrumb-separator">/</span> ';
+	$sep_char = apply_filters( 'HTG_breadcrumb_separator', '/' );
+	$separator = ' <span class="breadcrumb-separator">' . esc_html( $sep_char ) . '</span> ';
 	$home_title = __( 'Home', 'adtech-pro' );
 
 	// Start breadcrumb

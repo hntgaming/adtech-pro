@@ -1,23 +1,36 @@
 /**
  * Engagement Features Styles
  * Quiz, Accordion, Newsletter, Author Box, Progress Bar
+ * Dark Theme — matches site-wide #0a0a0a palette
  *
  * @package HTG
- * @since 2.1.0
+ * @since 2.5.4
  */
+
+/* CSS Variables — inherit from main design tokens in style.css */
+:root {
+	--htg-engagement-primary: var(--htg-navy, #1a1f36);
+	--htg-engagement-secondary: var(--htg-accent, #00d4aa);
+	--htg-engagement-bg: var(--htg-bg-card, #121212);
+	--htg-engagement-card: var(--htg-bg-elevated, #1a1a1a);
+	--htg-engagement-border: var(--htg-border, #2a2a2a);
+	--htg-engagement-text: var(--htg-text-body, #e0e0e0);
+	--htg-engagement-muted: var(--htg-text-muted, #b0b0b0);
+	--htg-engagement-heading: var(--htg-text-primary, #ffffff);
+}
 
 /* ===========================================
    Interactive Quiz System
    =========================================== */
 
 .HTG-quiz-container {
-	background: linear-gradient(135deg, #1a1a1a 0%, #121212 100%);
+	background: linear-gradient(135deg, var(--htg-engagement-card) 0%, var(--htg-engagement-bg) 100%);
 	border-radius: 12px;
 	padding: 30px;
 	margin: 40px 0;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 	position: relative;
-	border: 2px solid #2a2a2a;
+	border: 2px solid var(--htg-engagement-border);
 }
 
 .HTG-quiz-header {
@@ -35,7 +48,7 @@
 .HTG-quiz-question {
 	font-size: 22px;
 	font-weight: 700;
-	/* Uses global heading color */
+	color: var(--htg-engagement-heading);
 	margin: 0;
 	line-height: 1.3;
 }
@@ -47,14 +60,13 @@
 }
 
 .HTG-quiz-option {
-	background: #1a1a1a;
-	border: 2px solid #2a2a2a;
+	background: var(--htg-engagement-card);
+	border: 2px solid var(--htg-engagement-border);
 	border-radius: 8px;
 	padding: 18px 20px;
-	color: #e0e0e0;
+	color: var(--htg-engagement-text);
 	font-size: 16px;
 	font-weight: 600;
-	/* Uses global text color */
 	cursor: pointer;
 	transition: all 0.3s ease;
 	display: flex;
@@ -65,8 +77,8 @@
 }
 
 .HTG-quiz-option:hover {
-	border-color: var(--HTG-primary, #1a1f36);
-	background: var(--HTG-primary, #1a1f36);
+	border-color: var(--htg-engagement-secondary);
+	background: var(--htg-engagement-primary);
 	color: #ffffff;
 	transform: translateX(4px);
 }
@@ -88,15 +100,15 @@
 }
 
 .HTG-quiz-result {
-	background: #1a1a1a;
+	background: var(--htg-engagement-card);
 	border-radius: 8px;
 	padding: 15px;
-	border: 2px solid #2a2a2a;
+	border: 2px solid var(--htg-engagement-border);
 }
 
 .HTG-quiz-result.user-choice {
-	border-color: var(--HTG-primary, #1a1f36);
-	background: rgba(36, 11, 80, 0.05);
+	border-color: var(--htg-engagement-secondary);
+	background: rgba(0, 212, 170, 0.08);
 }
 
 .HTG-quiz-result-header {
@@ -108,26 +120,26 @@
 
 .HTG-quiz-result-text {
 	font-weight: 600;
-	/* Uses global text color */
+	color: var(--htg-engagement-text);
 	font-size: 15px;
 }
 
 .HTG-quiz-your-vote {
 	display: inline-block;
 	margin-left: 8px;
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-secondary);
 	font-size: 13px;
 }
 
 .HTG-quiz-result-percentage {
 	font-size: 18px;
 	font-weight: 700;
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-secondary);
 }
 
 .HTG-quiz-result-bar {
 	height: 8px;
-	background: #2a2a2a;
+	background: var(--htg-engagement-border);
 	border-radius: 4px;
 	overflow: hidden;
 	margin-bottom: 8px;
@@ -135,14 +147,14 @@
 
 .HTG-quiz-result-fill {
 	height: 100%;
-	background: linear-gradient(90deg, var(--HTG-primary, #1a1f36) 0%, var(--HTG-secondary, #00d4aa) 100%);
+	background: linear-gradient(90deg, var(--htg-engagement-primary) 0%, var(--htg-engagement-secondary) 100%);
 	border-radius: 4px;
 	transition: width 0.8s ease;
 }
 
 .HTG-quiz-result-votes {
 	font-size: 12px;
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 }
 
 .HTG-quiz-footer {
@@ -150,17 +162,17 @@
 	justify-content: space-between;
 	align-items: center;
 	padding-top: 20px;
-	border-top: 1px solid #2a2a2a;
+	border-top: 1px solid var(--htg-engagement-border);
 	font-size: 14px;
 }
 
 .HTG-quiz-total-votes {
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 	font-weight: 600;
 }
 
 .HTG-quiz-prompt {
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-secondary);
 	font-weight: 600;
 }
 
@@ -175,7 +187,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: rgba(255, 255, 255, 0.95);
+	background: rgba(10, 10, 10, 0.92);
 	border-radius: 12px;
 	display: flex;
 	align-items: center;
@@ -185,8 +197,8 @@
 .HTG-quiz-spinner {
 	width: 40px;
 	height: 40px;
-	border: 4px solid #2a2a2a;
-	border-top-color: #00d4aa;
+	border: 4px solid var(--htg-engagement-border);
+	border-top-color: var(--htg-engagement-secondary);
 	border-radius: 50%;
 	animation: HTG-spin 0.8s linear infinite;
 }
@@ -204,8 +216,8 @@
 }
 
 .HTG-accordion-item {
-	background: #1a1a1a;
-	border: 1px solid #2a2a2a;
+	background: var(--htg-engagement-card);
+	border: 1px solid var(--htg-engagement-border);
 	border-radius: 8px;
 	margin-bottom: 12px;
 	overflow: hidden;
@@ -213,18 +225,18 @@
 }
 
 .HTG-accordion-item:hover {
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .HTG-accordion-item.is-open {
-	border-color: var(--HTG-primary, #1a1f36);
+	border-color: var(--htg-engagement-secondary);
 }
 
 .HTG-accordion-header {
-	background: #0a0a0a;
+	background: #0f0f0f;
 	border: none;
 	padding: 18px 20px;
-	color: #e0e0e0;
+	color: var(--htg-engagement-text);
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -233,21 +245,20 @@
 	transition: all 0.3s ease;
 	font-size: 16px;
 	font-weight: 600;
-	/* Uses global text color */
 	text-align: left;
 }
 
 .HTG-accordion-item.is-open .HTG-accordion-header {
-	background: var(--HTG-primary, #1a1f36);
+	background: var(--htg-engagement-primary);
 	color: #ffffff;
 }
 
 .HTG-accordion-header:hover {
-	background: #2a2a2a;
+	background: var(--htg-engagement-border);
 }
 
 .HTG-accordion-item.is-open .HTG-accordion-header:hover {
-	background: #3d1573;
+	background: #0d1a3d;
 }
 
 .HTG-accordion-icon {
@@ -267,14 +278,14 @@
 
 .HTG-accordion-body {
 	padding: 20px;
-	color: #475569;
+	color: var(--htg-engagement-text);
 	line-height: 1.7;
 }
 
 /* Accordion Styles */
 .HTG-accordion-minimal .HTG-accordion-item {
 	border: none;
-	border-bottom: 1px solid #2a2a2a;
+	border-bottom: 1px solid var(--htg-engagement-border);
 	border-radius: 0;
 }
 
@@ -293,11 +304,11 @@
    =========================================== */
 
 .HTG-newsletter-box {
-	background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+	background: linear-gradient(135deg, var(--htg-engagement-card) 0%, var(--htg-engagement-bg) 100%);
 	border-radius: 12px;
 	padding: 40px;
 	margin: 40px 0;
-	border: 2px solid #2a2a2a;
+	border: 2px solid var(--htg-engagement-border);
 	display: flex;
 	gap: 30px;
 	align-items: center;
@@ -307,7 +318,7 @@
 	flex-shrink: 0;
 	width: 80px;
 	height: 80px;
-	background: var(--HTG-primary, #1a1f36);
+	background: var(--htg-engagement-primary);
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -327,13 +338,13 @@
 .HTG-newsletter-title {
 	font-size: 24px;
 	font-weight: 700;
-	/* Uses global heading color */
+	color: var(--htg-engagement-heading);
 	margin: 0 0 10px;
 }
 
 .HTG-newsletter-description {
 	font-size: 15px;
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 	margin: 0 0 20px;
 }
 
@@ -346,22 +357,24 @@
 .HTG-newsletter-input {
 	flex: 1;
 	padding: 14px 20px;
-	border: 2px solid #2a2a2a;
+	border: 2px solid var(--htg-engagement-border);
 	border-radius: 8px;
 	font-size: 15px;
 	transition: all 0.3s ease;
+	background: #0a0a0a;
+	color: var(--htg-engagement-text);
 }
 
 .HTG-newsletter-input:focus {
-	border-color: var(--HTG-primary, #1a1f36);
+	border-color: var(--htg-engagement-secondary);
 	outline: none;
-	box-shadow: 0 0 0 3px rgba(36, 11, 80, 0.1);
+	box-shadow: 0 0 0 3px rgba(0, 212, 170, 0.15);
 }
 
 .HTG-newsletter-button {
 	padding: 14px 30px;
-	background: var(--HTG-primary, #1a1f36);
-	color: #ffffff;
+	background: var(--htg-engagement-secondary);
+	color: #0a0a0a;
 	border: none;
 	border-radius: 8px;
 	font-size: 15px;
@@ -374,9 +387,10 @@
 }
 
 .HTG-newsletter-button:hover {
-	background: #3d1573;
+	background: #00e6b8;
 	transform: translateY(-2px);
-	box-shadow: 0 4px 12px rgba(36, 11, 80, 0.3);
+	box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
+	color: #0a0a0a;
 }
 
 .HTG-newsletter-message {
@@ -388,20 +402,20 @@
 }
 
 .HTG-newsletter-message.success {
-	background: #d1fae5;
-	color: #065f46;
-	border: 1px solid #10b981;
+	background: rgba(16, 185, 129, 0.1);
+	color: #10b981;
+	border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .HTG-newsletter-message.error {
-	background: #fef2f2;
-	color: #991b1b;
-	border: 1px solid #ef4444;
+	background: rgba(239, 68, 68, 0.1);
+	color: #ef4444;
+	border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
 .HTG-newsletter-privacy {
 	font-size: 12px;
-	color: #94a3b8;
+	color: #888888;
 	margin: 0;
 }
 
@@ -415,9 +429,9 @@
 }
 
 .HTG-newsletter-boxed {
-	background: var(--HTG-primary, #1a1f36);
+	background: var(--htg-engagement-primary);
 	color: #ffffff;
-	border-color: var(--HTG-primary, #1a1f36);
+	border-color: var(--htg-engagement-primary);
 }
 
 .HTG-newsletter-boxed .HTG-newsletter-title,
@@ -431,15 +445,16 @@
 
 .HTG-newsletter-boxed .HTG-newsletter-button {
 	background: #ffffff;
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-primary);
 }
 
 .HTG-newsletter-boxed .HTG-newsletter-button:hover {
-	background: var(--HTG-secondary, #00d4aa);
+	background: var(--htg-engagement-secondary);
+	color: #0a0a0a;
 }
 
 .HTG-newsletter-gradient {
-	background: linear-gradient(135deg, var(--HTG-primary, #1a1f36) 0%, #3d1573 100%);
+	background: linear-gradient(135deg, var(--htg-engagement-primary) 0%, #0d1a3d 100%);
 	color: #ffffff;
 	border: none;
 }
@@ -454,13 +469,13 @@
    =========================================== */
 
 .HTG-author-box {
-	background: #f8f9fa;
+	background: var(--htg-engagement-card);
 	border-radius: 12px;
 	padding: 30px;
 	margin: 40px 0;
 	display: flex;
 	gap: 25px;
-	border: 2px solid #2a2a2a;
+	border: 2px solid var(--htg-engagement-border);
 }
 
 .HTG-author-avatar {
@@ -471,8 +486,8 @@
 	border-radius: 50%;
 	width: 120px;
 	height: 120px;
-	border: 4px solid #ffffff;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	border: 4px solid var(--htg-engagement-border);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .HTG-author-info {
@@ -490,27 +505,28 @@
 	font-size: 22px;
 	font-weight: 700;
 	margin: 0 0 8px;
+	color: var(--htg-engagement-heading);
 }
 
 .HTG-author-name a {
-	/* Uses global heading color */
+	color: var(--htg-engagement-heading);
 	text-decoration: none;
 	transition: color 0.3s ease;
 }
 
 .HTG-author-name a:hover {
-	/* Uses global hover color */
+	color: var(--htg-engagement-secondary);
 }
 
 .HTG-author-title {
 	font-size: 14px;
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 	font-weight: 500;
 }
 
 .HTG-author-job-title {
 	font-weight: 600;
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-secondary);
 }
 
 .HTG-author-stats {
@@ -519,21 +535,21 @@
 
 .HTG-author-post-count {
 	display: inline-block;
-	background: #ffffff;
+	background: #0a0a0a;
 	padding: 8px 15px;
 	border-radius: 20px;
 	font-size: 13px;
-	color: #64748b;
-	border: 1px solid #2a2a2a;
+	color: var(--htg-engagement-muted);
+	border: 1px solid var(--htg-engagement-border);
 }
 
 .HTG-author-post-count strong {
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-secondary);
 	font-size: 16px;
 }
 
 .HTG-author-bio {
-	color: #475569;
+	color: var(--htg-engagement-text);
 	line-height: 1.7;
 	margin-bottom: 20px;
 }
@@ -547,7 +563,7 @@
 	justify-content: space-between;
 	align-items: center;
 	padding-top: 15px;
-	border-top: 1px solid #2a2a2a;
+	border-top: 1px solid var(--htg-engagement-border);
 }
 
 .HTG-author-social {
@@ -559,12 +575,12 @@
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
-	background: #ffffff;
-	border: 2px solid #2a2a2a;
+	background: #0a0a0a;
+	border: 2px solid var(--htg-engagement-border);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 	text-decoration: none;
 	font-size: 14px;
 	font-weight: 700;
@@ -572,14 +588,14 @@
 }
 
 .HTG-author-social-link:hover {
-	background: var(--HTG-primary, #1a1f36);
-	border-color: var(--HTG-primary, #1a1f36);
-	color: #ffffff;
+	background: var(--htg-engagement-secondary);
+	border-color: var(--htg-engagement-secondary);
+	color: #0a0a0a;
 	transform: translateY(-2px);
 }
 
 .HTG-author-link {
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-secondary);
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 14px;
@@ -590,7 +606,7 @@
 }
 
 .HTG-author-link:hover {
-	color: #3d1573;
+	color: #00e6b8;
 	gap: 12px;
 }
 
@@ -602,12 +618,12 @@
 }
 
 .HTG-author-box-card {
-	background: #ffffff;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	background: var(--htg-engagement-card);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .HTG-author-box-gradient {
-	background: linear-gradient(135deg, var(--HTG-primary, #1a1f36) 0%, #3d1573 100%);
+	background: linear-gradient(135deg, var(--htg-engagement-primary) 0%, #0d1a3d 100%);
 	color: #ffffff;
 	border: none;
 }
@@ -618,7 +634,7 @@
 }
 
 .HTG-author-box-gradient .HTG-author-title {
-	color: var(--HTG-secondary, #00d4aa);
+	color: var(--htg-engagement-secondary);
 }
 
 /* ===========================================
@@ -631,13 +647,13 @@
 	left: 0;
 	width: 100%;
 	height: 4px;
-	background: rgba(0, 0, 0, 0.05);
+	background: rgba(255, 255, 255, 0.05);
 	z-index: 9999;
 }
 
 .HTG-progress-fill {
 	height: 100%;
-	background: linear-gradient(90deg, var(--HTG-primary, #1a1f36) 0%, var(--HTG-secondary, #00d4aa) 100%);
+	background: linear-gradient(90deg, var(--htg-engagement-primary) 0%, var(--htg-engagement-secondary) 100%);
 	width: 0%;
 	transition: width 0.1s ease;
 }
@@ -676,7 +692,7 @@
 }
 
 /* ===========================================
-   AJAX Post Grid & Filters (innovation4world inspired)
+   AJAX Post Grid & Filters
    =========================================== */
 
 .HTG-ajax-post-grid-container {
@@ -691,7 +707,7 @@
 .HTG-filters-title {
 	font-size: 28px;
 	font-weight: 700;
-	/* Uses global heading color */
+	color: var(--htg-engagement-heading);
 	margin: 0 0 25px;
 }
 
@@ -704,26 +720,26 @@
 
 .HTG-filter-btn {
 	padding: 12px 24px;
-	background: #ffffff;
-	border: 2px solid #2a2a2a;
+	background: var(--htg-engagement-card);
+	border: 2px solid var(--htg-engagement-border);
 	border-radius: 8px;
 	font-size: 15px;
 	font-weight: 600;
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 	cursor: pointer;
 	transition: all 0.3s ease;
 }
 
 .HTG-filter-btn:hover {
-	border-color: var(--HTG-primary, #1a1f36);
-	color: var(--HTG-primary, #1a1f36);
+	border-color: var(--htg-engagement-secondary);
+	color: var(--htg-engagement-secondary);
 	transform: translateY(-2px);
 }
 
 .HTG-filter-btn.active {
-	background: var(--HTG-primary, #1a1f36);
-	border-color: var(--HTG-primary, #1a1f36);
-	color: #ffffff;
+	background: var(--htg-engagement-secondary);
+	border-color: var(--htg-engagement-secondary);
+	color: #0a0a0a;
 }
 
 .HTG-filter-count {
@@ -773,10 +789,10 @@
 }
 
 .HTG-ajax-post-card {
-	background: #ffffff;
+	background: var(--htg-engagement-card);
 	border-radius: 12px;
 	overflow: hidden;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	border: 1px solid var(--htg-engagement-border);
 	transition: all 0.3s ease;
 	display: flex;
 	flex-direction: column;
@@ -784,7 +800,8 @@
 
 .HTG-ajax-post-card:hover {
 	transform: translateY(-6px);
-	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+	border-color: var(--htg-engagement-secondary);
 }
 
 .HTG-ajax-post-thumbnail {
@@ -811,7 +828,7 @@
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
-	background: rgba(36, 11, 80, 0.9);
+	background: rgba(26, 31, 54, 0.9);
 	color: #ffffff;
 	display: flex;
 	align-items: center;
@@ -841,13 +858,13 @@
 }
 
 .HTG-ajax-post-title a {
-	/* Uses global heading color */
+	color: var(--htg-engagement-heading);
 	text-decoration: none;
 	transition: color 0.3s ease;
 }
 
 .HTG-ajax-post-title a:hover {
-	/* Uses global hover color */
+	color: var(--htg-engagement-secondary);
 }
 
 .HTG-ajax-post-meta {
@@ -855,7 +872,7 @@
 	flex-wrap: wrap;
 	gap: 15px;
 	font-size: 13px;
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 	margin-bottom: 15px;
 }
 
@@ -872,7 +889,7 @@
 }
 
 .HTG-ajax-post-excerpt {
-	color: #475569;
+	color: #cccccc;
 	font-size: 14px;
 	line-height: 1.6;
 	margin-bottom: 15px;
@@ -883,7 +900,7 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	color: var(--HTG-primary, #1a1f36);
+	color: var(--htg-engagement-secondary);
 	font-weight: 600;
 	font-size: 14px;
 	text-decoration: none;
@@ -892,7 +909,7 @@
 }
 
 .HTG-ajax-post-link:hover {
-	color: #3d1573;
+	color: #00e6b8;
 	gap: 12px;
 }
 
@@ -909,8 +926,8 @@
 
 .HTG-load-more-btn {
 	padding: 16px 40px;
-	background: var(--HTG-primary, #1a1f36);
-	color: #ffffff;
+	background: var(--htg-engagement-secondary);
+	color: #0a0a0a;
 	border: none;
 	border-radius: 8px;
 	font-size: 16px;
@@ -923,13 +940,14 @@
 }
 
 .HTG-load-more-btn:hover {
-	background: #3d1573;
+	background: #00e6b8;
 	transform: translateY(-2px);
-	box-shadow: 0 4px 12px rgba(36, 11, 80, 0.3);
+	box-shadow: 0 4px 12px rgba(0, 212, 170, 0.3);
 }
 
 .HTG-load-more-btn:disabled {
-	background: #94a3b8;
+	background: #333333;
+	color: #666666;
 	cursor: not-allowed;
 	transform: none;
 }
@@ -938,8 +956,8 @@
 	display: inline-block;
 	width: 18px;
 	height: 18px;
-	border: 3px solid rgba(255, 255, 255, 0.3);
-	border-top-color: #ffffff;
+	border: 3px solid rgba(0, 0, 0, 0.2);
+	border-top-color: #0a0a0a;
 	border-radius: 50%;
 	animation: HTG-spin 0.8s linear infinite;
 }
@@ -947,14 +965,15 @@
 .HTG-no-posts {
 	text-align: center;
 	padding: 60px 20px;
-	background: #f8f9fa;
+	background: var(--htg-engagement-card);
+	border: 1px solid var(--htg-engagement-border);
 	border-radius: 12px;
 	margin: 20px 0;
 }
 
 .HTG-no-posts p {
 	font-size: 18px;
-	color: #64748b;
+	color: var(--htg-engagement-muted);
 	margin: 0;
 }
 
@@ -976,10 +995,9 @@
 	align-items: center;
 	gap: 12px;
 	padding: 16px 20px;
-	background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-	border: 2px solid #f87171;
+	background: rgba(239, 68, 68, 0.1);
+	border: 2px solid rgba(239, 68, 68, 0.3);
 	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(248, 113, 113, 0.2);
 }
 
 .HTG-error-icon {
@@ -991,7 +1009,7 @@
 .HTG-error-text {
 	font-size: 15px;
 	font-weight: 500;
-	color: #991b1b;
+	color: #ef4444;
 	line-height: 1.4;
 }
 
@@ -1020,4 +1038,3 @@
 		display: none;
 	}
 }
-

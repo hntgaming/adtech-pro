@@ -195,7 +195,7 @@ class HTG_Settings_Pages {
 										<label for="HTG_accent_color_1"><?php esc_html_e( 'Accent Color 1', 'adtech-pro' ); ?></label>
 									</th>
 									<td>
-										<input type="text" name="HTG_accent_color_1" id="HTG_accent_color_1" value="<?php echo esc_attr( $accent_color_1 ); ?>" class="HTG-color-picker" data-default-color="#6c5ce7" />
+										<input type="text" name="HTG_accent_color_1" id="HTG_accent_color_1" value="<?php echo esc_attr( $accent_color_1 ); ?>" class="HTG-color-picker" data-default-color="#00d4aa" />
 										<p class="description"><?php esc_html_e( 'Additional accent for categories and badges.', 'adtech-pro' ); ?></p>
 									</td>
 								</tr>

@@ -18,6 +18,32 @@ function HTG_get_color_palettes() {
 	return array(
 		
 		// =============================================
+		// HTG DARK (DEFAULT) - Clean teal on dark gray
+		// Matches the master design token system in style.css
+		// Professional, modern, readable
+		// =============================================
+		'htg_dark' => array(
+			'name'        => __( 'HTG Dark', 'adtech-pro' ),
+			'description' => __( 'Default professional dark theme', 'adtech-pro' ),
+			// Accents - Teal spectrum
+			'primary'     => '#00d4aa',  // Teal (--htg-accent)
+			'secondary'   => '#00b894',  // Deep teal (--htg-accent-hover)
+			'accent1'     => '#1a1f36',  // Dark navy (--htg-navy)
+			'accent2'     => '#00b894',  // Green teal
+			// Text - High readability
+			'heading'     => '#ffffff',
+			'body_text'   => '#e0e0e0',
+			'link'        => '#00d4aa',
+			'link_hover'  => '#00b894',
+			// Backgrounds - Dark grays
+			'body_bg'     => '#0a0a0a',
+			'content_bg'  => '#121212',
+			'footer_bg'   => '#000000',
+			'card_bg'     => '#1a1a1a',
+			'border'      => '#2a2a2a',
+		),
+		
+		// =============================================
 		// NEON CYBER - Vibrant teal/purple on pure black
 		// Modern, gaming, tech startups
 		// =============================================
@@ -225,7 +251,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 
 	// Scheme selector
 	$wp_customize->add_setting( 'HTG_color_scheme', array(
-		'default'           => 'neon_cyber',
+		'default'           => 'htg_dark',
 		'sanitize_callback' => 'sanitize_text_field',
 		'transport'         => 'refresh',
 	) );
@@ -255,7 +281,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 
 	// Primary Color
 	$wp_customize->add_setting( 'HTG_custom_primary', array(
-		'default'           => '#00ffd5',
+		'default'           => '#00d4aa',
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_primary', array(
@@ -265,7 +291,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 
 	// Secondary Color
 	$wp_customize->add_setting( 'HTG_custom_secondary', array(
-		'default'           => '#bf00ff',
+		'default'           => '#00b894',
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_secondary', array(
@@ -275,7 +301,7 @@ function HTG_color_palette_customizer( $wp_customize ) {
 
 	// Background
 	$wp_customize->add_setting( 'HTG_custom_body_bg', array(
-		'default'           => '#000000',
+		'default'           => '#0a0a0a',
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_body_bg', array(
@@ -285,12 +311,23 @@ function HTG_color_palette_customizer( $wp_customize ) {
 
 	// Content Background
 	$wp_customize->add_setting( 'HTG_custom_content_bg', array(
-		'default'           => '#0a0a0a',
+		'default'           => '#121212',
 		'sanitize_callback' => 'sanitize_hex_color',
 	) );
 	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_content_bg', array(
 		'label'   => __( 'Content Background', 'adtech-pro' ),
 		'section' => 'HTG_custom_colors',
+	) ) );
+
+	// Widget / Card Background
+	$wp_customize->add_setting( 'HTG_custom_card_bg', array(
+		'default'           => '#1a1a1a',
+		'sanitize_callback' => 'sanitize_hex_color',
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'HTG_custom_card_bg', array(
+		'label'       => __( 'Widget / Card Background', 'adtech-pro' ),
+		'description' => __( 'Background for widgets, cards, and elevated surfaces', 'adtech-pro' ),
+		'section'     => 'HTG_custom_colors',
 	) ) );
 
 	// Typography Section
@@ -339,24 +376,24 @@ add_action( 'customize_register', 'HTG_color_palette_customizer' );
  * Get current colors based on selected scheme
  */
 function HTG_get_current_colors() {
-	$scheme = get_theme_mod( 'HTG_color_scheme', 'neon_cyber' );
+	$scheme = get_theme_mod( 'HTG_color_scheme', 'htg_dark' );
 	$palettes = HTG_get_color_palettes();
 	
 	if ( 'custom' === $scheme ) {
 		return array(
-			'primary'     => get_theme_mod( 'HTG_custom_primary', '#00ffd5' ),
-			'secondary'   => get_theme_mod( 'HTG_custom_secondary', '#bf00ff' ),
-			'accent1'     => get_theme_mod( 'HTG_custom_primary', '#00ffd5' ),
-			'accent2'     => get_theme_mod( 'HTG_custom_secondary', '#bf00ff' ),
+			'primary'     => get_theme_mod( 'HTG_custom_primary', '#00d4aa' ),
+			'secondary'   => get_theme_mod( 'HTG_custom_secondary', '#00b894' ),
+			'accent1'     => '#1a1f36',
+			'accent2'     => get_theme_mod( 'HTG_custom_secondary', '#00b894' ),
 			'heading'     => '#ffffff',
-			'body_text'   => '#c0c0c0',
-			'link'        => get_theme_mod( 'HTG_custom_primary', '#00ffd5' ),
-			'link_hover'  => get_theme_mod( 'HTG_custom_secondary', '#bf00ff' ),
-			'body_bg'     => get_theme_mod( 'HTG_custom_body_bg', '#000000' ),
-			'content_bg'  => get_theme_mod( 'HTG_custom_content_bg', '#0a0a0a' ),
-			'footer_bg'   => get_theme_mod( 'HTG_custom_body_bg', '#000000' ),
-			'card_bg'     => get_theme_mod( 'HTG_custom_content_bg', '#0a0a0a' ),
-			'border'      => '#1a1a1a',
+			'body_text'   => '#e0e0e0',
+			'link'        => get_theme_mod( 'HTG_custom_primary', '#00d4aa' ),
+			'link_hover'  => get_theme_mod( 'HTG_custom_secondary', '#00b894' ),
+			'body_bg'     => get_theme_mod( 'HTG_custom_body_bg', '#0a0a0a' ),
+			'content_bg'  => get_theme_mod( 'HTG_custom_content_bg', '#121212' ),
+			'footer_bg'   => get_theme_mod( 'HTG_custom_body_bg', '#0a0a0a' ),
+			'card_bg'     => get_theme_mod( 'HTG_custom_card_bg', '#1a1a1a' ),
+			'border'      => '#2a2a2a',
 		);
 	}
 	
@@ -364,18 +401,41 @@ function HTG_get_current_colors() {
 		return $palettes[ $scheme ];
 	}
 	
-	return $palettes['neon_cyber'];
+	return $palettes['htg_dark'];
 }
 
 /**
- * Output CSS variables and comprehensive styles
+ * Output CSS variables that bridge palette colors to style.css design tokens.
+ * 
+ * This is the SINGLE source of truth for runtime color variables.
+ * style.css uses these variables throughout — no hardcoded rules needed here.
  */
 function HTG_output_color_scheme() {
 	$c = HTG_get_current_colors();
 	?>
 	<style id="htg-color-scheme">
-	/* === CSS VARIABLES === */
+	/* === Design Token Bridge ===
+	   Maps active palette colors to the master design tokens used in style.css.
+	   This block overrides the :root defaults in style.css with the active palette. */
 	:root {
+		/* --- Accent Colors --- */
+		--htg-accent: <?php echo esc_attr( $c['primary'] ); ?>;
+		--htg-accent-hover: <?php echo esc_attr( $c['secondary'] ); ?>;
+		--htg-navy: <?php echo esc_attr( $c['accent1'] ); ?>;
+
+		/* --- Text Colors --- */
+		--htg-text-primary: <?php echo esc_attr( $c['heading'] ); ?>;
+		--htg-text-body: <?php echo esc_attr( $c['body_text'] ); ?>;
+
+		/* --- Background Colors --- */
+		--htg-bg-primary: <?php echo esc_attr( $c['body_bg'] ); ?>;
+		--htg-bg-card: <?php echo esc_attr( $c['content_bg'] ); ?>;
+		--htg-bg-elevated: <?php echo esc_attr( $c['card_bg'] ); ?>;
+
+		/* --- Border --- */
+		--htg-border: <?php echo esc_attr( $c['border'] ); ?>;
+
+		/* --- Legacy variable aliases (backward compat) --- */
 		--htg-primary: <?php echo esc_attr( $c['primary'] ); ?>;
 		--htg-secondary: <?php echo esc_attr( $c['secondary'] ); ?>;
 		--htg-accent-1: <?php echo esc_attr( $c['accent1'] ); ?>;
@@ -388,416 +448,45 @@ function HTG_output_color_scheme() {
 		--htg-content-bg: <?php echo esc_attr( $c['content_bg'] ); ?>;
 		--htg-footer-bg: <?php echo esc_attr( $c['footer_bg'] ); ?>;
 		--htg-card-bg: <?php echo esc_attr( $c['card_bg'] ); ?>;
-		--htg-border: <?php echo esc_attr( $c['border'] ); ?>;
 	}
-	
-	/* ========================================
-	   GLOBAL BACKGROUNDS
-	   ======================================== */
-	body,
-	html {
-		background-color: <?php echo esc_attr( $c['body_bg'] ); ?> !important;
-		color: <?php echo esc_attr( $c['body_text'] ); ?>;
+
+	/* === Critical Overrides ===
+	   Minimal set of rules that MUST use !important to override
+	   third-party plugins and WordPress core inline styles. */
+
+	/* Force dark backgrounds on structural wrappers */
+	body, html {
+		background-color: var(--htg-bg-primary) !important;
+		color: var(--htg-text-body);
 	}
-	
-	#page,
-	.site,
-	.site-content,
-	.hm-container,
-	#content {
-		background-color: <?php echo esc_attr( $c['body_bg'] ); ?> !important;
+
+	#page, .site, .site-content, .hm-container, #content {
+		background-color: var(--htg-bg-primary) !important;
 	}
-	
-	/* Content areas */
-	article,
-	.hentry,
-	.widget,
-	.entry-content,
-	.comment-body,
-	.hm-slider-wrapper,
-	.cat-block-wrap,
-	.slider-wrap,
-	.hm-featured-slider {
-		background-color: <?php echo esc_attr( $c['content_bg'] ); ?>;
+
+	/* Header & navigation backgrounds */
+	.site-header, #masthead {
+		background-color: var(--htg-bg-primary) !important;
 	}
-	
-	/* Cards */
-	.hm-cat-box,
-	.hm-grid-box,
-	.hm-list-box,
-	.entry-header,
-	.author-box,
-	.related-posts,
-	.post-navigation,
-	.comments-area,
-	.navigation,
-	.pagination {
-		background-color: <?php echo esc_attr( $c['card_bg'] ); ?>;
-		border-color: <?php echo esc_attr( $c['border'] ); ?>;
+
+	.main-navigation, .hm-main-navigation, #site-navigation {
+		background-color: var(--htg-bg-card) !important;
 	}
-	
-	/* ========================================
-	   HEADER & TOP BAR
-	   ======================================== */
-	.top-bar {
-		background-color: <?php echo esc_attr( $c['content_bg'] ); ?> !important;
-		border-bottom-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-	}
-	
-	.top-bar a,
-	.top-bar-date {
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	.top-bar a:hover {
-		color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	.site-header,
-	#masthead {
-		background-color: <?php echo esc_attr( $c['body_bg'] ); ?> !important;
-		border-bottom-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-	}
-	
-	.site-branding .site-title a,
-	.site-title a {
-		color: <?php echo esc_attr( $c['heading'] ); ?> !important;
-	}
-	
-	.site-description {
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	/* ========================================
-	   NAVIGATION
-	   ======================================== */
-	.main-navigation,
-	.hm-main-navigation,
-	#site-navigation {
-		background-color: <?php echo esc_attr( $c['content_bg'] ); ?> !important;
-	}
-	
-	.main-navigation a,
-	.main-navigation li a,
-	.hm-main-navigation a {
-		color: <?php echo esc_attr( $c['heading'] ); ?> !important;
-	}
-	
-	.main-navigation a:hover,
-	.main-navigation li:hover > a,
-	.main-navigation .current_page_item > a,
-	.main-navigation .current-menu-item > a,
-	.main-navigation .current-menu-ancestor > a {
-		color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		background-color: transparent !important;
-	}
-	
-	.main-navigation ul ul,
-	.main-navigation .sub-menu {
-		background-color: <?php echo esc_attr( $c['card_bg'] ); ?> !important;
-		border-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-	}
-	
-	.main-navigation ul ul a {
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	.main-navigation ul ul a:hover {
-		color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		background-color: <?php echo esc_attr( $c['content_bg'] ); ?> !important;
-	}
-	
-	/* ========================================
-	   TYPOGRAPHY
-	   ======================================== */
-	h1, h2, h3, h4, h5, h6 {
-		color: <?php echo esc_attr( $c['heading'] ); ?> !important;
-	}
-	
-	.entry-title,
-	.entry-title a,
-	.page-title,
-	.widget-title,
-	.footer-widget-title,
-	.hm-cat-title,
-	.hm-cat-title a,
-	.hm-slider-title,
-	.slider-article .entry-title,
-	.slider-article .entry-title a,
-	.hm-grid-title a,
-	.hm-list-title a {
-		color: <?php echo esc_attr( $c['heading'] ); ?> !important;
-	}
-	
-	.entry-title a:hover,
-	.slider-article .entry-title a:hover,
-	.hm-grid-title a:hover,
-	.hm-list-title a:hover,
-	.hm-cat-title a:hover {
-		color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	p, li, td, th, address, blockquote {
-		color: <?php echo esc_attr( $c['body_text'] ); ?>;
-	}
-	
-	.entry-meta,
-	.entry-meta a,
-	.post-meta,
-	.byline,
-	.posted-on,
-	.entry-footer,
-	time {
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	.entry-meta a:hover {
-		color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	/* ========================================
-	   LINKS
-	   ======================================== */
-	a {
-		color: <?php echo esc_attr( $c['link'] ); ?>;
-	}
-	
-	a:hover, a:focus, a:active {
-		color: <?php echo esc_attr( $c['link_hover'] ); ?>;
-	}
-	
-	/* ========================================
-	   BUTTONS & BADGES
-	   ======================================== */
-	button,
-	input[type='button'],
-	input[type='submit'],
-	.btn,
-	.button,
-	.wp-block-button__link {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		color: #000 !important;
-		border-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	button:hover,
-	input[type='button']:hover,
-	input[type='submit']:hover,
-	.btn:hover,
-	.button:hover,
-	.wp-block-button__link:hover {
-		background-color: <?php echo esc_attr( $c['secondary'] ); ?> !important;
-		color: #000 !important;
-		border-color: <?php echo esc_attr( $c['secondary'] ); ?> !important;
-	}
-	
-	.cat-links a,
-	.hm-cat-tag,
-	.entry-category a,
-	article .cat-links a {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		color: #000 !important;
-	}
-	
-	.cat-links a:hover,
-	.hm-cat-tag:hover {
-		background-color: <?php echo esc_attr( $c['secondary'] ); ?> !important;
-	}
-	
-	.tagcloud a,
-	.widget_tag_cloud a {
-		background-color: <?php echo esc_attr( $c['card_bg'] ); ?> !important;
-		border-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	.tagcloud a:hover,
-	.widget_tag_cloud a:hover {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		color: #000 !important;
-	}
-	
-	/* Pagination */
-	.nav-links a,
-	.page-numbers {
-		background-color: <?php echo esc_attr( $c['card_bg'] ); ?> !important;
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-		border-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-	}
-	
-	.nav-links a:hover,
-	.page-numbers:hover,
-	.nav-links .current,
-	.page-numbers.current {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		color: #000 !important;
-	}
-	
-	/* ========================================
-	   BORDERS & DIVIDERS
-	   ======================================== */
-	.widget-title,
-	.footer-widget-title {
-		border-bottom-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	.hm-cat-header,
-	.hm-cat-title {
-		border-bottom-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	hr,
-	.entry-footer,
-	.comment,
-	.comment-list li {
-		border-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-	}
-	
-	/* ========================================
-	   MAGAZINE SECTIONS
-	   ======================================== */
-	.hm-cat-wrap,
-	.hm-category-section {
-		background-color: <?php echo esc_attr( $c['body_bg'] ); ?>;
-	}
-	
-	.hm-posts-count {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		color: #000 !important;
-	}
-	
-	/* Slider */
-	.hm-slider-caption,
-	.slider-content {
-		background: linear-gradient(transparent, <?php echo esc_attr( $c['body_bg'] ); ?>ee) !important;
-	}
-	
-	/* ========================================
-	   SIDEBAR & WIDGETS
-	   ======================================== */
-	.widget {
-		background-color: <?php echo esc_attr( $c['content_bg'] ); ?>;
-		border-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-	}
-	
-	.widget a {
-		color: <?php echo esc_attr( $c['body_text'] ); ?>;
-	}
-	
-	.widget a:hover {
-		color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	.widget li {
-		border-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-	}
-	
-	/* ========================================
-	   FOOTER
-	   ======================================== */
-	.site-footer,
-	#colophon,
-	.footer-widget-area {
+
+	/* Footer backgrounds */
+	.site-footer, #colophon, .footer-widget-area {
 		background-color: <?php echo esc_attr( $c['footer_bg'] ); ?> !important;
 	}
-	
-	.site-footer,
-	.site-footer p,
-	.site-footer a,
-	.footer-widget-area,
-	.footer-widget-area a,
-	.site-info,
-	.site-info a {
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	.site-footer a:hover,
-	.footer-widget-area a:hover,
-	.site-info a:hover {
-		color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	/* ========================================
-	   FORMS
-	   ======================================== */
-	input[type='text'],
-	input[type='email'],
-	input[type='url'],
-	input[type='password'],
-	input[type='search'],
-	input[type='number'],
-	input[type='tel'],
-	textarea,
-	select {
-		background-color: <?php echo esc_attr( $c['content_bg'] ); ?> !important;
-		border-color: <?php echo esc_attr( $c['border'] ); ?> !important;
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	input:focus,
-	textarea:focus,
-	select:focus {
-		border-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		outline-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-	}
-	
-	::placeholder {
-		color: <?php echo esc_attr( $c['body_text'] ); ?>88 !important;
-	}
-	
-	/* Search form */
-	.search-form .search-submit {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?> !important;
-		color: #000 !important;
-	}
-	
-	/* ========================================
-	   COMMENTS
-	   ======================================== */
-	.comments-area {
-		background-color: <?php echo esc_attr( $c['content_bg'] ); ?>;
-	}
-	
-	.comment-author .fn,
-	.comment-author .fn a {
-		color: <?php echo esc_attr( $c['heading'] ); ?> !important;
-	}
-	
-	.comment-metadata a {
-		color: <?php echo esc_attr( $c['body_text'] ); ?> !important;
-	}
-	
-	/* ========================================
-	   SCROLLBAR & SELECTION
-	   ======================================== */
-	::-webkit-scrollbar {
-		width: 10px;
-		height: 10px;
-		background: <?php echo esc_attr( $c['body_bg'] ); ?>;
-	}
-	
-	::-webkit-scrollbar-track {
-		background: <?php echo esc_attr( $c['body_bg'] ); ?>;
-	}
-	
-	::-webkit-scrollbar-thumb {
-		background: <?php echo esc_attr( $c['border'] ); ?>;
-		border-radius: 5px;
-	}
-	
-	::-webkit-scrollbar-thumb:hover {
-		background: <?php echo esc_attr( $c['primary'] ); ?>;
-	}
-	
-	::selection {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?>;
-		color: #000;
-	}
-	
-	::-moz-selection {
-		background-color: <?php echo esc_attr( $c['primary'] ); ?>;
-		color: #000;
-	}
+
+	/* Scrollbar */
+	::-webkit-scrollbar { width: 10px; height: 10px; background: var(--htg-bg-primary); }
+	::-webkit-scrollbar-track { background: var(--htg-bg-primary); }
+	::-webkit-scrollbar-thumb { background: var(--htg-border); border-radius: 5px; }
+	::-webkit-scrollbar-thumb:hover { background: var(--htg-accent); }
+
+	/* Selection */
+	::selection { background-color: var(--htg-accent); color: #000; }
+	::-moz-selection { background-color: var(--htg-accent); color: #000; }
 	</style>
 	<?php
 }

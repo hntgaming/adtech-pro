@@ -8,20 +8,20 @@
  */
 
 /* ===================================
-   CSS Custom Properties (inherit from site)
+   CSS Custom Properties (inherit from main design tokens)
    =================================== */
 :root {
-	--magazine-bg: #0a0a0a;
-	--magazine-card-bg: #121212;
-	--magazine-section-bg: #1a1a1a;
-	--magazine-border: #2a2a2a;
-	--magazine-text: #e0e0e0;
-	--magazine-heading: #ffffff;
-	--magazine-primary: #1a1f36;
-	--magazine-secondary: #00d4aa;
-	--magazine-accent: #6c5ce7;
-	--magazine-gradient: linear-gradient(135deg, #1a1f36 0%, #6c5ce7 100%);
-	--magazine-gradient-hover: linear-gradient(135deg, #00d4aa 0%, #00b894 100%);
+	--magazine-bg: var(--htg-bg-primary, #0a0a0a);
+	--magazine-card-bg: var(--htg-bg-card, #121212);
+	--magazine-section-bg: var(--htg-bg-elevated, #1a1a1a);
+	--magazine-border: var(--htg-border, #2a2a2a);
+	--magazine-text: var(--htg-text-body, #e0e0e0);
+	--magazine-heading: var(--htg-text-primary, #ffffff);
+	--magazine-primary: var(--htg-navy, #1a1f36);
+	--magazine-secondary: var(--htg-accent, #00d4aa);
+	--magazine-accent: var(--htg-accent, #00d4aa);
+	--magazine-gradient: linear-gradient(135deg, var(--htg-navy, #1a1f36) 0%, var(--htg-accent, #00d4aa) 100%);
+	--magazine-gradient-hover: linear-gradient(135deg, var(--htg-accent, #00d4aa) 0%, var(--htg-accent-hover, #00b894) 100%);
 }
 
 /* ===================================
@@ -235,7 +235,7 @@
 	background: var(--magazine-gradient);
 	color: #ffffff;
 	border-radius: 20px;
-	box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3);
+	box-shadow: 0 2px 8px rgba(0, 212, 170, 0.3);
 }
 
 .magazine-post .cat-links a:hover {
@@ -328,7 +328,7 @@
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 	transition: all 0.3s ease;
-	box-shadow: 0 2px 8px rgba(108, 92, 231, 0.3);
+	box-shadow: 0 2px 8px rgba(0, 212, 170, 0.3);
 }
 
 .magazine-post .read-more-btn:hover {
@@ -368,7 +368,7 @@
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 	transition: all 0.3s ease;
-	box-shadow: 0 4px 15px rgba(108, 92, 231, 0.3);
+	box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
 }
 
 .view-all-btn:hover {
@@ -649,8 +649,8 @@
 }
 
 .post-format-badge.post-format-gallery {
-	background: linear-gradient(135deg, #6c5ce7 0%, #a55eea 100%);
-	border-color: rgba(108, 92, 231, 0.3);
+	background: linear-gradient(135deg, #1a1f36 0%, #00d4aa 100%);
+	border-color: rgba(0, 212, 170, 0.3);
 }
 
 /* ===================================
