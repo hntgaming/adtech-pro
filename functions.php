@@ -331,62 +331,64 @@ function HTG_resource_hints() {
 		return;
 	}
 
-	// ── Preconnect origins (DNS + TCP + TLS) ──
-	$preconnect_origins = array(
-		// H&T Gaming CDN — our own ad loader, site.js, configs (highest priority)
-		'https://cdn.hntgaming.me',
-		// Google Publisher Tag (GPT) — the ad tag itself
-		'https://securepubads.g.doubleclick.net',
-		// AdSense / GPT implementation / ad sync
-		'https://pagead2.googlesyndication.com',
-		// Ad creative serving & tracking pixels
-		'https://googleads.g.doubleclick.net',
-		// Google Analytics (GA4 via gtag.js)
-		'https://www.googletagmanager.com',
-		// Google Analytics measurement endpoint
-		'https://www.google-analytics.com',
+	// ─────────────────────────────────────────────────────────────
+	// H&T Gaming CDN — NO crossorigin (referrer-restricted access)
+	// The CDN validates Referer header; crossorigin sends anonymous
+	// CORS requests that strip Referer, causing the CDN to block.
+	// ─────────────────────────────────────────────────────────────
+	echo '<link rel="preconnect" href="https://cdn.hntgaming.me">' . "\n";
+	echo '<link rel="dns-prefetch" href="//cdn.hntgaming.me">' . "\n";
+
+	// ─────────────────────────────────────────────────────────────
+	// Google origins — crossorigin is correct here (CORS-enabled CDNs)
+	// ─────────────────────────────────────────────────────────────
+	$google_preconnect = array(
+		'https://securepubads.g.doubleclick.net',  // GPT ad tag
+		'https://pagead2.googlesyndication.com',   // AdSense / GPT impl
+		'https://googleads.g.doubleclick.net',     // Ad creatives & tracking
+		'https://www.googletagmanager.com',        // GA4 via gtag.js
+		'https://www.google-analytics.com',        // Analytics measurement
 	);
 
-	// ── DNS-prefetch origins (DNS-only, broader coverage) ──
-	$dns_prefetch_origins = array(
-		// All preconnect origins also get dns-prefetch as fallback
-		'//cdn.hntgaming.me',
-		'//securepubads.g.doubleclick.net',
-		'//pagead2.googlesyndication.com',
-		'//googleads.g.doubleclick.net',
-		'//www.googletagmanager.com',
-		'//www.google-analytics.com',
-		// Additional ad-serving origins (lower priority, dns-prefetch only)
-		'//adservice.google.com',
-		'//tpc.googlesyndication.com',
-		'//adsrvr.org',
-		'//cdn.ampproject.org',
-	);
-
-	// Output preconnect hints
-	foreach ( $preconnect_origins as $origin ) {
+	foreach ( $google_preconnect as $origin ) {
 		printf(
 			'<link rel="preconnect" href="%s" crossorigin>' . "\n",
 			esc_url( $origin )
 		);
 	}
 
-	// Output dns-prefetch hints (fallback for older browsers + extra origins)
-	foreach ( $dns_prefetch_origins as $origin ) {
+	// ── DNS-prefetch fallback for all origins + extra ad-serving domains ──
+	$dns_prefetch = array(
+		'//securepubads.g.doubleclick.net',
+		'//pagead2.googlesyndication.com',
+		'//googleads.g.doubleclick.net',
+		'//www.googletagmanager.com',
+		'//www.google-analytics.com',
+		'//adservice.google.com',
+		'//tpc.googlesyndication.com',
+		'//adsrvr.org',
+		'//cdn.ampproject.org',
+	);
+
+	foreach ( $dns_prefetch as $origin ) {
 		printf(
 			'<link rel="dns-prefetch" href="%s">' . "\n",
 			esc_attr( $origin )
 		);
 	}
 
-	// ── Preload H&T Gaming CDN ad loader (our script, first priority) ──
-	echo '<link rel="preload" href="https://cdn.hntgaming.me/loader.js" as="script" crossorigin>' . "\n";
-
-	// ── Preload GPT script (Google ad tag) ──
+	// ─────────────────────────────────────────────────────────────
+	// Preload — only GPT (fixed URL, always loaded on ad-tech sites)
+	//
+	// NOT preloading:
+	// - cdn.hntgaming.me scripts: filename is per-publisher (e.g.
+	//   bdresultguru.js, site.js) and CDN rejects crossorigin.
+	//   Preconnect above is sufficient — connection is warm by the
+	//   time the <script> tag fires from the ad loader.
+	// - gtag.js: requires ?id=G-XXXXX parameter, bare URL won't
+	//   match the actual request → "preloaded but not used" warning.
+	// ─────────────────────────────────────────────────────────────
 	echo '<link rel="preload" href="https://securepubads.g.doubleclick.net/tag/js/gpt.js" as="script" crossorigin>' . "\n";
-
-	// ── Preload Google Analytics (gtag.js) ──
-	echo '<link rel="preload" href="https://www.googletagmanager.com/gtag/js" as="script" crossorigin>' . "\n";
 }
 add_action( 'wp_head', 'HTG_resource_hints', 1 );
 
