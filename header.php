@@ -114,13 +114,6 @@ if ( function_exists( 'wp_body_open' ) ) {
 
 			<?php do_action( 'HTG_after_site_logo' ); ?>
 
-			<?php 
-				if ( is_active_sidebar( 'sidebar-header' ) ) {
-					echo '<div class="hm-header-sidebar">';
-					dynamic_sidebar( 'sidebar-header' );
-					echo '</div>';
-				} 
-			?>
 			</div><!-- .hm-container -->
 		</div><!-- .header-main-area -->
 

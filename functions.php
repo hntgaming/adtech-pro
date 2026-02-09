@@ -243,24 +243,6 @@ function HTG_widgets_init() {
 		'after_title'   => '</h4>',
 	) );
 	register_sidebar( array(
-		'name'          => esc_html__( 'Magazine Homepage', 'adtech-pro' ),
-		'id'            => 'magazine',
-		'description'   => esc_html__( 'Appears on Magazine Homepage template only. Add magazine posts widgets to this widget area.', 'adtech-pro' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h4 class="widget-title">',
-		'after_title'   => '</h4>',
-	) );
-	register_sidebar( array(
-		'name'          => esc_html__( 'Header Advertisement Area', 'adtech-pro' ),
-		'id'            => 'sidebar-header',
-		'description'   => esc_html__( 'You can add advertisement widget to this widget area.', 'adtech-pro' ),
-		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</aside>',
-		'before_title'  => '<h4 class="widget-title">',
-		'after_title'   => '</h4>',
-	) );
-	register_sidebar( array(
 		'name'          => esc_html__( 'Footer Left Sidebar', 'adtech-pro' ),
 		'id'            => 'footer-left',
 		'description'   => '',

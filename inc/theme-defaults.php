@@ -98,6 +98,7 @@ function HTG_get_theme_defaults() {
 		// ===========================================
 		// SINGLE POST SETTINGS
 		// ===========================================
+		'HTG_post_hide_featured_image'=> 0,             // Show featured image on single posts by default
 		'HTG_post_show_author_box'    => 1,             // Author box enabled
 		'HTG_post_show_related'       => 1,             // Related posts enabled
 		'HTG_post_related_count'      => 6,             // 6 related posts

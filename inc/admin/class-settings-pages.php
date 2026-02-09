@@ -692,6 +692,7 @@ class HTG_Settings_Pages {
 			update_option( 'HTG_show_author', isset( $_POST['HTG_show_author'] ) ? 1 : 0 );
 			
 			// Post Settings
+			update_option( 'HTG_post_hide_featured_image', isset( $_POST['HTG_post_hide_featured_image'] ) ? 1 : 0 );
 			update_option( 'HTG_post_show_author_box', isset( $_POST['HTG_post_show_author_box'] ) ? 1 : 0 );
 			update_option( 'HTG_post_show_related', isset( $_POST['HTG_post_show_related'] ) ? 1 : 0 );
 			update_option( 'HTG_post_related_count', absint( $_POST['HTG_post_related_count'] ?? 6 ) );
@@ -719,6 +720,7 @@ class HTG_Settings_Pages {
 		$excerpt_length = get_option( 'HTG_excerpt_length', 30 );
 		$show_post_date = get_option( 'HTG_show_post_date', 1 );
 		$show_author = get_option( 'HTG_show_author', 1 );
+		$post_hide_featured_image = get_option( 'HTG_post_hide_featured_image', 0 );
 		$post_show_author_box = get_option( 'HTG_post_show_author_box', 1 );
 		$post_show_related = get_option( 'HTG_post_show_related', 1 );
 		$post_related_count = get_option( 'HTG_post_related_count', 6 );
@@ -917,6 +919,16 @@ class HTG_Settings_Pages {
 						<!-- Post Tab -->
 						<div id="post" class="HTG-tab-content" style="display: none;">
 							<table class="form-table">
+								<tr>
+									<th scope="row"><?php esc_html_e( 'Hide Featured Image', 'adtech-pro' ); ?></th>
+									<td>
+										<label class="HTG-toggle">
+											<input type="checkbox" name="HTG_post_hide_featured_image" value="1" <?php checked( $post_hide_featured_image, 1 ); ?>>
+											<span class="HTG-toggle-slider"></span>
+										</label>
+										<p class="description"><?php esc_html_e( 'Hide featured images on single blog posts for faster page loads. Images will still appear on homepage, archives, and magazine pages.', 'adtech-pro' ); ?></p>
+									</td>
+								</tr>
 								<tr>
 									<th scope="row"><?php esc_html_e( 'Author Box', 'adtech-pro' ); ?></th>
 									<td>

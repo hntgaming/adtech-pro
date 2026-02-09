@@ -244,10 +244,16 @@ function HTG_thumb_size() {
 
 /**
  * Displays the featured image in single post.
+ * Respects the "Hide Featured Image on Single Posts" admin option for performance.
  */
 function HTG_single_post_thumbnail() {
 
 	global $post;
+
+	// Admin panel toggle — hide featured image on single posts for faster page loads
+	if ( (bool) get_option( 'HTG_post_hide_featured_image', 0 ) ) {
+		return;
+	}
 
 	if ( false == get_theme_mod( 'single_thumbnail_sw', true ) ) {
 		return;

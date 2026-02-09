@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.2
+Stable tag: 3.0.3
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,14 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.3 =
+* New: "Hide Featured Image on Single Posts" toggle in Admin Panel → Blog Settings → Post tab
+* New: When enabled, featured images are hidden on individual blog posts for significantly faster page loads
+* Note: Featured images remain visible on homepage, archives, categories, and magazine pages
+* Removed: "Magazine Homepage" widget area (unused — magazine uses admin panel settings)
+* Removed: "Header Advertisement Area" widget area and sidebar output from header
+* Removed: .hm-header-sidebar CSS from style.css and rtl.css (dead code cleanup)
 
 = 3.0.2 =
 * Fix: Removed crossorigin from cdn.hntgaming.me preconnect (CDN uses referrer-based access restriction)

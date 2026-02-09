@@ -4,7 +4,7 @@ Theme URI: https://hntgaming.me/themes/adtech-pro
 Author: H&T GAMING
 Author URI: https://hntgaming.me/
 Description: A modern dark-themed magazine theme for bloggers, news sites, and content publishers. Features a magazine-style homepage with featured slider and category sections, built-in ad placement areas for AdSense or any ad network, and tools to help grow your audience. Includes newsletter signup, social sharing, reading progress bar, and a legal page generator for Privacy Policy and Terms pages.
-Version: 3.0.2
+Version: 3.0.3
 Tested up to: 6.8
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -1977,16 +1977,6 @@ a:active {
   margin-bottom: 24px;
 }
 
-.hm-header-sidebar {
-  max-width: 100%;
-  margin: 20px 0 0;
-  overflow: hidden;
-  float: right;
-}
-.hm-header-sidebar .widget {
-  margin-bottom: 20px;
-}
-
 .widget ul,
 .widget-area ul {
   margin: 0;
@@ -2168,12 +2158,6 @@ a.hm-viewall:hover {
   background: #222222;
 }
 
-@media (min-width: 768px) {
-  .hm-header-sidebar .widget_search {
-    min-width: 345px;
-    margin: 25px 0;
-  }
-}
 /* Magazine Widgets */
 .hmb-post,
 .hms-posts {
