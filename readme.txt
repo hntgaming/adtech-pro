@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,15 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.1 =
+* New: Resource hints — preconnect, dns-prefetch, and preload for AdTech & Analytics origins
+* New: Preconnect to cdn.hntgaming.me (H&T Gaming CDN) as highest-priority origin
+* New: Preload cdn.hntgaming.me/loader.js, gpt.js (GPT), and gtag.js (GA4) for fastest ad & analytics initialization
+* New: Preconnect to Google ad-serving origins (securepubads, googlesyndication, doubleclick, googletagmanager, google-analytics)
+* New: DNS-prefetch fallback for all preconnect origins plus adservice.google.com, tpc.googlesyndication.com, adsrvr.org, cdn.ampproject.org
+* Fix: Removed unnecessary WordPress default s.w.org dns-prefetch (emoji CDN)
+* Performance: ~300ms faster ad tag initialization via early connection establishment
 
 = 3.0.0 =
 * Major: Unified CSS Design System — consolidated 4 competing CSS color systems into a single design-token architecture

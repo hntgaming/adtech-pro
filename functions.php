@@ -306,6 +306,111 @@ function HTG_font_styles() {
 add_action( 'wp_enqueue_scripts', 'HTG_font_styles' );
 
 /**
+ * Resource Hints — Preconnect / DNS-Prefetch / Preload for AdTech & Analytics
+ *
+ * Strategy rationale:
+ * - preconnect  = DNS + TCP + TLS handshake (saves ~100-300 ms per origin on first request)
+ * - dns-prefetch = DNS-only fallback for browsers that don't support preconnect
+ * - preload     = fetch the resource immediately at highest priority (used for GPT script)
+ *
+ * Origins:
+ * - cdn.hntgaming.me                → H&T Gaming CDN (ad loader, site.js, configs)
+ * - securepubads.g.doubleclick.net  → GPT ad tag
+ * - pagead2.googlesyndication.com   → AdSense / GPT impl / ad creatives
+ * - googleads.g.doubleclick.net     → Ad serving (creatives, tracking)
+ * - tpc.googlesyndication.com       → Third-party cookie sync
+ * - www.googletagmanager.com        → Google Analytics (GA4 via gtag.js)
+ * - www.google-analytics.com        → Google Analytics legacy / Measurement Protocol
+ * - adservice.google.com            → Ad click handling
+ *
+ * @since 3.0.0
+ */
+function HTG_resource_hints() {
+	// Only on frontend, not in admin or customizer preview
+	if ( is_admin() ) {
+		return;
+	}
+
+	// ── Preconnect origins (DNS + TCP + TLS) ──
+	$preconnect_origins = array(
+		// H&T Gaming CDN — our own ad loader, site.js, configs (highest priority)
+		'https://cdn.hntgaming.me',
+		// Google Publisher Tag (GPT) — the ad tag itself
+		'https://securepubads.g.doubleclick.net',
+		// AdSense / GPT implementation / ad sync
+		'https://pagead2.googlesyndication.com',
+		// Ad creative serving & tracking pixels
+		'https://googleads.g.doubleclick.net',
+		// Google Analytics (GA4 via gtag.js)
+		'https://www.googletagmanager.com',
+		// Google Analytics measurement endpoint
+		'https://www.google-analytics.com',
+	);
+
+	// ── DNS-prefetch origins (DNS-only, broader coverage) ──
+	$dns_prefetch_origins = array(
+		// All preconnect origins also get dns-prefetch as fallback
+		'//cdn.hntgaming.me',
+		'//securepubads.g.doubleclick.net',
+		'//pagead2.googlesyndication.com',
+		'//googleads.g.doubleclick.net',
+		'//www.googletagmanager.com',
+		'//www.google-analytics.com',
+		// Additional ad-serving origins (lower priority, dns-prefetch only)
+		'//adservice.google.com',
+		'//tpc.googlesyndication.com',
+		'//adsrvr.org',
+		'//cdn.ampproject.org',
+	);
+
+	// Output preconnect hints
+	foreach ( $preconnect_origins as $origin ) {
+		printf(
+			'<link rel="preconnect" href="%s" crossorigin>' . "\n",
+			esc_url( $origin )
+		);
+	}
+
+	// Output dns-prefetch hints (fallback for older browsers + extra origins)
+	foreach ( $dns_prefetch_origins as $origin ) {
+		printf(
+			'<link rel="dns-prefetch" href="%s">' . "\n",
+			esc_attr( $origin )
+		);
+	}
+
+	// ── Preload H&T Gaming CDN ad loader (our script, first priority) ──
+	echo '<link rel="preload" href="https://cdn.hntgaming.me/loader.js" as="script" crossorigin>' . "\n";
+
+	// ── Preload GPT script (Google ad tag) ──
+	echo '<link rel="preload" href="https://securepubads.g.doubleclick.net/tag/js/gpt.js" as="script" crossorigin>' . "\n";
+
+	// ── Preload Google Analytics (gtag.js) ──
+	echo '<link rel="preload" href="https://www.googletagmanager.com/gtag/js" as="script" crossorigin>' . "\n";
+}
+add_action( 'wp_head', 'HTG_resource_hints', 1 );
+
+/**
+ * Filter WordPress core resource hints to avoid duplicate dns-prefetch
+ * WordPress core adds some by default; we deduplicate here.
+ *
+ * @since 3.0.0
+ */
+function HTG_filter_resource_hints( $urls, $relation_type ) {
+	if ( $relation_type === 'dns-prefetch' ) {
+		// Remove WordPress default s.w.org dns-prefetch (emoji CDN, usually not needed)
+		$urls = array_filter( $urls, function( $url ) {
+			if ( is_array( $url ) ) {
+				return ! isset( $url['href'] ) || strpos( $url['href'], 's.w.org' ) === false;
+			}
+			return strpos( $url, 's.w.org' ) === false;
+		} );
+	}
+	return $urls;
+}
+add_filter( 'wp_resource_hints', 'HTG_filter_resource_hints', 10, 2 );
+
+/**
  * Enqueue scripts and styles.
  */
 function HTG_scripts() {
