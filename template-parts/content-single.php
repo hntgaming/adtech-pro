@@ -15,11 +15,6 @@
 	
 	<?php do_action( 'HTG_before_entry_header' ); ?>
 
-	<?php 
-	// Ad Slot: Post Top
-	HTG_display_ad( 'post_top' ); 
-	?>
-
 	<header class="entry-header">
 		<?php
 
@@ -43,11 +38,6 @@
 	<?php HTG_single_post_thumbnail(); ?>
 
 	<?php do_action( 'HTG_before_single_post_content' ); ?>
-
-	<?php 
-	// Ad Slot: Post Content Middle (will appear within content)
-	HTG_display_ad( 'post_content_middle' ); 
-	?>
 
 	<div class="entry-content">
 		<?php

@@ -27,8 +27,8 @@ if ( $HTG_sidebar_layout == 'th-content-centered' || $HTG_sidebar_layout == 'th-
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
 
 	<?php 
-	// Ad Slot: Sidebar Middle
-	HTG_display_ad( 'sidebar_middle' ); 
+	// Ad Slot: Sidebar Sticky
+	HTG_display_ad( 'sidebar_sticky' ); 
 	?>
 
 	<?php do_action( 'HTG_after_sidebar' ); ?>

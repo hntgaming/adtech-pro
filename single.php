@@ -23,9 +23,6 @@ get_header(); ?>
 		while ( have_posts() ) : the_post();
 
 			get_template_part( 'template-parts/content', 'single' );
-			
-			// Ad Slot: Post Bottom
-			HTG_display_ad( 'post_bottom' );
 
 			if ( true == get_theme_mod( 'relatedposts_sw', true ) ) :
 				get_template_part( 'template-parts/related-posts' );

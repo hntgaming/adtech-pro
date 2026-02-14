@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,23 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.4 =
+* Major: Ad Manager rewritten — all ad boxes now accept raw HTML (script, iframe, GPT, Prebid, any ad code)
+* New: 3 independent In-Article ad slots (was 1), each with its own placement rule
+* New: Advanced placement engine with 3 syntax modes:
+  - Single paragraph: "3" → insert after paragraph 3
+  - CSV list: "3,6,9" → insert after paragraphs 3, 6, and 9
+  - Repeat pattern: "%4" → insert after every 4th paragraph (4, 8, 12, 16...)
+* New: Color-coded slot cards in admin UI (green / blue / yellow) for visual distinction
+* New: Placement syntax guide built into admin page with dark panel design
+* Fix: Header Ads (Above/Below) now properly hooked to HTG_before_header / HTG_after_header actions
+* Fix: Before/After Article ads now hooked to HTG_before/after_single_post_content actions
+* Fix: Sidebar Sticky ad now correctly mapped (was orphaned as sidebar_middle)
+* Fix: Removed orphaned post_top, post_content_middle, post_bottom ad calls that had no admin fields
+* Fix: One-time migration moves legacy single in-article ad data to new Slot 1 automatically
+* Removed: wp_kses sanitization that stripped valid ad HTML (script, amp-ad, GPT tags)
+* Performance: Removed HTG_sanitize_ad_code — admin-only input, raw output for zero tag stripping
 
 = 3.0.3 =
 * New: "Hide Featured Image on Single Posts" toggle in Admin Panel → Blog Settings → Post tab

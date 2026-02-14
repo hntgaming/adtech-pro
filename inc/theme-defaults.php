@@ -152,8 +152,14 @@ function HTG_get_theme_defaults() {
 		// Article ads
 		'HTG_ad_before_content'       => '',
 		'HTG_ad_after_content'        => '',
-		'HTG_ad_in_article'           => '',
-		'HTG_ad_in_article_position'  => 3,             // After 3rd paragraph
+		
+		// In-article ads (3 independent slots with placement rules)
+		'HTG_ad_in_article_1'              => '',
+		'HTG_ad_in_article_1_position'     => '3',      // After paragraph 3
+		'HTG_ad_in_article_2'              => '',
+		'HTG_ad_in_article_2_position'     => '',       // Empty = disabled
+		'HTG_ad_in_article_3'              => '',
+		'HTG_ad_in_article_3_position'     => '',       // Empty = disabled
 		
 		// Sidebar ads
 		'HTG_ad_sidebar_top'          => '',
@@ -257,6 +263,34 @@ function HTG_migrate_v231() {
 	update_option( 'HTG_migrated_v231', true );
 }
 add_action( 'init', 'HTG_migrate_v231' );
+
+/**
+ * One-time migration for v3.0.4
+ * Moves legacy single in-article ad to new slot 1
+ */
+function HTG_migrate_v304_ads() {
+	if ( get_option( 'HTG_migrated_v304_ads', false ) ) {
+		return;
+	}
+
+	$old_code     = get_option( 'HTG_ad_in_article', '' );
+	$old_position = get_option( 'HTG_ad_in_article_position', '' );
+
+	if ( ! empty( $old_code ) ) {
+		// Only migrate if slot 1 is empty
+		$new_slot1 = get_option( 'HTG_ad_in_article_1', '' );
+		if ( empty( $new_slot1 ) ) {
+			update_option( 'HTG_ad_in_article_1', $old_code );
+			update_option( 'HTG_ad_in_article_1_position', (string) $old_position );
+		}
+		// Clean up legacy options
+		delete_option( 'HTG_ad_in_article' );
+		delete_option( 'HTG_ad_in_article_position' );
+	}
+
+	update_option( 'HTG_migrated_v304_ads', true );
+}
+add_action( 'init', 'HTG_migrate_v304_ads' );
 
 /**
  * Reset options to defaults (admin function)
