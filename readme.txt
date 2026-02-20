@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.4
+Stable tag: 3.0.5
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,11 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.5 =
+* Fix: Removed overflow:hidden from .site-content — was breaking position:sticky for sidebar and all sticky ad formats (SpotSticky, etc.)
+* Fix: Sidebar sticky positioning and CDN sticky ad units now work correctly
+* Note: Float clearing already handled by .hm-container::after clearfix, overflow:hidden was redundant
 
 = 3.0.4 =
 * Major: Ad Manager rewritten — all ad boxes now accept raw HTML (script, iframe, GPT, Prebid, any ad code)
