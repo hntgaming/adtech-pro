@@ -231,15 +231,9 @@ body.HTG-dark-mode .HTG-ad-footer_top {
    Performance Optimization
    =================================== */
 
-/* GPU acceleration for animations */
+/* GPU acceleration for ad slot animations */
 .HTG-ad-slot {
-	will-change: contents;
 	transform: translateZ(0);
-}
-
-/* Prevent layout shifts */
-.HTG-ad-slot[style*="height"] {
-	min-height: attr(style);
 }
 
 /* ===================================

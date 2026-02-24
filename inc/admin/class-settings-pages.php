@@ -117,7 +117,7 @@ class HTG_Settings_Pages {
 	 */
 	public static function render_appearance_page() {
 		// Handle save
-		if ( isset( $_POST['HTG_save_appearance'] ) && check_admin_referer( 'HTG_appearance_nonce' ) ) {
+		if ( isset( $_POST['HTG_save_appearance'] ) && check_admin_referer( 'HTG_appearance_nonce' ) && current_user_can( 'manage_options' ) ) {
 			update_option( 'HTG_primary_color', sanitize_hex_color( $_POST['HTG_primary_color'] ?? HTG_get_default( 'HTG_primary_color' ) ) );
 			update_option( 'HTG_secondary_color', sanitize_hex_color( $_POST['HTG_secondary_color'] ?? HTG_get_default( 'HTG_secondary_color' ) ) );
 			update_option( 'HTG_accent_color_1', sanitize_hex_color( $_POST['HTG_accent_color_1'] ?? HTG_get_default( 'HTG_accent_color_1' ) ) );
@@ -664,7 +664,7 @@ class HTG_Settings_Pages {
 	 */
 	public static function render_general_page() {
 		// Handle save
-		if ( isset( $_POST['HTG_save_all_general'] ) && check_admin_referer( 'HTG_all_general_nonce' ) ) {
+		if ( isset( $_POST['HTG_save_all_general'] ) && check_admin_referer( 'HTG_all_general_nonce' ) && current_user_can( 'manage_options' ) ) {
 			// Site Settings
 			update_option( 'HTG_site_layout', sanitize_text_field( $_POST['HTG_site_layout'] ?? 'wide' ) );
 			update_option( 'HTG_sidebar_position', sanitize_text_field( $_POST['HTG_sidebar_position'] ?? 'right' ) );

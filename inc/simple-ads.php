@@ -275,7 +275,7 @@ add_action( 'admin_menu', 'HTG_ad_manager_admin_menu', 20 );
 function HTG_render_ad_manager_page() {
 
 	// ── Save Handler ──
-	if ( isset( $_POST['HTG_save_ads'] ) && check_admin_referer( 'HTG_ad_manager_nonce' ) ) {
+	if ( isset( $_POST['HTG_save_ads'] ) && check_admin_referer( 'HTG_ad_manager_nonce' ) && current_user_can( 'manage_options' ) ) {
 
 		// Global settings
 		update_option( 'HTG_ad_labels_enable', isset( $_POST['HTG_ad_labels_enable'] ) ? 1 : 0 );

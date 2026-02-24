@@ -249,7 +249,10 @@
 	window.HTG_showNotification = function(message, type) {
 		type = type || 'success';
 		
-		var $notification = $('<div class="notice notice-' + type + ' is-dismissible"><p>' + message + '</p></div>');
+		var allowedTypes = ['success', 'error', 'warning', 'info'];
+		type = (allowedTypes.indexOf(type) !== -1) ? type : 'success';
+		var $notification = $('<div class="notice notice-' + type + ' is-dismissible"></div>');
+		$notification.append($('<p></p>').text(message));
 		
 		$('.HTG-admin-wrap .HTG-admin-header').after($notification);
 		

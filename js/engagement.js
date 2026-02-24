@@ -353,15 +353,15 @@
 					}
 					return response.json();
 				})
-				.then(function(data) {
-					if (data.success) {
-						grid.innerHTML = data.data.html;
-						
-						// Update load more button
-						if (loadMoreBtn) {
-							loadMoreBtn.setAttribute('data-page', '1');
-							loadMoreBtn.setAttribute('data-max-pages', data.data.max_pages);
-							loadMoreBtn.setAttribute('data-category', category);
+			.then(function(data) {
+				if (data.success && data.data && data.data.html) {
+					grid.innerHTML = data.data.html;
+					
+					// Update load more button
+					if (loadMoreBtn) {
+						loadMoreBtn.setAttribute('data-page', '1');
+						loadMoreBtn.setAttribute('data-max-pages', data.data.max_pages || '1');
+						loadMoreBtn.setAttribute('data-category', category);
 							
 							loadMoreBtn.style.display = data.data.has_more ? 'inline-flex' : 'none';
 						}
@@ -423,12 +423,12 @@
 				}
 				return response.json();
 			})
-			.then(function(data) {
-				if (data.success) {
-					grid.insertAdjacentHTML('beforeend', data.data.html);
-					btn.setAttribute('data-page', nextPage);
-					
-					if (!data.data.has_more) {
+		.then(function(data) {
+			if (data.success && data.data && data.data.html) {
+				grid.insertAdjacentHTML('beforeend', data.data.html);
+				btn.setAttribute('data-page', nextPage);
+				
+				if (!data.data.has_more) {
 						btn.style.display = 'none';
 					}
 				} else {

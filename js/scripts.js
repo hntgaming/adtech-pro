@@ -3,7 +3,7 @@ jQuery(function($) {
 	// Search toggle
 	$(".hm-search-button-icon").on( "click", function() {
 		$(".hm-search-box-container").toggle('fast');
-		$(".hm-search-box .search-field").focus();
+		$(".hm-search-box .search-field").trigger('focus');
 		$(this).toggleClass("hm-search-close");
 	});
 

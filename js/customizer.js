@@ -126,30 +126,46 @@
 		}
 	};
 
-	/**
-	 * Apply palette colors to the preview via CSS variables.
-	 * Bridges palette values to the design token names used in style.css.
-	 */
+	function isValidCSSColor( val ) {
+		return typeof val === 'string' && /^#[0-9A-Fa-f]{3,8}$/.test( val );
+	}
+
+	function safeColor( val, fallback ) {
+		return isValidCSSColor( val ) ? val : ( fallback || '#000000' );
+	}
+
 	function applyColors( palette ) {
 		$( '#HTG-custom-colors-preview' ).remove();
 
+		var p = {
+			primary:    safeColor( palette.primary ),
+			secondary:  safeColor( palette.secondary ),
+			accent1:    safeColor( palette.accent1 ),
+			heading:    safeColor( palette.heading, '#ffffff' ),
+			body_text:  safeColor( palette.body_text, '#cccccc' ),
+			body_bg:    safeColor( palette.body_bg, '#0a0a0a' ),
+			content_bg: safeColor( palette.content_bg, '#111111' ),
+			card_bg:    safeColor( palette.card_bg, '#1a1a1a' ),
+			border:     safeColor( palette.border, '#333333' ),
+			footer_bg:  safeColor( palette.footer_bg, '#0a0a0a' )
+		};
+
 		var css = '<style id="HTG-custom-colors-preview">';
 		css += ':root {';
-		css += '--htg-accent: ' + palette.primary + ';';
-		css += '--htg-accent-hover: ' + palette.secondary + ';';
-		css += '--htg-navy: ' + palette.accent1 + ';';
-		css += '--htg-text-primary: ' + palette.heading + ';';
-		css += '--htg-text-body: ' + palette.body_text + ';';
-		css += '--htg-bg-primary: ' + palette.body_bg + ';';
-		css += '--htg-bg-card: ' + palette.content_bg + ';';
-		css += '--htg-bg-elevated: ' + palette.card_bg + ';';
-		css += '--htg-border: ' + palette.border + ';';
+		css += '--htg-accent: ' + p.primary + ';';
+		css += '--htg-accent-hover: ' + p.secondary + ';';
+		css += '--htg-navy: ' + p.accent1 + ';';
+		css += '--htg-text-primary: ' + p.heading + ';';
+		css += '--htg-text-body: ' + p.body_text + ';';
+		css += '--htg-bg-primary: ' + p.body_bg + ';';
+		css += '--htg-bg-card: ' + p.content_bg + ';';
+		css += '--htg-bg-elevated: ' + p.card_bg + ';';
+		css += '--htg-border: ' + p.border + ';';
 		css += '}';
 
-		// Force structural backgrounds with !important for live preview
-		css += 'body, html { background-color: ' + palette.body_bg + ' !important; color: ' + palette.body_text + '; }';
-		css += '#page, .site, .site-content { background-color: ' + palette.body_bg + ' !important; }';
-		css += '.site-footer, .footer-widget-area { background-color: ' + palette.footer_bg + ' !important; }';
+		css += 'body, html { background-color: ' + p.body_bg + ' !important; color: ' + p.body_text + '; }';
+		css += '#page, .site, .site-content { background-color: ' + p.body_bg + ' !important; }';
+		css += '.site-footer, .footer-widget-area { background-color: ' + p.footer_bg + ' !important; }';
 		css += '</style>';
 
 		$( 'head' ).append( css );
@@ -209,18 +225,19 @@
 	// ===================================
 	wp.customize( 'HTG_custom_primary', function( value ) {
 		value.bind( function( to ) {
-			document.documentElement.style.setProperty( '--htg-accent', to );
+			if ( isValidCSSColor( to ) ) document.documentElement.style.setProperty( '--htg-accent', to );
 		} );
 	} );
 
 	wp.customize( 'HTG_custom_secondary', function( value ) {
 		value.bind( function( to ) {
-			document.documentElement.style.setProperty( '--htg-accent-hover', to );
+			if ( isValidCSSColor( to ) ) document.documentElement.style.setProperty( '--htg-accent-hover', to );
 		} );
 	} );
 
 	wp.customize( 'HTG_custom_body_bg', function( value ) {
 		value.bind( function( to ) {
+			if ( !isValidCSSColor( to ) ) return;
 			document.documentElement.style.setProperty( '--htg-bg-primary', to );
 			$( 'body' ).css( 'background-color', to );
 		} );
@@ -228,13 +245,13 @@
 
 	wp.customize( 'HTG_custom_content_bg', function( value ) {
 		value.bind( function( to ) {
-			document.documentElement.style.setProperty( '--htg-bg-card', to );
+			if ( isValidCSSColor( to ) ) document.documentElement.style.setProperty( '--htg-bg-card', to );
 		} );
 	} );
 
 	wp.customize( 'HTG_custom_card_bg', function( value ) {
 		value.bind( function( to ) {
-			document.documentElement.style.setProperty( '--htg-bg-elevated', to );
+			if ( isValidCSSColor( to ) ) document.documentElement.style.setProperty( '--htg-bg-elevated', to );
 		} );
 	} );
 

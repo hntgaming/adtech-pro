@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.5
+Stable tag: 3.0.6
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,15 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.6 =
+* Security: Added current_user_can('manage_options') capability checks to all admin form save handlers (Ad Manager, Appearance, General settings)
+* Security: Fixed XSS vector in admin notification function — now uses jQuery .text() instead of raw HTML injection
+* Security: Added CSS color value validation in Customizer live preview to prevent CSS injection
+* Fix: Removed invalid CSS properties in simple-ads.css — will-change:contents (invalid value) and min-height:attr(style) (unsupported syntax)
+* Fix: Added null-safety guards for AJAX response data in engagement.js (filter posts, load more)
+* Fix: Replaced deprecated jQuery .focus() with .trigger('focus') in scripts.js
+* Fix: Removed duplicate background/background-color declaration on body element in style.css
 
 = 3.0.5 =
 * Fix: Removed overflow:hidden from .site-content — was breaking position:sticky for sidebar and all sticky ad formats (SpotSticky, etc.)
