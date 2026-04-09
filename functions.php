@@ -322,17 +322,36 @@ function HTG_resource_hints() {
 	echo '<link rel="dns-prefetch" href="//cdn.hntgaming.me">' . "\n";
 
 	// ─────────────────────────────────────────────────────────────
-	// Google origins — crossorigin is correct here (CORS-enabled CDNs)
+	// Google ad-serving origins — NO crossorigin
+	// securepubads and googleads do NOT return CORS headers on
+	// /gampad/ads responses. Using crossorigin here causes the
+	// browser to open a CORS-mode connection; when GPT later
+	// fetch()es /gampad/ads, the missing Access-Control-Allow-Origin
+	// header triggers a CORS block (ERR_FAILED).
 	// ─────────────────────────────────────────────────────────────
-	$google_preconnect = array(
-		'https://securepubads.g.doubleclick.net',  // GPT ad tag
-		'https://pagead2.googlesyndication.com',   // AdSense / GPT impl
+	$google_preconnect_no_cors = array(
+		'https://securepubads.g.doubleclick.net',  // GPT ad requests
 		'https://googleads.g.doubleclick.net',     // Ad creatives & tracking
+	);
+
+	foreach ( $google_preconnect_no_cors as $origin ) {
+		printf(
+			'<link rel="preconnect" href="%s">' . "\n",
+			esc_url( $origin )
+		);
+	}
+
+	// ─────────────────────────────────────────────────────────────
+	// Google script/resource origins — crossorigin is correct
+	// These serve JS/CSS with proper CORS headers.
+	// ─────────────────────────────────────────────────────────────
+	$google_preconnect_cors = array(
+		'https://pagead2.googlesyndication.com',   // AdSense / GPT impl scripts
 		'https://www.googletagmanager.com',        // GA4 via gtag.js
 		'https://www.google-analytics.com',        // Analytics measurement
 	);
 
-	foreach ( $google_preconnect as $origin ) {
+	foreach ( $google_preconnect_cors as $origin ) {
 		printf(
 			'<link rel="preconnect" href="%s" crossorigin>' . "\n",
 			esc_url( $origin )
@@ -362,15 +381,19 @@ function HTG_resource_hints() {
 	// ─────────────────────────────────────────────────────────────
 	// Preload — only GPT (fixed URL, always loaded on ad-tech sites)
 	//
+	// NO crossorigin: securepubads does not return CORS headers on
+	// /gampad/ads. Using crossorigin on the preload opens a CORS-mode
+	// connection to the origin; GPT's subsequent no-cors fetch() to
+	// /gampad/ads reuses that connection but the server doesn't send
+	// Access-Control-Allow-Origin → browser blocks the response.
+	//
 	// NOT preloading:
-	// - cdn.hntgaming.me scripts: filename is per-publisher (e.g.
-	//   bdresultguru.js, site.js) and CDN rejects crossorigin.
-	//   Preconnect above is sufficient — connection is warm by the
-	//   time the <script> tag fires from the ad loader.
-	// - gtag.js: requires ?id=G-XXXXX parameter, bare URL won't
-	//   match the actual request → "preloaded but not used" warning.
+	// - cdn.hntgaming.me scripts: filename is per-publisher and CDN
+	//   rejects crossorigin. Preconnect above is sufficient.
+	// - gtag.js: requires ?id=G-XXXXX, bare URL → "preloaded but
+	//   not used" warning.
 	// ─────────────────────────────────────────────────────────────
-	echo '<link rel="preload" href="https://securepubads.g.doubleclick.net/tag/js/gpt.js" as="script" crossorigin>' . "\n";
+	echo '<link rel="preload" href="https://securepubads.g.doubleclick.net/tag/js/gpt.js" as="script">' . "\n";
 }
 add_action( 'wp_head', 'HTG_resource_hints', 1 );
 

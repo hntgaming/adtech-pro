@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,11 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.7 =
+* Fix: Removed crossorigin attribute from preconnect/preload for securepubads.g.doubleclick.net and googleads.g.doubleclick.net — these origins do not return CORS headers on /gampad/ads responses, causing ERR_FAILED and CORS policy blocks in the browser
+* Fix: Split Google resource hints into CORS-safe (googlesyndication, googletagmanager, google-analytics) and non-CORS (securepubads, googleads) groups for correct connection-mode handling
+* Fix: GPT preload no longer uses crossorigin to prevent connection-mode mismatch with subsequent fetch() calls
 
 = 3.0.6 =
 * Security: Added current_user_can('manage_options') capability checks to all admin form save handlers (Ad Manager, Appearance, General settings)
