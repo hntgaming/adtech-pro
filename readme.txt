@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.7
+Stable tag: 3.0.8
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,11 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.8 =
+* Fix: Removed preconnect for securepubads.g.doubleclick.net and googleads.g.doubleclick.net entirely — these origins are managed by the CDN ad loader (markreiser.js / pubads_impl.js) and any theme-level preconnect creates connection-mode mismatches that cause CORS blocks and ERR_FAILED on /gampad/ads
+* Fix: Removed gpt.js preload — the CDN wrapper loads gpt.js dynamically with its own request mode; our preload used a different mode causing "preloaded but not used" warnings and double-downloads
+* Retained: dns-prefetch for all Google origins (harmless, DNS-only) and preconnect for googlesyndication, googletagmanager, google-analytics (these serve scripts with proper CORS headers)
 
 = 3.0.7 =
 * Fix: Removed crossorigin attribute from preconnect/preload for securepubads.g.doubleclick.net and googleads.g.doubleclick.net — these origins do not return CORS headers on /gampad/ads responses, causing ERR_FAILED and CORS policy blocks in the browser
