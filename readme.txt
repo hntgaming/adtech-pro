@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.9
+Stable tag: 3.1.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,10 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.1.0 =
+* Optimized: Re-added resource hints — preconnect for CDN + Google script origins, dns-prefetch for all ad-tech origins
+* Excluded: securepubads/googleads preconnect and gpt.js preload (CDN loader manages those; theme-level hints cause mode conflicts)
 
 = 3.0.9 =
 * Removed: All preconnect, dns-prefetch, and preload resource hints — CDN ad loaders and GPT manage their own connections; theme-level hints caused CORS conflicts, double-downloads, and console errors

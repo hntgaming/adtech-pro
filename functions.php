@@ -288,9 +288,51 @@ function HTG_font_styles() {
 add_action( 'wp_enqueue_scripts', 'HTG_font_styles' );
 
 /**
- * Filter WordPress core resource hints.
+ * Resource Hints — preconnect + dns-prefetch for AdTech & Analytics origins.
  *
- * Remove the default s.w.org dns-prefetch WordPress adds for the emoji CDN.
+ * Only hint origins whose request mode we control or that are side-effect-free.
+ * securepubads / googleads / gpt.js are intentionally omitted — the CDN ad
+ * loader manages those connections and any mode mismatch causes CORS errors.
+ *
+ * @since 3.0.0
+ */
+function HTG_resource_hints() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	// H&T Gaming CDN — no crossorigin (CDN validates Referer header)
+	echo '<link rel="preconnect" href="https://cdn.hntgaming.me">' . "\n";
+
+	// Google script/analytics origins — crossorigin (proper CORS support)
+	$preconnect = array(
+		'https://pagead2.googlesyndication.com',
+		'https://www.googletagmanager.com',
+		'https://www.google-analytics.com',
+	);
+	foreach ( $preconnect as $origin ) {
+		printf( '<link rel="preconnect" href="%s" crossorigin>' . "\n", esc_url( $origin ) );
+	}
+
+	// dns-prefetch for all ad-tech origins (DNS-only, no mode conflicts)
+	$dns = array(
+		'//cdn.hntgaming.me',
+		'//securepubads.g.doubleclick.net',
+		'//pagead2.googlesyndication.com',
+		'//googleads.g.doubleclick.net',
+		'//www.googletagmanager.com',
+		'//www.google-analytics.com',
+		'//adservice.google.com',
+		'//tpc.googlesyndication.com',
+	);
+	foreach ( $dns as $origin ) {
+		printf( '<link rel="dns-prefetch" href="%s">' . "\n", esc_attr( $origin ) );
+	}
+}
+add_action( 'wp_head', 'HTG_resource_hints', 1 );
+
+/**
+ * Filter WordPress core resource hints — remove unused s.w.org dns-prefetch.
  *
  * @since 3.0.0
  */
