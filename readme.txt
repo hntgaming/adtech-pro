@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.0.8
+Stable tag: 3.0.9
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,10 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.0.9 =
+* Removed: All preconnect, dns-prefetch, and preload resource hints — CDN ad loaders and GPT manage their own connections; theme-level hints caused CORS conflicts, double-downloads, and console errors
+* Kept: WordPress core dns-prefetch filter to remove unused s.w.org hint
 
 = 3.0.8 =
 * Fix: Removed preconnect for securepubads.g.doubleclick.net and googleads.g.doubleclick.net entirely — these origins are managed by the CDN ad loader (markreiser.js / pubads_impl.js) and any theme-level preconnect creates connection-mode mismatches that cause CORS blocks and ERR_FAILED on /gampad/ads

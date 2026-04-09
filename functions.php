@@ -288,118 +288,14 @@ function HTG_font_styles() {
 add_action( 'wp_enqueue_scripts', 'HTG_font_styles' );
 
 /**
- * Resource Hints — Preconnect / DNS-Prefetch / Preload for AdTech & Analytics
+ * Filter WordPress core resource hints.
  *
- * Strategy rationale:
- * - preconnect  = DNS + TCP + TLS handshake (saves ~100-300 ms per origin on first request)
- * - dns-prefetch = DNS-only fallback for browsers that don't support preconnect
- * - preload     = fetch the resource immediately at highest priority (used for GPT script)
- *
- * Origins:
- * - cdn.hntgaming.me                → H&T Gaming CDN (ad loader, site.js, configs)
- * - securepubads.g.doubleclick.net  → GPT ad tag
- * - pagead2.googlesyndication.com   → AdSense / GPT impl / ad creatives
- * - googleads.g.doubleclick.net     → Ad serving (creatives, tracking)
- * - tpc.googlesyndication.com       → Third-party cookie sync
- * - www.googletagmanager.com        → Google Analytics (GA4 via gtag.js)
- * - www.google-analytics.com        → Google Analytics legacy / Measurement Protocol
- * - adservice.google.com            → Ad click handling
- *
- * @since 3.0.0
- */
-function HTG_resource_hints() {
-	// Only on frontend, not in admin or customizer preview
-	if ( is_admin() ) {
-		return;
-	}
-
-	// ─────────────────────────────────────────────────────────────
-	// H&T Gaming CDN — NO crossorigin (referrer-restricted access)
-	// The CDN validates Referer header; crossorigin sends anonymous
-	// CORS requests that strip Referer, causing the CDN to block.
-	// ─────────────────────────────────────────────────────────────
-	echo '<link rel="preconnect" href="https://cdn.hntgaming.me">' . "\n";
-	echo '<link rel="dns-prefetch" href="//cdn.hntgaming.me">' . "\n";
-
-	// ─────────────────────────────────────────────────────────────
-	// Google ad-serving origins — NO preconnect
-	//
-	// securepubads.g.doubleclick.net and googleads.g.doubleclick.net
-	// are managed entirely by the CDN ad loader (markreiser.js) and
-	// GPT's pubads_impl.js. Any preconnect we add here risks a
-	// connection-mode mismatch (CORS vs no-cors) with how the loader
-	// actually establishes its connections, which can cause:
-	//   - CORS blocks on /gampad/ads fetch() calls
-	//   - ERR_FAILED responses
-	//   - Double-downloaded resources (preload wasted)
-	// dns-prefetch below is sufficient and side-effect free.
-	// ─────────────────────────────────────────────────────────────
-
-	// ─────────────────────────────────────────────────────────────
-	// Google script/resource origins — crossorigin is correct
-	// These serve JS/CSS with proper CORS headers and are loaded
-	// directly by GPT, not by the CDN wrapper.
-	// ─────────────────────────────────────────────────────────────
-	$google_preconnect_cors = array(
-		'https://pagead2.googlesyndication.com',   // AdSense / GPT impl scripts
-		'https://www.googletagmanager.com',        // GA4 via gtag.js
-		'https://www.google-analytics.com',        // Analytics measurement
-	);
-
-	foreach ( $google_preconnect_cors as $origin ) {
-		printf(
-			'<link rel="preconnect" href="%s" crossorigin>' . "\n",
-			esc_url( $origin )
-		);
-	}
-
-	// ── DNS-prefetch fallback for all origins + extra ad-serving domains ──
-	$dns_prefetch = array(
-		'//securepubads.g.doubleclick.net',
-		'//pagead2.googlesyndication.com',
-		'//googleads.g.doubleclick.net',
-		'//www.googletagmanager.com',
-		'//www.google-analytics.com',
-		'//adservice.google.com',
-		'//tpc.googlesyndication.com',
-		'//adsrvr.org',
-		'//cdn.ampproject.org',
-	);
-
-	foreach ( $dns_prefetch as $origin ) {
-		printf(
-			'<link rel="dns-prefetch" href="%s">' . "\n",
-			esc_attr( $origin )
-		);
-	}
-
-	// ─────────────────────────────────────────────────────────────
-	// NO preload for gpt.js or CDN scripts
-	//
-	// gpt.js is loaded dynamically by the CDN ad wrapper
-	// (e.g. markreiser.js). The wrapper controls the request mode
-	// (credentials, crossorigin). Any preload we add here will
-	// use a different mode → browser can't match them → gpt.js
-	// downloads twice ("preloaded but not used" warning).
-	//
-	// cdn.hntgaming.me scripts: filename is per-publisher and CDN
-	// rejects crossorigin. Preconnect above is sufficient.
-	//
-	// gtag.js: requires ?id=G-XXXXX query param; bare URL won't
-	// match the actual request → same "preloaded but not used".
-	// ─────────────────────────────────────────────────────────────
-}
-add_action( 'wp_head', 'HTG_resource_hints', 1 );
-
-/**
- * Filter WordPress core resource hints to avoid duplicate dns-prefetch
- * WordPress core adds some by default; we deduplicate here.
+ * Remove the default s.w.org dns-prefetch WordPress adds for the emoji CDN.
  *
  * @since 3.0.0
  */
 function HTG_filter_resource_hints( $urls, $relation_type ) {
 	if ( $relation_type === 'dns-prefetch' ) {
-		// Remove WordPress default s.w.org dns-prefetch (emoji CDN, usually not needed)
 		$urls = array_filter( $urls, function( $url ) {
 			if ( is_array( $url ) ) {
 				return ! isset( $url['href'] ) || strpos( $url['href'], 's.w.org' ) === false;
