@@ -155,8 +155,8 @@ class HTG_Newsletter_System {
 	public static function handle_subscription() {
 		check_ajax_referer( 'HTG_engagement_nonce', 'nonce' );
 
-		$email = isset( $_POST['email'] ) ? sanitize_email( $_POST['email'] ) : '';
-		$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
+		$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+		$post_id = isset( $_POST['post_id'] ) ? absint( wp_unslash( $_POST['post_id'] ) ) : 0;
 
 		if ( ! is_email( $email ) ) {
 			wp_send_json_error( array(
@@ -164,10 +164,28 @@ class HTG_Newsletter_System {
 			) );
 		}
 
+		// Rate limit: 1 subscription attempt per IP per 5 minutes
+		$ip = self::get_user_ip();
+		$rate_key = 'htg_news_rl_' . md5( $ip );
+		if ( get_transient( $rate_key ) ) {
+			wp_send_json_error( array(
+				'message' => __( 'Too many attempts. Please wait a few minutes before trying again.', 'adtech-pro' ),
+			) );
+		}
+		set_transient( $rate_key, 1, 5 * MINUTE_IN_SECONDS );
+
+		// Validate post_id if provided
+		if ( $post_id > 0 ) {
+			$post = get_post( $post_id );
+			if ( ! $post || 'publish' !== $post->post_status ) {
+				$post_id = 0;
+			}
+		}
+
 		// Store subscriber
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'HTG_subscribers';
-		
+
 		// Create table if it doesn't exist
 		self::maybe_create_subscribers_table();
 
@@ -189,8 +207,8 @@ class HTG_Newsletter_System {
 			array(
 				'email'      => $email,
 				'post_id'    => $post_id,
-				'ip_address' => self::get_user_ip(),
-				'user_agent' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( $_SERVER['HTTP_USER_AGENT'] ) : '',
+				'ip_address' => $ip,
+				'user_agent' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
 				'created_at' => current_time( 'mysql' ),
 			),
 			array( '%s', '%d', '%s', '%s', '%s' )
@@ -210,7 +228,7 @@ class HTG_Newsletter_System {
 		update_option( 'HTG_subscriber_count', $count + 1 );
 
 		wp_send_json_success( array(
-			'message' => __( '🎉 Success! Check your email to confirm your subscription.', 'adtech-pro' ),
+			'message' => __( 'Thank you for subscribing!', 'adtech-pro' ),
 		) );
 	}
 
@@ -219,11 +237,11 @@ class HTG_Newsletter_System {
 	 */
 	private static function maybe_create_subscribers_table() {
 		// Only create table once per version
-		$db_version = '1.0.0';
+		$db_version = '1.1.0';
 		if ( get_option( 'HTG_subscribers_db_version' ) === $db_version ) {
 			return;
 		}
-		
+
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'HTG_subscribers';
 		$charset_collate = $wpdb->get_charset_collate();
@@ -233,16 +251,16 @@ class HTG_Newsletter_System {
 			email varchar(100) NOT NULL,
 			post_id bigint(20) DEFAULT 0,
 			ip_address varchar(45) DEFAULT '',
-			user_agent text DEFAULT '',
-			status varchar(20) DEFAULT 'pending',
-			created_at datetime DEFAULT '0000-00-00 00:00:00',
+			user_agent text,
+			status varchar(20) DEFAULT 'subscribed',
+			created_at datetime DEFAULT CURRENT_TIMESTAMP,
 			PRIMARY KEY  (id),
 			UNIQUE KEY email (email)
 		) $charset_collate;";
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql );
-		
+
 		update_option( 'HTG_subscribers_db_version', $db_version );
 	}
 
@@ -268,23 +286,25 @@ class HTG_Newsletter_System {
 	}
 
 	/**
-	 * Get user IP address
+	 * Get user IP address (validated, REMOTE_ADDR only for security)
 	 */
 	private static function get_user_ip() {
-		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-			return sanitize_text_field( $_SERVER['HTTP_CLIENT_IP'] );
-		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			return sanitize_text_field( $_SERVER['HTTP_X_FORWARDED_FOR'] );
-		} else {
-			return sanitize_text_field( $_SERVER['REMOTE_ADDR'] );
-		}
+		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+		return filter_var( $ip, FILTER_VALIDATE_IP ) ? $ip : '';
 	}
 
 	/**
 	 * Auto-insert newsletter in content
 	 */
 	public static function auto_insert_newsletter( $content ) {
-		if ( ! is_single() || ! get_theme_mod( 'HTG_newsletter_auto_insert', false ) ) {
+		if ( ! is_single() || ! in_the_loop() || is_feed() || is_preview() ) {
+			return $content;
+		}
+		// Respect admin enable toggle
+		if ( (int) get_option( 'HTG_newsletter_enable', 1 ) !== 1 ) {
+			return $content;
+		}
+		if ( ! get_theme_mod( 'HTG_newsletter_auto_insert', false ) ) {
 			return $content;
 		}
 

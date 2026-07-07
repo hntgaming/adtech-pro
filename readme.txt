@@ -4,7 +4,7 @@ Contributors: H&T GAMING
 Requires at least: 5.0
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 3.1.0
+Stable tag: 3.2.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,65 @@ Jetpack
 Font Awesome 4 Menus
 
 == Changelog ==
+
+= 3.2.0 =
+Production-hardening release for WordPress.org public submission.
+
+Security:
+* Added current_user_can('manage_options') capability checks to Magazine and Engagement admin save handlers (CSRF-only was insufficient)
+* Added current_user_can('unfiltered_html') gating on ad code saves — strips script tags on multisite where site admins lack unfiltered_html
+* Added wp_unslash() to all $_POST / $_GET / $_SERVER access across admin and AJAX handlers (WordPress coding standards)
+* Added whitelist validation for select fields (site layout, sidebar, header layout, blog layout, magazine layout, fonts)
+* Added numeric bounds clamping (container width, font size, excerpt length, posts per page, related count, slider count, logo dimensions)
+* Sanitized all dynamic CSS color values with sanitize_hex_color() + fallback to prevent CSS injection
+* Sanitized dynamic CSS numeric values with absint() and clamping
+* Fixed $_GET sanitization and null-check for get_current_screen() in customizer notice
+* Replaced Settings API registrations with proper sanitization callbacks and show_in_rest => false
+
+Bug Fixes:
+* Fixed quiz AJAX nonce mismatch — PHP verified HTG_quiz_nonce but JS sent HTG_engagement_nonce (voting was completely broken)
+* Fixed quiz hook mismatch — template fires HTG_before_comments_template but quiz hooked HTG_before_comments (before_comments position never worked)
+* Fixed progress bar option key mismatch — admin saved HTG_progress_bar_enable but frontend read HTG_post_reading_progress (toggle had no effect)
+* Fixed top bar CSS selector — targeted .top-bar but markup uses .hm-top-bar (hide setting had no effect)
+* Fixed footer copyright not reading admin option — footer.php now reads HTG_footer_copyright option directly
+* Fixed blog layout body class reading orphaned option — now reads HTG_blog_layout saved by General settings
+* Fixed duplicate author box on single posts — auto-insert now skips when legacy template part will render it
+* Fixed duplicate inline typography CSS — consolidated into single HTG_dynamic_css() output
+* Fixed reading progress bar divide-by-zero when document height equals window height
+* Fixed dead wp_reset_postdata() in AJAX handlers (called after wp_send_json which terminates)
+* Fixed newsletter misleading success message — no longer claims "check your email to confirm" when no confirmation email is sent
+* Fixed newsletter dbDelta schema — invalid zero date replaced with CURRENT_TIMESTAMP for MySQL strict mode
+* Fixed newsletter IP collection — now uses REMOTE_ADDR only with FILTER_VALIDATE_IP (was trusting spoofable X-Forwarded-For)
+
+AdTech:
+* Fixed CSS class mismatch — PHP output htg-ad-* but stylesheet expected HTG-ad-container / HTG-ad-slot (most ad styling was broken)
+* Added sticky class for sidebar_sticky slot (sticky positioning now works)
+* Added feed/preview/rest/in_the_loop guards to in-article ad insertion (was leaking ads into RSS feeds)
+* Improved paragraph parsing — now case-insensitive via preg_split (was missing </P> tags)
+* Changed the_content priority from 20 to 15 to avoid collision with quiz system
+* Set autoload=no for large ad code options (performance — was loading on every request)
+* Removed duplicate inline frontend ad styles (consolidated into simple-ads.css)
+* Added capability check at top of ad manager render function
+
+Performance:
+* Moved migration hooks from init to admin_init (was running on every frontend request)
+* Added static loop guard to settings sync functions (prevents ping-pong DB writes)
+* Fixed container width responsive logic — removed max-width:1920px override that made setting ineffective on most screens
+
+Code Quality:
+* Removed 3 duplicate inline script blocks from admin pages (functionality exists in admin.js)
+* Moved logo toggle JS into admin.js
+* Removed orphaned register_setting() calls with wrong option names
+* Removed dead HTG_footer_text filter (never applied)
+* Fixed date('Y') frozen in static defaults cache — now uses %year% placeholder resolved dynamically
+* Updated legacy ad sync keys to new 3-slot in-article format
+* Removed emoji from translatable admin strings
+* Added rate limiting to quiz voting and newsletter subscription (transient-based)
+* Added post existence/status validation to quiz voting
+* Added option_index validation against actual quiz options
+* Added newsletter enable toggle check to auto-insert
+* Added in_the_loop/feed/preview guards to newsletter and author box auto-insert
+* Wired HTG_custom_css output via wp_add_inline_style (was saved but never displayed)
 
 = 3.1.0 =
 * Optimized: Re-added resource hints — preconnect for CDN + Google script origins, dns-prefetch for all ad-tech origins

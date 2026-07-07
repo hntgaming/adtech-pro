@@ -24,8 +24,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function HTG_apply_general_settings() {
 	$site_layout = get_option( 'HTG_site_layout', HTG_get_default( 'HTG_site_layout' ) );
 	$sidebar_position = get_option( 'HTG_sidebar_position', HTG_get_default( 'HTG_sidebar_position' ) );
-	$container_width = get_option( 'HTG_container_width', HTG_get_default( 'HTG_container_width' ) );
-	
+	$container_width = absint( get_option( 'HTG_container_width', HTG_get_default( 'HTG_container_width' ) ) );
+	// Clamp to safe range
+	$container_width = max( 960, min( 2560, $container_width ) );
+
 	?>
 	<style id="HTG-general-settings">
 		/* Container Width - Auto Responsive */
@@ -33,7 +35,7 @@ function HTG_apply_general_settings() {
 		.container,
 		.site-content,
 		.HTG-wrapper {
-			max-width: <?php echo esc_attr( $container_width ); ?>px;
+			max-width: <?php echo absint( $container_width ); ?>px;
 			width: 100%;
 			margin-left: auto;
 			margin-right: auto;
@@ -41,33 +43,14 @@ function HTG_apply_general_settings() {
 			padding-right: 20px;
 			box-sizing: border-box;
 		}
-		
+
 		/* Full width inner elements */
 		.hm-nav-container,
 		.site-header .hm-container,
 		.header-main-area .hm-container {
-			max-width: <?php echo esc_attr( $container_width ); ?>px;
+			max-width: <?php echo absint( $container_width ); ?>px;
 		}
-		
-		/* Responsive Breakpoints - Auto adjust based on screen size */
-		@media screen and (max-width: 1920px) {
-			.hm-container,
-			.container,
-			.site-content,
-			.HTG-wrapper {
-				max-width: 100%;
-			}
-		}
-		
-		@media screen and (min-width: 1921px) {
-			.hm-container,
-			.container,
-			.site-content,
-			.HTG-wrapper {
-				max-width: <?php echo esc_attr( $container_width ); ?>px;
-			}
-		}
-		
+
 		@media screen and (max-width: 1400px) {
 			.hm-container,
 			.container,
@@ -76,7 +59,7 @@ function HTG_apply_general_settings() {
 				padding-right: 30px;
 			}
 		}
-		
+
 		@media screen and (max-width: 991px) {
 			.hm-container,
 			.container,
@@ -131,17 +114,20 @@ add_action( 'wp_head', 'HTG_apply_general_settings', 101 );
  * Apply Header Settings
  */
 function HTG_apply_header_settings() {
-	$header_bg = get_option( 'HTG_header_bg_color', HTG_get_default( 'HTG_header_bg_color' ) );
+	$header_bg = sanitize_hex_color( get_option( 'HTG_header_bg_color', HTG_get_default( 'HTG_header_bg_color' ) ) );
+	if ( ! $header_bg ) {
+		$header_bg = HTG_get_default( 'HTG_header_bg_color' );
+	}
 	$sticky_header = get_option( 'HTG_sticky_header', HTG_get_default( 'HTG_sticky_header' ) );
 	$topbar_enable = get_option( 'HTG_topbar_enable', HTG_get_default( 'HTG_topbar_enable' ) );
-	
+
 	?>
 	<style id="HTG-header-settings">
 		/* Header Background */
 		.site-header {
 			background-color: <?php echo esc_attr( $header_bg ); ?>;
 		}
-		
+
 		/* Sticky Header */
 		<?php if ( $sticky_header ) : ?>
 		.site-header.sticky {
@@ -153,10 +139,10 @@ function HTG_apply_header_settings() {
 			box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 		}
 		<?php endif; ?>
-		
+
 		/* Top Bar */
 		<?php if ( ! $topbar_enable ) : ?>
-		.top-bar {
+		.hm-top-bar {
 			display: none;
 		}
 		<?php endif; ?>
@@ -164,15 +150,6 @@ function HTG_apply_header_settings() {
 	<?php
 }
 add_action( 'wp_head', 'HTG_apply_header_settings', 102 );
-
-/**
- * Modify Footer Copyright Text
- */
-function HTG_footer_copyright() {
-	$copyright = get_option( 'HTG_footer_copyright', HTG_get_default( 'HTG_footer_copyright' ) );
-	return wp_kses_post( $copyright );
-}
-add_filter( 'HTG_footer_text', 'HTG_footer_copyright' );
 
 /**
  * Apply Breadcrumbs Settings
@@ -196,33 +173,32 @@ add_filter( 'HTG_breadcrumb_separator', 'HTG_breadcrumb_separator' );
  * Apply Typography Settings
  */
 function HTG_apply_typography() {
+	$allowed_fonts = array( 'Inter', 'Poppins', 'Roboto', 'Open Sans', 'Lato', 'Ubuntu', 'Montserrat' );
 	$heading_font = get_option( 'HTG_heading_font', HTG_get_default( 'HTG_heading_font' ) );
-	$body_font = get_option( 'HTG_body_font', HTG_get_default( 'HTG_body_font' ) );
-	$font_size_base = get_option( 'HTG_font_size_base', HTG_get_default( 'HTG_font_size_base' ) );
-	
-	// Load Google Fonts
-	wp_enqueue_style( 
-		'HTG-google-fonts', 
-		'https://fonts.googleapis.com/css2?family=' . str_replace( ' ', '+', $heading_font ) . ':wght@400;700&family=' . str_replace( ' ', '+', $body_font ) . ':wght@400;600&display=swap',
-		array(), 
-		null 
-	);
-	
-	?>
-	<style id="HTG-typography">
-		/* Typography from Admin Settings */
-		body {
-			font-family: '<?php echo esc_attr( $body_font ); ?>', sans-serif;
-			font-size: <?php echo esc_attr( $font_size_base ); ?>px;
+	$body_font    = get_option( 'HTG_body_font', HTG_get_default( 'HTG_body_font' ) );
+
+	if ( ! in_array( $heading_font, $allowed_fonts, true ) ) {
+		$heading_font = HTG_get_default( 'HTG_heading_font' );
+	}
+	if ( ! in_array( $body_font, $allowed_fonts, true ) ) {
+		$body_font = HTG_get_default( 'HTG_body_font' );
+	}
+
+	// Load Google Fonts (typography CSS rules are handled by HTG_dynamic_css in functions.php)
+	if ( 'system' !== $heading_font || 'system' !== $body_font ) {
+		$families = array();
+		if ( 'system' !== $heading_font ) {
+			$families[] = str_replace( ' ', '+', $heading_font ) . ':wght@400;700';
 		}
-		
-		h1, h2, h3, h4, h5, h6,
-		.site-title,
-		.entry-title {
-			font-family: '<?php echo esc_attr( $heading_font ); ?>', sans-serif;
+		if ( 'system' !== $body_font && $body_font !== $heading_font ) {
+			$families[] = str_replace( ' ', '+', $body_font ) . ':wght@400;600';
 		}
-	</style>
-	<?php
+		if ( ! empty( $families ) ) {
+			$url = 'https://fonts.googleapis.com/css2?family=' . implode( '&family=', $families ) . '&display=swap';
+			wp_enqueue_style( 'HTG-google-fonts', esc_url( $url ), array(), null );
+		}
+	}
+	// Note: font-family and font-size CSS rules are output by HTG_dynamic_css() in functions.php
 }
 add_action( 'wp_enqueue_scripts', 'HTG_apply_typography', 1 );
 
@@ -242,9 +218,9 @@ add_filter( 'body_class', 'HTG_blog_layout_class' );
  * Posts Per Page
  */
 function HTG_posts_per_page( $query ) {
-	if ( ! is_admin() && $query->is_main_query() && ( is_home() || is_archive() ) ) {
-		$posts_per_page = get_option( 'HTG_posts_per_page', HTG_get_default( 'HTG_posts_per_page' ) );
-		$query->set( 'posts_per_page', absint( $posts_per_page ) );
+	if ( ! is_admin() && $query->is_main_query() && ( is_home() || is_category() || is_tag() ) ) {
+		$posts_per_page = absint( get_option( 'HTG_posts_per_page', HTG_get_default( 'HTG_posts_per_page' ) ) );
+		$query->set( 'posts_per_page', max( 1, min( 50, $posts_per_page ) ) );
 	}
 }
 add_action( 'pre_get_posts', 'HTG_posts_per_page' );
@@ -329,9 +305,12 @@ function HTG_reading_progress_bar() {
 	}
 	
 	$show_progress = get_option( 'HTG_post_reading_progress', HTG_get_default( 'HTG_post_reading_progress' ) );
-	
+
 	if ( $show_progress ) {
-		$progress_color = get_option( 'HTG_progress_bar_color', HTG_get_default( 'HTG_progress_bar_color' ) );
+		$progress_color = sanitize_hex_color( get_option( 'HTG_progress_bar_color', HTG_get_default( 'HTG_progress_bar_color' ) ) );
+		if ( ! $progress_color ) {
+			$progress_color = HTG_get_default( 'HTG_progress_bar_color' );
+		}
 		?>
 		<div class="reading-progress-bar">
 			<div class="reading-progress-fill"></div>
@@ -357,7 +336,7 @@ function HTG_reading_progress_bar() {
 		jQuery(window).on('scroll', function() {
 			var s = jQuery(window).scrollTop(),
 				d = jQuery(document).height() - jQuery(window).height(),
-				c = (s / d) * 100;
+				c = (d > 0) ? (s / d) * 100 : 0;
 			jQuery('.reading-progress-fill').css('width', c + '%');
 		});
 		</script>

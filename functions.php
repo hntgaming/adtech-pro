@@ -576,43 +576,60 @@ add_action( 'wp_enqueue_scripts', 'HTG_simple_ads_assets', 20 );
  * This function only outputs typography settings (fonts, font-size scale).
  */
 function HTG_dynamic_css() {
-	// Typography
-	$heading_font = get_theme_mod( 'HTG_heading_font', 'Ubuntu' );
-	$body_font = get_theme_mod( 'HTG_body_font', 'Lato' );
-	$font_size_scale = get_theme_mod( 'HTG_font_size_scale', 100 );
-	
+	// Typography — whitelist fonts to prevent CSS injection
+	$allowed_fonts = array( 'Inter', 'Poppins', 'Roboto', 'Open Sans', 'Lato', 'Ubuntu', 'Montserrat', 'system' );
+	$heading_font = get_theme_mod( 'HTG_heading_font', 'Inter' );
+	$body_font    = get_theme_mod( 'HTG_body_font', 'Inter' );
+	if ( ! in_array( $heading_font, $allowed_fonts, true ) ) {
+		$heading_font = 'Inter';
+	}
+	if ( ! in_array( $body_font, $allowed_fonts, true ) ) {
+		$body_font = 'Inter';
+	}
+	$font_size_scale = absint( get_theme_mod( 'HTG_font_size_scale', 100 ) );
+	$font_size_scale = max( 60, min( 150, $font_size_scale ) );
+
 	$css = "
 	/* Typography Scale */
 	html {
 		font-size: {$font_size_scale}%;
 	}
 	";
-	
+
 	if ( 'system' !== $heading_font ) {
 		$css .= "
-		h1, h2, h3, h4, h5, h6,
-		.site-title,
-		.widget-title,
-		.footer-widget-title,
-		.arc-page-title,
-		.entry-title {
-			font-family: '{$heading_font}', sans-serif;
-		}
-		";
+	h1, h2, h3, h4, h5, h6,
+	.site-title,
+	.widget-title,
+	.footer-widget-title,
+	.arc-page-title,
+	.entry-title {
+		font-family: '{$heading_font}', sans-serif;
 	}
-	
+	";
+	}
+
 	if ( 'system' !== $body_font ) {
 		$css .= "
-		body,
-		button,
-		input,
-		select,
-		textarea {
-			font-family: '{$body_font}', sans-serif;
-		}
-		";
+	body,
+	button,
+	input,
+	select,
+	textarea {
+		font-family: '{$body_font}', sans-serif;
 	}
-	
+	";
+	}
+
+	// Custom CSS from Appearance settings (trusted admin input, wp_strip_all_tags on save)
+	$custom_css = get_option( 'HTG_custom_css', '' );
+	if ( ! empty( trim( $custom_css ) ) ) {
+		// Sanitize: strip PHP tags, HTML tags already stripped on save; escape </style> to prevent breakout
+		$custom_css = wp_strip_all_tags( $custom_css );
+		$custom_css = str_replace( '</style>', '<\/style>', $custom_css );
+		$css .= "\n/* Custom CSS */\n" . $custom_css;
+	}
+
 	wp_add_inline_style( 'HTG-style', $css );
 }
 add_action( 'wp_enqueue_scripts', 'HTG_dynamic_css' );

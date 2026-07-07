@@ -62,14 +62,26 @@ body.HTG-dark-mode .HTG-ad-label {
 /* ===================================
    Header Ad Placement
    =================================== */
-.HTG-ad-header_top {
+.HTG-ad-header_top,
+.HTG-ad-header_above {
 	margin: 20px 0;
 	padding: 20px 0;
 	border-bottom: 1px solid #f0f0f0;
 }
 
-body.HTG-dark-mode .HTG-ad-header_top {
+.HTG-ad-header_below {
+	margin: 20px 0;
+	padding: 20px 0;
+	border-top: 1px solid #f0f0f0;
+}
+
+body.HTG-dark-mode .HTG-ad-header_top,
+body.HTG-dark-mode .HTG-ad-header_above {
 	border-bottom-color: #2a2a2a;
+}
+
+body.HTG-dark-mode .HTG-ad-header_below {
+	border-top-color: #2a2a2a;
 }
 
 /* ===================================
@@ -82,18 +94,21 @@ body.HTG-dark-mode .HTG-ad-header_top {
 /* ===================================
    Post Ad Placements
    =================================== */
-.HTG-ad-post_top {
+.HTG-ad-post_top,
+.HTG-ad-before_content {
 	margin: 30px 0;
 }
 
-.HTG-ad-post_content_middle {
+.HTG-ad-post_content_middle,
+.HTG-ad-after_content {
 	margin: 40px 0;
 	padding: 30px 0;
 	border-top: 1px solid #f0f0f0;
 	border-bottom: 1px solid #f0f0f0;
 }
 
-body.HTG-dark-mode .HTG-ad-post_content_middle {
+body.HTG-dark-mode .HTG-ad-post_content_middle,
+body.HTG-dark-mode .HTG-ad-after_content {
 	border-color: #2a2a2a;
 }
 
@@ -107,15 +122,24 @@ body.HTG-dark-mode .HTG-ad-post_bottom {
 	border-top-color: #2a2a2a;
 }
 
+/* In-article ad slots */
+.HTG-ad-in_article_1,
+.HTG-ad-in_article_2,
+.HTG-ad-in_article_3 {
+	margin: 40px 0;
+}
+
 /* ===================================
    Sidebar Ad Placements
    =================================== */
 .HTG-ad-sidebar_top,
-.HTG-ad-sidebar_middle {
+.HTG-ad-sidebar_middle,
+.HTG-ad-sidebar_sticky {
 	margin: 0 0 30px 0;
 }
 
-/* Sticky sidebar ads (optional) */
+/* Sticky sidebar ads */
+.HTG-ad-sticky,
 .HTG-ad-sidebar_top.sticky {
 	position: sticky;
 	top: 100px;
@@ -125,13 +149,15 @@ body.HTG-dark-mode .HTG-ad-post_bottom {
 /* ===================================
    Footer Ad Placement
    =================================== */
-.HTG-ad-footer_top {
+.HTG-ad-footer_top,
+.HTG-ad-before_footer {
 	margin: 50px 0 30px;
 	padding: 30px 0;
 	border-top: 2px solid #f0f0f0;
 }
 
-body.HTG-dark-mode .HTG-ad-footer_top {
+body.HTG-dark-mode .HTG-ad-footer_top,
+body.HTG-dark-mode .HTG-ad-before_footer {
 	border-top-color: #2a2a2a;
 }
 

@@ -80,61 +80,124 @@ class HTG_Settings_Pages {
 	}
 
 	/**
-	 * Register all settings
+	 * Register all settings with sanitization callbacks.
+	 * Forms use manual update_option() but these registrations ensure
+	 * proper sanitization if any code uses the Settings API and prevents
+	 * unintended REST API exposure.
 	 */
 	public static function register_settings() {
-		// Appearance settings
-		register_setting( 'HTG_appearance', 'HTG_primary_color' );
-		register_setting( 'HTG_appearance', 'HTG_secondary_color' );
-		register_setting( 'HTG_appearance', 'HTG_accent_color_1' );
-		register_setting( 'HTG_appearance', 'HTG_accent_color_2' );
-		register_setting( 'HTG_appearance', 'HTG_heading_font' );
-		register_setting( 'HTG_appearance', 'HTG_body_font' );
-		register_setting( 'HTG_appearance', 'HTG_font_size_scale' );
+		$settings = array(
+			// Appearance
+			'HTG_primary_color'      => 'sanitize_hex_color',
+			'HTG_secondary_color'    => 'sanitize_hex_color',
+			'HTG_accent_color_1'     => 'sanitize_hex_color',
+			'HTG_accent_color_2'     => 'sanitize_hex_color',
+			'HTG_heading_font'       => 'sanitize_text_field',
+			'HTG_body_font'          => 'sanitize_text_field',
+			'HTG_font_size_base'     => 'absint',
+			'HTG_custom_css'         => 'wp_strip_all_tags',
+			'HTG_logo_max_width'     => 'absint',
+			'HTG_logo_max_height'    => 'absint',
+			'HTG_logo_bg_color'      => 'sanitize_hex_color',
+			'HTG_logo_bg_tolerance'  => 'absint',
+			// Magazine
+			'HTG_magazine_enable'             => 'absint',
+			'HTG_magazine_posts_per_section'  => 'absint',
+			'HTG_magazine_layout_style'       => 'sanitize_text_field',
+			'HTG_magazine_show_badges'        => 'absint',
+			'HTG_magazine_show_reading_time'  => 'absint',
+			// Engagement
+			'HTG_newsletter_enable'     => 'absint',
+			'HTG_newsletter_title'      => 'sanitize_text_field',
+			'HTG_newsletter_description'=> 'sanitize_textarea_field',
+			'HTG_reading_time_enable'   => 'absint',
+			'HTG_post_reading_progress' => 'absint',
+			'HTG_progress_bar_color'    => 'sanitize_hex_color',
+			// General
+			'HTG_site_layout'          => 'sanitize_text_field',
+			'HTG_sidebar_position'     => 'sanitize_text_field',
+			'HTG_container_width'      => 'absint',
+			'HTG_breadcrumbs_enable'   => 'absint',
+			'HTG_footer_copyright'     => 'wp_kses_post',
+			'HTG_header_layout'        => 'sanitize_text_field',
+			'HTG_topbar_enable'        => 'absint',
+			'HTG_sticky_header'        => 'absint',
+			'HTG_header_show_search'   => 'absint',
+			'HTG_slider_enable'        => 'absint',
+			'HTG_slider_posts_count'   => 'absint',
+			'HTG_slider_autoplay'      => 'absint',
+			'HTG_excerpt_length'       => 'absint',
+			'HTG_show_post_date'       => 'absint',
+			'HTG_show_author'          => 'absint',
+			'HTG_post_hide_featured_image' => 'absint',
+			'HTG_post_show_author_box' => 'absint',
+			'HTG_post_show_related'    => 'absint',
+			'HTG_post_related_count'   => 'absint',
+			'HTG_post_show_tags'       => 'absint',
+		);
 
-		// Magazine settings
-		register_setting( 'HTG_magazine', 'HTG_enable_magazine_layout' );
-		register_setting( 'HTG_magazine', 'HTG_featured_posts_count' );
-		register_setting( 'HTG_magazine', 'HTG_excerpt_length' );
+		// Magazine section categories
 		for ( $i = 1; $i <= 4; $i++ ) {
-			register_setting( 'HTG_magazine', 'HTG_category_section_' . $i );
-			register_setting( 'HTG_magazine', 'HTG_category_section_' . $i . '_posts' );
+			$settings[ 'HTG_magazine_section_' . $i . '_category' ] = 'absint';
 		}
 
-		// Engagement settings
-		register_setting( 'HTG_engagement', 'HTG_newsletter_title' );
-		register_setting( 'HTG_engagement', 'HTG_newsletter_description' );
-		register_setting( 'HTG_engagement', 'HTG_newsletter_email' );
-		register_setting( 'HTG_engagement', 'HTG_newsletter_auto_insert' );
-		register_setting( 'HTG_engagement', 'HTG_author_box_enable' );
-		register_setting( 'HTG_engagement', 'HTG_author_box_style' );
-		register_setting( 'HTG_engagement', 'HTG_author_box_show_post_count' );
-		register_setting( 'HTG_engagement', 'HTG_author_box_show_social' );
+		foreach ( $settings as $option_name => $sanitize_cb ) {
+			$args = array(
+				'type'         => 'string',
+				'show_in_rest' => false,
+			);
+			if ( $sanitize_cb ) {
+				$args['sanitize_callback'] = $sanitize_cb;
+			}
+			register_setting( 'HTG_settings_group', $option_name, $args );
+		}
 	}
 
 	/**
 	 * Render Appearance Page
 	 */
 	public static function render_appearance_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'adtech-pro' ) );
+		}
+
 		// Handle save
 		if ( isset( $_POST['HTG_save_appearance'] ) && check_admin_referer( 'HTG_appearance_nonce' ) && current_user_can( 'manage_options' ) ) {
-			update_option( 'HTG_primary_color', sanitize_hex_color( $_POST['HTG_primary_color'] ?? HTG_get_default( 'HTG_primary_color' ) ) );
-			update_option( 'HTG_secondary_color', sanitize_hex_color( $_POST['HTG_secondary_color'] ?? HTG_get_default( 'HTG_secondary_color' ) ) );
-			update_option( 'HTG_accent_color_1', sanitize_hex_color( $_POST['HTG_accent_color_1'] ?? HTG_get_default( 'HTG_accent_color_1' ) ) );
-			update_option( 'HTG_accent_color_2', sanitize_hex_color( $_POST['HTG_accent_color_2'] ?? HTG_get_default( 'HTG_accent_color_2' ) ) );
-			update_option( 'HTG_heading_font', sanitize_text_field( $_POST['HTG_heading_font'] ?? HTG_get_default( 'HTG_heading_font' ) ) );
-			update_option( 'HTG_body_font', sanitize_text_field( $_POST['HTG_body_font'] ?? HTG_get_default( 'HTG_body_font' ) ) );
-			update_option( 'HTG_font_size_base', absint( $_POST['HTG_font_size_base'] ?? HTG_get_default( 'HTG_font_size_base' ) ) );
-			update_option( 'HTG_custom_css', wp_strip_all_tags( $_POST['HTG_custom_css'] ?? '' ) );
-			
+			// Sanitize hex colors with fallback to defaults
+			$color_fields = array( 'HTG_primary_color', 'HTG_secondary_color', 'HTG_accent_color_1', 'HTG_accent_color_2' );
+			foreach ( $color_fields as $cf ) {
+				$color = sanitize_hex_color( wp_unslash( $_POST[ $cf ] ?? '' ) );
+				if ( ! $color ) {
+					$color = HTG_get_default( $cf );
+				}
+				update_option( $cf, $color );
+			}
+
+			// Whitelist font names
+			$allowed_fonts = array( 'Inter', 'Poppins', 'Roboto', 'Open Sans', 'Lato', 'Ubuntu', 'Montserrat', 'system' );
+			$heading_font = sanitize_text_field( wp_unslash( $_POST['HTG_heading_font'] ?? HTG_get_default( 'HTG_heading_font' ) ) );
+			$body_font = sanitize_text_field( wp_unslash( $_POST['HTG_body_font'] ?? HTG_get_default( 'HTG_body_font' ) ) );
+			if ( ! in_array( $heading_font, $allowed_fonts, true ) ) {
+				$heading_font = HTG_get_default( 'HTG_heading_font' );
+			}
+			if ( ! in_array( $body_font, $allowed_fonts, true ) ) {
+				$body_font = HTG_get_default( 'HTG_body_font' );
+			}
+
+			update_option( 'HTG_heading_font', $heading_font );
+			update_option( 'HTG_body_font', $body_font );
+			update_option( 'HTG_font_size_base', max( 60, min( 150, absint( wp_unslash( $_POST['HTG_font_size_base'] ?? HTG_get_default( 'HTG_font_size_base' ) ) ) ) ) );
+			update_option( 'HTG_custom_css', wp_strip_all_tags( wp_unslash( $_POST['HTG_custom_css'] ?? '' ) ) );
+
 			// Logo settings
-			update_option( 'HTG_logo_max_width', absint( $_POST['HTG_logo_max_width'] ?? 300 ) );
-			update_option( 'HTG_logo_max_height', absint( $_POST['HTG_logo_max_height'] ?? 100 ) );
+			update_option( 'HTG_logo_max_width', max( 60, min( 600, absint( wp_unslash( $_POST['HTG_logo_max_width'] ?? 300 ) ) ) ) );
+			update_option( 'HTG_logo_max_height', max( 20, min( 300, absint( wp_unslash( $_POST['HTG_logo_max_height'] ?? 100 ) ) ) ) );
 			update_option( 'HTG_logo_auto_resize', isset( $_POST['HTG_logo_auto_resize'] ) ? 1 : 0 );
 			update_option( 'HTG_logo_remove_bg', isset( $_POST['HTG_logo_remove_bg'] ) ? 1 : 0 );
-			update_option( 'HTG_logo_bg_color', sanitize_hex_color( $_POST['HTG_logo_bg_color'] ?? '#ffffff' ) );
-			update_option( 'HTG_logo_bg_tolerance', absint( $_POST['HTG_logo_bg_tolerance'] ?? 30 ) );
-			
+			$logo_bg = sanitize_hex_color( wp_unslash( $_POST['HTG_logo_bg_color'] ?? '#ffffff' ) );
+			update_option( 'HTG_logo_bg_color', $logo_bg ? $logo_bg : '#ffffff' );
+			update_option( 'HTG_logo_bg_tolerance', max( 0, min( 100, absint( wp_unslash( $_POST['HTG_logo_bg_tolerance'] ?? 30 ) ) ) ) );
+
 			echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__( 'Appearance settings saved!', 'adtech-pro' ) . '</strong></p></div>';
 		}
 
@@ -360,52 +423,38 @@ class HTG_Settings_Pages {
 							<?php esc_html_e( 'Save Appearance', 'adtech-pro' ); ?>
 						</button>
 					</p>
-				</form>
-			</div>
+			</form>
 		</div>
-		
-		<script>
-		jQuery(document).ready(function($){
-			$('.nav-tab').on('click', function(e){
-				e.preventDefault();
-				var target = $(this).attr('href');
-				$('.nav-tab').removeClass('nav-tab-active');
-				$(this).addClass('nav-tab-active');
-				$('.HTG-tab-content').hide();
-				$(target).show();
-			});
-			if (typeof $.fn.wpColorPicker !== 'undefined') {
-				$('.HTG-color-picker').wpColorPicker();
-			}
-			
-			// Logo settings toggles
-			$('#HTG_logo_remove_bg').on('change', function() {
-				$('.htg-bg-removal-options').toggle(this.checked);
-			});
-			$('#HTG_logo_bg_tolerance').on('input', function() {
-				$('#htg-tolerance-value').text(this.value);
-			});
-		});
-		</script>
-		<?php
+	</div>
+	<?php
 	}
 
 	/**
 	 * Render Magazine Page
 	 */
 	public static function render_magazine_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'adtech-pro' ) );
+		}
+
 		// Handle form submission
-		if ( isset( $_POST['HTG_magazine_settings_nonce'] ) && wp_verify_nonce( $_POST['HTG_magazine_settings_nonce'], 'HTG_magazine_settings' ) ) {
+		if ( isset( $_POST['HTG_save_magazine'] ) && isset( $_POST['HTG_magazine_settings_nonce'] ) && wp_verify_nonce( wp_unslash( $_POST['HTG_magazine_settings_nonce'] ), 'HTG_magazine_settings' ) && current_user_can( 'manage_options' ) ) {
+			$allowed_layouts = array( 'grid', 'list', 'masonry' );
+			$layout = sanitize_text_field( wp_unslash( $_POST['HTG_magazine_layout_style'] ?? 'grid' ) );
+			if ( ! in_array( $layout, $allowed_layouts, true ) ) {
+				$layout = 'grid';
+			}
+
 			update_option( 'HTG_magazine_enable', isset( $_POST['HTG_magazine_enable'] ) ? 1 : 0 );
-			update_option( 'HTG_magazine_posts_per_section', absint( $_POST['HTG_magazine_posts_per_section'] ) );
-			update_option( 'HTG_magazine_layout_style', sanitize_text_field( $_POST['HTG_magazine_layout_style'] ) );
+			update_option( 'HTG_magazine_posts_per_section', max( 1, min( 12, absint( wp_unslash( $_POST['HTG_magazine_posts_per_section'] ?? 6 ) ) ) ) );
+			update_option( 'HTG_magazine_layout_style', $layout );
 			update_option( 'HTG_magazine_show_badges', isset( $_POST['HTG_magazine_show_badges'] ) ? 1 : 0 );
 			update_option( 'HTG_magazine_show_reading_time', isset( $_POST['HTG_magazine_show_reading_time'] ) ? 1 : 0 );
-			
+
 			for ( $i = 1; $i <= 4; $i++ ) {
-				update_option( 'HTG_magazine_section_' . $i . '_category', absint( $_POST['HTG_magazine_section_' . $i . '_category'] ) );
+				update_option( 'HTG_magazine_section_' . $i . '_category', absint( wp_unslash( $_POST[ 'HTG_magazine_section_' . $i . '_category' ] ?? 0 ) ) );
 			}
-			
+
 			echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__( 'Magazine settings saved!', 'adtech-pro' ) . '</strong></p></div>';
 		}
 		?>
@@ -514,12 +563,12 @@ class HTG_Settings_Pages {
 						</div>
 					</div>
 
-					<p class="submit" style="padding: 20px 40px;">
-						<button type="submit" class="button button-primary button-hero">
-							<span class="dashicons dashicons-saved"></span>
-							<?php esc_html_e( 'Save Magazine Settings', 'adtech-pro' ); ?>
-						</button>
-					</p>
+				<p class="submit" style="padding: 20px 40px;">
+					<button type="submit" name="HTG_save_magazine" class="button button-primary button-hero">
+						<span class="dashicons dashicons-saved"></span>
+						<?php esc_html_e( 'Save Magazine Settings', 'adtech-pro' ); ?>
+					</button>
+				</p>
 				</form>
 			</div>
 		</div>
@@ -530,15 +579,24 @@ class HTG_Settings_Pages {
 	 * Render Engagement Page
 	 */
 	public static function render_engagement_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'adtech-pro' ) );
+		}
+
 		// Handle form submission
-		if ( isset( $_POST['HTG_engagement_nonce'] ) && wp_verify_nonce( $_POST['HTG_engagement_nonce'], 'HTG_engagement_settings' ) ) {
+		if ( isset( $_POST['HTG_save_engagement'] ) && isset( $_POST['HTG_engagement_nonce'] ) && wp_verify_nonce( wp_unslash( $_POST['HTG_engagement_nonce'] ), 'HTG_engagement_settings' ) && current_user_can( 'manage_options' ) ) {
+			$progress_color = sanitize_hex_color( wp_unslash( $_POST['HTG_progress_bar_color'] ?? '#00d4aa' ) );
+			if ( ! $progress_color ) {
+				$progress_color = '#00d4aa';
+			}
+
 			update_option( 'HTG_newsletter_enable', isset( $_POST['HTG_newsletter_enable'] ) ? 1 : 0 );
-			update_option( 'HTG_newsletter_title', sanitize_text_field( $_POST['HTG_newsletter_title'] ?? '' ) );
-			update_option( 'HTG_newsletter_description', sanitize_textarea_field( $_POST['HTG_newsletter_description'] ?? '' ) );
+			update_option( 'HTG_newsletter_title', sanitize_text_field( wp_unslash( $_POST['HTG_newsletter_title'] ?? '' ) ) );
+			update_option( 'HTG_newsletter_description', sanitize_textarea_field( wp_unslash( $_POST['HTG_newsletter_description'] ?? '' ) ) );
 			update_option( 'HTG_reading_time_enable', isset( $_POST['HTG_reading_time_enable'] ) ? 1 : 0 );
-			update_option( 'HTG_progress_bar_enable', isset( $_POST['HTG_progress_bar_enable'] ) ? 1 : 0 );
-			update_option( 'HTG_progress_bar_color', sanitize_hex_color( $_POST['HTG_progress_bar_color'] ?? '#00d4aa' ) );
-			
+			update_option( 'HTG_post_reading_progress', isset( $_POST['HTG_progress_bar_enable'] ) ? 1 : 0 );
+			update_option( 'HTG_progress_bar_color', $progress_color );
+
 			echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__( 'Engagement settings saved!', 'adtech-pro' ) . '</strong></p></div>';
 		}
 		
@@ -547,8 +605,8 @@ class HTG_Settings_Pages {
 		$newsletter_title = get_option( 'HTG_newsletter_title', 'Subscribe to Our Newsletter' );
 		$newsletter_description = get_option( 'HTG_newsletter_description', 'Get the latest updates delivered to your inbox.' );
 		$reading_time_enable = get_option( 'HTG_reading_time_enable', 1 );
-		$progress_bar_enable = get_option( 'HTG_progress_bar_enable', 1 );
-		$progress_bar_color = get_option( 'HTG_progress_bar_color', '#00d4aa' );
+	$progress_bar_enable = get_option( 'HTG_post_reading_progress', 1 );
+	$progress_bar_color = get_option( 'HTG_progress_bar_color', '#00d4aa' );
 		?>
 		<div class="wrap HTG-admin-wrap">
 			<div class="HTG-admin-header">
@@ -631,73 +689,77 @@ class HTG_Settings_Pages {
 						</div>
 					</div>
 					
-					<p class="submit" style="padding: 20px 40px;">
-						<button type="submit" class="button button-primary button-hero">
-							<span class="dashicons dashicons-saved"></span>
-							<?php esc_html_e( 'Save Engagement Settings', 'adtech-pro' ); ?>
-						</button>
-					</p>
-				</form>
-			</div>
+				<p class="submit" style="padding: 20px 40px;">
+					<button type="submit" name="HTG_save_engagement" class="button button-primary button-hero">
+						<span class="dashicons dashicons-saved"></span>
+						<?php esc_html_e( 'Save Engagement Settings', 'adtech-pro' ); ?>
+					</button>
+				</p>
+			</form>
 		</div>
-		
-		<script>
-		jQuery(document).ready(function($){
-			$('.nav-tab').on('click', function(e){
-				e.preventDefault();
-				var target = $(this).attr('href');
-				$('.nav-tab').removeClass('nav-tab-active');
-				$(this).addClass('nav-tab-active');
-				$('.HTG-tab-content').hide();
-				$(target).show();
-			});
-			if (typeof $.fn.wpColorPicker !== 'undefined') {
-				$('.HTG-color-picker').wpColorPicker();
-			}
-		});
-		</script>
-		<?php
+	</div>
+	<?php
 	}
 
 	/**
 	 * Render General Page
 	 */
 	public static function render_general_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to access this page.', 'adtech-pro' ) );
+		}
+
 		// Handle save
 		if ( isset( $_POST['HTG_save_all_general'] ) && check_admin_referer( 'HTG_all_general_nonce' ) && current_user_can( 'manage_options' ) ) {
+			// Whitelists for select fields
+			$allowed_layouts    = array( 'wide', 'boxed' );
+			$allowed_sidebars   = array( 'right', 'left', 'none' );
+			$allowed_headers    = array( 'default', 'centered', 'minimal' );
+			$allowed_blog       = array( 'grid', 'list', 'large' );
+
+			$site_layout     = sanitize_text_field( wp_unslash( $_POST['HTG_site_layout'] ?? 'wide' ) );
+			$sidebar_pos     = sanitize_text_field( wp_unslash( $_POST['HTG_sidebar_position'] ?? 'right' ) );
+			$header_layout   = sanitize_text_field( wp_unslash( $_POST['HTG_header_layout'] ?? 'default' ) );
+			$selected_layout = sanitize_text_field( wp_unslash( $_POST['HTG_blog_layout'] ?? 'grid' ) );
+
+			if ( ! in_array( $site_layout, $allowed_layouts, true ) ) { $site_layout = 'wide'; }
+			if ( ! in_array( $sidebar_pos, $allowed_sidebars, true ) ) { $sidebar_pos = 'right'; }
+			if ( ! in_array( $header_layout, $allowed_headers, true ) ) { $header_layout = 'default'; }
+			if ( ! in_array( $selected_layout, $allowed_blog, true ) ) { $selected_layout = 'grid'; }
+
 			// Site Settings
-			update_option( 'HTG_site_layout', sanitize_text_field( $_POST['HTG_site_layout'] ?? 'wide' ) );
-			update_option( 'HTG_sidebar_position', sanitize_text_field( $_POST['HTG_sidebar_position'] ?? 'right' ) );
-			update_option( 'HTG_container_width', absint( $_POST['HTG_container_width'] ?? 1920 ) );
+			update_option( 'HTG_site_layout', $site_layout );
+			update_option( 'HTG_sidebar_position', $sidebar_pos );
+			update_option( 'HTG_container_width', max( 960, min( 2560, absint( wp_unslash( $_POST['HTG_container_width'] ?? 1920 ) ) ) ) );
 			update_option( 'HTG_breadcrumbs_enable', isset( $_POST['HTG_breadcrumbs_enable'] ) ? 1 : 0 );
-			update_option( 'HTG_footer_copyright', wp_kses_post( $_POST['HTG_footer_copyright'] ?? '' ) );
-			
+			update_option( 'HTG_footer_copyright', wp_kses_post( wp_unslash( $_POST['HTG_footer_copyright'] ?? '' ) ) );
+
 			// Header Settings
-			update_option( 'HTG_header_layout', sanitize_text_field( $_POST['HTG_header_layout'] ?? 'default' ) );
+			update_option( 'HTG_header_layout', $header_layout );
 			update_option( 'HTG_topbar_enable', isset( $_POST['HTG_topbar_enable'] ) ? 1 : 0 );
 			update_option( 'HTG_sticky_header', isset( $_POST['HTG_sticky_header'] ) ? 1 : 0 );
 			update_option( 'HTG_header_show_search', isset( $_POST['HTG_header_show_search'] ) ? 1 : 0 );
-			
+
 			// Slider Settings
 			update_option( 'HTG_slider_enable', isset( $_POST['HTG_slider_enable'] ) ? 1 : 0 );
-			update_option( 'HTG_slider_posts_count', absint( $_POST['HTG_slider_posts_count'] ?? 5 ) );
+			update_option( 'HTG_slider_posts_count', max( 1, min( 10, absint( wp_unslash( $_POST['HTG_slider_posts_count'] ?? 5 ) ) ) ) );
 			update_option( 'HTG_slider_autoplay', isset( $_POST['HTG_slider_autoplay'] ) ? 1 : 0 );
-			
+
 			// Blog Settings
 			$layout_map = array( 'grid' => 'th-grid-2', 'list' => 'th-list-posts', 'large' => 'th-large-posts' );
-			$selected_layout = sanitize_text_field( $_POST['HTG_blog_layout'] ?? 'grid' );
-			update_option( 'archive_content_layout', $layout_map[ $selected_layout ] ?? 'th-grid-2' );
-			update_option( 'HTG_excerpt_length', absint( $_POST['HTG_excerpt_length'] ?? 30 ) );
+			update_option( 'archive_content_layout', $layout_map[ $selected_layout ] );
+			update_option( 'HTG_blog_layout', $selected_layout );
+			update_option( 'HTG_excerpt_length', max( 5, min( 100, absint( wp_unslash( $_POST['HTG_excerpt_length'] ?? 30 ) ) ) ) );
 			update_option( 'HTG_show_post_date', isset( $_POST['HTG_show_post_date'] ) ? 1 : 0 );
 			update_option( 'HTG_show_author', isset( $_POST['HTG_show_author'] ) ? 1 : 0 );
-			
+
 			// Post Settings
 			update_option( 'HTG_post_hide_featured_image', isset( $_POST['HTG_post_hide_featured_image'] ) ? 1 : 0 );
 			update_option( 'HTG_post_show_author_box', isset( $_POST['HTG_post_show_author_box'] ) ? 1 : 0 );
 			update_option( 'HTG_post_show_related', isset( $_POST['HTG_post_show_related'] ) ? 1 : 0 );
-			update_option( 'HTG_post_related_count', absint( $_POST['HTG_post_related_count'] ?? 6 ) );
+			update_option( 'HTG_post_related_count', max( 2, min( 12, absint( wp_unslash( $_POST['HTG_post_related_count'] ?? 6 ) ) ) ) );
 			update_option( 'HTG_post_show_tags', isset( $_POST['HTG_post_show_tags'] ) ? 1 : 0 );
-			
+
 			echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__( 'Settings saved!', 'adtech-pro' ) . '</strong></p></div>';
 		}
 
@@ -973,26 +1035,10 @@ class HTG_Settings_Pages {
 							<?php esc_html_e( 'Save All Settings', 'adtech-pro' ); ?>
 						</button>
 					</p>
-				</form>
-			</div>
+			</form>
 		</div>
-		
-		<script>
-		jQuery(document).ready(function($){
-			$('.nav-tab').on('click', function(e){
-				e.preventDefault();
-				var target = $(this).attr('href');
-				$('.nav-tab').removeClass('nav-tab-active');
-				$(this).addClass('nav-tab-active');
-				$('.HTG-tab-content').hide();
-				$(target).show();
-			});
-			if (typeof $.fn.wpColorPicker !== 'undefined') {
-				$('.HTG-color-picker').wpColorPicker();
-			}
-		});
-		</script>
-		<?php
+	</div>
+	<?php
 	}
 }
 

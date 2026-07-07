@@ -154,12 +154,20 @@
 	function initToggleSwitches() {
 		$('.HTG-toggle input[type="checkbox"]').on('change', function() {
 			var $toggle = $(this).closest('.HTG-toggle');
-			
+
 			// Add visual feedback
 			$toggle.addClass('HTG-toggle-changed');
 			setTimeout(function() {
 				$toggle.removeClass('HTG-toggle-changed');
 			}, 300);
+		});
+
+		// Logo background-removal toggles
+		$('#HTG_logo_remove_bg').on('change', function() {
+			$('.htg-bg-removal-options').toggle(this.checked);
+		});
+		$('#HTG_logo_bg_tolerance').on('input', function() {
+			$('#htg-tolerance-value').text(this.value);
 		});
 	}
 

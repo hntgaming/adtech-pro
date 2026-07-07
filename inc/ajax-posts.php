@@ -30,9 +30,11 @@ class HTG_Ajax_Posts {
 	public static function load_more_posts() {
 		check_ajax_referer( 'HTG_ajax_nonce', 'nonce' );
 
-		$page = isset( $_POST['page'] ) ? intval( $_POST['page'] ) : 1;
-		$posts_per_page = isset( $_POST['posts_per_page'] ) ? intval( $_POST['posts_per_page'] ) : 9;
-		$category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
+		$page = isset( $_POST['page'] ) ? absint( wp_unslash( $_POST['page'] ) ) : 1;
+		$page = max( 1, $page );
+		$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( wp_unslash( $_POST['posts_per_page'] ) ) : 9;
+		$posts_per_page = max( 1, min( 50, $posts_per_page ) );
+		$category = isset( $_POST['category'] ) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ) : '';
 
 		$args = array(
 			'post_type'      => 'post',
@@ -42,32 +44,33 @@ class HTG_Ajax_Posts {
 		);
 
 		if ( ! empty( $category ) && 'all' !== $category ) {
-			$args['cat'] = intval( $category );
+			$args['cat'] = absint( $category );
 		}
 
 		$query = new WP_Query( $args );
 
 		if ( $query->have_posts() ) {
 			ob_start();
-			
+
 			while ( $query->have_posts() ) : $query->the_post();
 				self::render_post_card();
 			endwhile;
-			
+
 			$html = ob_get_clean();
-			
+
+			wp_reset_postdata();
+
 			wp_send_json_success( array(
 				'html'      => $html,
 				'has_more'  => $page < $query->max_num_pages,
 				'max_pages' => $query->max_num_pages,
 			) );
 		} else {
+			wp_reset_postdata();
 			wp_send_json_error( array(
 				'message' => __( 'No more posts to load.', 'adtech-pro' ),
 			) );
 		}
-
-		wp_reset_postdata();
 	}
 
 	/**
@@ -76,8 +79,9 @@ class HTG_Ajax_Posts {
 	public static function filter_posts() {
 		check_ajax_referer( 'HTG_ajax_nonce', 'nonce' );
 
-		$category = isset( $_POST['category'] ) ? sanitize_text_field( $_POST['category'] ) : '';
-		$posts_per_page = isset( $_POST['posts_per_page'] ) ? intval( $_POST['posts_per_page'] ) : 9;
+		$category = isset( $_POST['category'] ) ? sanitize_text_field( wp_unslash( $_POST['category'] ) ) : '';
+		$posts_per_page = isset( $_POST['posts_per_page'] ) ? absint( wp_unslash( $_POST['posts_per_page'] ) ) : 9;
+		$posts_per_page = max( 1, min( 50, $posts_per_page ) );
 
 		$args = array(
 			'post_type'      => 'post',
@@ -87,20 +91,22 @@ class HTG_Ajax_Posts {
 		);
 
 		if ( ! empty( $category ) && 'all' !== $category ) {
-			$args['cat'] = intval( $category );
+			$args['cat'] = absint( $category );
 		}
 
 		$query = new WP_Query( $args );
 
 		if ( $query->have_posts() ) {
 			ob_start();
-			
+
 			while ( $query->have_posts() ) : $query->the_post();
 				self::render_post_card();
 			endwhile;
-			
+
 			$html = ob_get_clean();
-			
+
+			wp_reset_postdata();
+
 			wp_send_json_success( array(
 				'html'      => $html,
 				'has_more'  => $query->max_num_pages > 1,
@@ -108,12 +114,11 @@ class HTG_Ajax_Posts {
 				'count'     => $query->found_posts,
 			) );
 		} else {
+			wp_reset_postdata();
 			wp_send_json_error( array(
 				'message' => __( 'No posts found in this category.', 'adtech-pro' ),
 			) );
 		}
-
-		wp_reset_postdata();
 	}
 
 	/**

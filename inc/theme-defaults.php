@@ -58,7 +58,7 @@ function HTG_get_theme_defaults() {
 		'HTG_container_width'         => 1920,          // 1920px container (auto-responsive)
 		'HTG_breadcrumbs_enable'      => 1,             // Breadcrumbs enabled
 		'HTG_breadcrumbs_separator'   => '›',           // Chevron separator
-		'HTG_footer_copyright'        => '© ' . date('Y') . ' H&T GAMING. All rights reserved.',
+		'HTG_footer_copyright'        => '© %year% H&T GAMING. All rights reserved.',
 		
 		// ===========================================
 		// HEADER SETTINGS
@@ -198,7 +198,12 @@ function HTG_get_theme_defaults() {
  */
 function HTG_get_default( $key, $fallback = null ) {
 	$defaults = HTG_get_theme_defaults();
-	return isset( $defaults[ $key ] ) ? $defaults[ $key ] : $fallback;
+	$value = isset( $defaults[ $key ] ) ? $defaults[ $key ] : $fallback;
+	// Resolve year placeholder dynamically (avoid static cache freezing the year)
+	if ( is_string( $value ) && strpos( $value, '%year%' ) !== false ) {
+		$value = str_replace( '%year%', gmdate( 'Y' ), $value );
+	}
+	return $value;
 }
 
 /**
@@ -255,14 +260,14 @@ function HTG_migrate_v231() {
 	
 	// Update container width if it's still at old default
 	$current_width = get_option( 'HTG_container_width', false );
-	if ( $current_width === false || $current_width == 1200 ) {
+	if ( $current_width === false || (int) $current_width === 1200 ) {
 		update_option( 'HTG_container_width', 1920 );
 	}
-	
+
 	// Mark as migrated
 	update_option( 'HTG_migrated_v231', true );
 }
-add_action( 'init', 'HTG_migrate_v231' );
+add_action( 'admin_init', 'HTG_migrate_v231' );
 
 /**
  * One-time migration for v3.0.4
@@ -290,7 +295,7 @@ function HTG_migrate_v304_ads() {
 
 	update_option( 'HTG_migrated_v304_ads', true );
 }
-add_action( 'init', 'HTG_migrate_v304_ads' );
+add_action( 'admin_init', 'HTG_migrate_v304_ads' );
 
 /**
  * Reset options to defaults (admin function)

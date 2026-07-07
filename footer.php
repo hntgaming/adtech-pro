@@ -52,16 +52,19 @@
 		<div class="site-info">
 			<div class="hm-container">
 				<div class="site-info-owner">
-					<?php
+				<?php
+					$footer_copyright_text = get_option( 'HTG_footer_copyright', '' );
+					if ( empty( trim( $footer_copyright_text ) ) ) {
 						$footer_copyright_text = get_theme_mod( 'footer_copyright_text', '' );
+					}
 
-						if ( ! empty ( $footer_copyright_text ) ) {
-							echo wp_kses_post( $footer_copyright_text );
-						} else {
-							$site_link = '<a href="' . esc_url( home_url( '/' ) ) . '" title="' . esc_attr( get_bloginfo( 'name' ) ) . '" >' . esc_attr( get_bloginfo( 'name' ) ) . '</a>';
-							printf( esc_html__( 'Copyright &#169; %1$s %2$s.', 'adtech-pro' ), date_i18n( 'Y' ), $site_link );
-						}		
-					?>
+					if ( ! empty ( trim( $footer_copyright_text ) ) ) {
+						echo wp_kses_post( $footer_copyright_text );
+					} else {
+						$site_link = '<a href="' . esc_url( home_url( '/' ) ) . '" title="' . esc_attr( get_bloginfo( 'name' ) ) . '" >' . esc_attr( get_bloginfo( 'name' ) ) . '</a>';
+						printf( esc_html__( 'Copyright &#169; %1$s %2$s.', 'adtech-pro' ), date_i18n( 'Y' ), $site_link );
+					}
+				?>
 				</div>			
 				<div class="site-info-designer">
 					<?php

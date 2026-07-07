@@ -113,35 +113,42 @@ foreach ( HTG_get_settings_map() as $theme_mod => $config ) {
  * Note: update_option action signature is ($option, $old_value, $value)
  */
 function HTG_sync_customizer_to_options( $option_name, $old_value, $new_value ) {
+	static $syncing = false;
+	if ( $syncing ) {
+		return;
+	}
+
 	// Ensure option_name is a string
 	if ( ! is_string( $option_name ) ) {
 		return;
 	}
-	
+
 	// This runs when theme_mods are updated
 	if ( strpos( $option_name, 'theme_mods_' ) !== 0 ) {
 		return;
 	}
-	
+
 	if ( ! is_array( $new_value ) ) {
 		return;
 	}
-	
+
 	$map = HTG_get_settings_map();
-	
+
+	$syncing = true;
 	foreach ( $map as $theme_mod => $config ) {
 		if ( isset( $new_value[ $theme_mod ] ) ) {
 			$value = $new_value[ $theme_mod ];
-			
+
 			// Convert 'true'/'false' strings back to boolean for storage
 			if ( isset( $config['bool_to_string'] ) && $config['bool_to_string'] ) {
 				$value = ( $value === 'true' || $value === true || $value === 1 || $value === '1' ) ? 1 : 0;
 			}
-			
+
 			// Update the option (silent - no action hooks)
 			update_option( $config['option'], $value );
 		}
 	}
+	$syncing = false;
 }
 add_action( 'update_option', 'HTG_sync_customizer_to_options', 10, 3 );
 
@@ -150,28 +157,33 @@ add_action( 'update_option', 'HTG_sync_customizer_to_options', 10, 3 );
  * When an HTG_* option is updated, also update the corresponding theme_mod
  */
 function HTG_sync_options_to_customizer( $option_name, $old_value, $new_value ) {
+	static $syncing = false;
+	if ( $syncing ) {
+		return;
+	}
+
 	// Only process HTG_ options
 	if ( strpos( $option_name, 'HTG_' ) !== 0 ) {
 		return;
 	}
-	
+
 	$map = HTG_get_settings_map();
-	
+
 	// Find the theme_mod that corresponds to this option
 	foreach ( $map as $theme_mod => $config ) {
 		if ( $config['option'] === $option_name ) {
 			$value = $new_value;
-			
+
 			// Convert boolean to 'true'/'false' string if needed
 			if ( isset( $config['bool_to_string'] ) && $config['bool_to_string'] ) {
 				$value = $new_value ? 'true' : 'false';
 			}
-			
-			// Update theme_mod (remove action first to prevent infinite loop)
-			remove_action( 'update_option', 'HTG_sync_customizer_to_options', 10 );
+
+			// Update theme_mod with loop guard
+			$syncing = true;
 			set_theme_mod( $theme_mod, $value );
-			add_action( 'update_option', 'HTG_sync_customizer_to_options', 10, 3 );
-			
+			$syncing = false;
+
 			break;
 		}
 	}
@@ -189,11 +201,12 @@ function HTG_register_ad_theme_mod_overrides() {
 	$ad_options = array(
 		'HTG_ad_head_code', 'HTG_ad_footer_code', 'HTG_ad_header_above',
 		'HTG_ad_header_below', 'HTG_ad_before_content', 'HTG_ad_after_content',
-		'HTG_ad_in_article', 'HTG_ad_in_article_position', 'HTG_ad_sidebar_top',
-		'HTG_ad_sidebar_sticky', 'HTG_ad_homepage_top', 'HTG_ad_before_footer',
+		'HTG_ad_in_article_1', 'HTG_ad_in_article_2', 'HTG_ad_in_article_3',
+		'HTG_ad_in_article_1_position', 'HTG_ad_in_article_2_position', 'HTG_ad_in_article_3_position',
+		'HTG_ad_sidebar_top', 'HTG_ad_sidebar_sticky', 'HTG_ad_homepage_top', 'HTG_ad_before_footer',
 		'HTG_ad_labels_enable',
 	);
-	
+
 	foreach ( $ad_options as $option_name ) {
 		add_filter( 'theme_mod_' . $option_name, function( $value ) use ( $option_name ) {
 			$option_value = get_option( $option_name, null );

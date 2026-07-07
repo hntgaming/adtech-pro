@@ -267,13 +267,32 @@ class HTG_Quiz_System {
 	 * Handle quiz vote via AJAX
 	 */
 	public static function handle_quiz_vote() {
-		check_ajax_referer( 'HTG_quiz_nonce', 'nonce' );
+		check_ajax_referer( 'HTG_engagement_nonce', 'nonce' );
 
-		$post_id = isset( $_POST['post_id'] ) ? intval( $_POST['post_id'] ) : 0;
-		$option_index = isset( $_POST['option_index'] ) ? intval( $_POST['option_index'] ) : -1;
+		$post_id = isset( $_POST['post_id'] ) ? absint( wp_unslash( $_POST['post_id'] ) ) : 0;
+		$option_index = isset( $_POST['option_index'] ) ? intval( wp_unslash( $_POST['option_index'] ) ) : -1;
 
 		if ( ! $post_id || $option_index < 0 ) {
 			wp_send_json_error( array( 'message' => __( 'Invalid request', 'adtech-pro' ) ) );
+		}
+
+		// Validate post exists and is published
+		$post = get_post( $post_id );
+		if ( ! $post || 'publish' !== $post->post_status || 'post' !== $post->post_type ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid request', 'adtech-pro' ) ) );
+		}
+
+		// Validate option_index against actual quiz options
+		$options = get_post_meta( $post_id, '_HTG_quiz_options', true );
+		if ( ! is_array( $options ) || ! array_key_exists( $option_index, $options ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid option.', 'adtech-pro' ) ) );
+		}
+
+		// Rate limit per IP (1 vote per minute per post)
+		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+		$rate_key = 'htg_quiz_rl_' . md5( $post_id . $ip );
+		if ( get_transient( $rate_key ) ) {
+			wp_send_json_error( array( 'message' => __( 'Please wait before voting again.', 'adtech-pro' ) ) );
 		}
 
 		// Check if user already voted
@@ -281,29 +300,31 @@ class HTG_Quiz_System {
 			wp_send_json_error( array( 'message' => __( 'You already voted', 'adtech-pro' ) ) );
 		}
 
-		// Get current votes
-		$votes = get_post_meta( $post_id, '_HTG_quiz_votes', true );
-		
-		if ( ! is_array( $votes ) ) {
-			$votes = array();
-		}
+	// Get current votes
+	$votes = get_post_meta( $post_id, '_HTG_quiz_votes', true );
 
-		// Increment vote count
-		if ( ! isset( $votes[ $option_index ] ) ) {
-			$votes[ $option_index ] = 0;
-		}
-		$votes[ $option_index ]++;
+	if ( ! is_array( $votes ) ) {
+		$votes = array();
+	}
 
-		// Update votes
-		update_post_meta( $post_id, '_HTG_quiz_votes', $votes );
+	// Increment vote count
+	if ( ! isset( $votes[ $option_index ] ) ) {
+		$votes[ $option_index ] = 0;
+	}
+	$votes[ $option_index ]++;
 
-		// Set cookie (expires in 1 year)
-		setcookie( 'HTG_quiz_' . $post_id, $option_index, time() + YEAR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+	// Update votes
+	update_post_meta( $post_id, '_HTG_quiz_votes', $votes );
 
-		// Calculate results
-		$options = get_post_meta( $post_id, '_HTG_quiz_options', true );
-		$total_votes = array_sum( $votes );
-		$results = array();
+	// Set rate limit (1 minute)
+	set_transient( $rate_key, 1, MINUTE_IN_SECONDS );
+
+	// Set cookie (expires in 1 year)
+	setcookie( 'HTG_quiz_' . $post_id, $option_index, time() + YEAR_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN );
+
+	// Calculate results — $options already validated above
+	$total_votes = array_sum( $votes );
+	$results = array();
 
 		foreach ( $options as $index => $option ) {
 			$option_votes = isset( $votes[ $index ] ) ? intval( $votes[ $index ] ) : 0;
@@ -379,13 +400,13 @@ HTG_Quiz_System::init();
 add_filter( 'the_content', array( 'HTG_Quiz_System', 'auto_insert_quiz' ), 20 );
 
 // Hook for before_comments position
-add_action( 'HTG_before_comments', function() {
+add_action( 'HTG_before_comments_template', function() {
 	if ( ! is_single() ) {
 		return;
 	}
 
 	$quiz_position = get_post_meta( get_the_ID(), '_HTG_quiz_position', true );
-	
+
 	if ( 'before_comments' === $quiz_position ) {
 		echo HTG_Quiz_System::render_quiz();
 	}

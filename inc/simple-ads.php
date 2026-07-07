@@ -45,13 +45,16 @@ function HTG_get_ad_code( $slot, $wrap = true ) {
 		return $ad_code;
 	}
 
-	$output = '<div class="htg-ad htg-ad-' . esc_attr( $slot ) . '">';
+	// Sticky class for sidebar_sticky slot
+	$sticky_class = ( 'sidebar_sticky' === $slot ) ? ' HTG-ad-sticky' : '';
 
-	if ( (bool) get_option( 'HTG_ad_labels_enable', 1 ) ) {
-		$output .= '<span class="htg-ad-label">' . esc_html__( 'Advertisement', 'adtech-pro' ) . '</span>';
+	$output = '<div class="HTG-ad-container HTG-ad-' . esc_attr( $slot ) . $sticky_class . '">';
+
+	if ( (int) get_option( 'HTG_ad_labels_enable', 1 ) === 1 ) {
+		$output .= '<span class="HTG-ad-label">' . esc_html__( 'Advertisement', 'adtech-pro' ) . '</span>';
 	}
 
-	$output .= '<div class="htg-ad-content">' . $ad_code . '</div></div>';
+	$output .= '<div class="HTG-ad-slot">' . $ad_code . '</div></div>';
 
 	return $output;
 }
@@ -178,20 +181,19 @@ function HTG_parse_placement_rule( $rule, $total ) {
  * @return string         Modified content with ads inserted.
  */
 function HTG_auto_insert_content_ads( $content ) {
-	if ( ! is_singular( 'post' ) || ! is_main_query() || is_admin() ) {
+	// Guards: only single posts, main query, in the loop, not feed/preview/admin/rest
+	if ( ! is_singular( 'post' ) || ! is_main_query() || ! in_the_loop() || is_admin() || is_feed() || is_preview() || wp_is_json_request() ) {
 		return $content;
 	}
 
-	// Split by closing </p> tags
-	$paragraphs = explode( '</p>', $content );
-	$total = count( $paragraphs );
-
-	// Don't count the last empty fragment after the final </p>
-	if ( isset( $paragraphs[ $total - 1 ] ) && trim( $paragraphs[ $total - 1 ] ) === '' ) {
-		$total_real = $total - 1;
-	} else {
-		$total_real = $total;
+	// Split by closing </p> tags (case-insensitive via regex split)
+	$paragraphs = preg_split( '/(<\/p>)/i', $content, -1, PREG_SPLIT_DELIM_CAPTURE );
+	if ( ! is_array( $paragraphs ) || count( $paragraphs ) < 2 ) {
+		return $content;
 	}
+
+	// Count real paragraphs (every other element is the </p> delimiter)
+	$total_real = ceil( count( $paragraphs ) / 2 );
 
 	if ( $total_real < 2 ) {
 		return $content;
@@ -211,11 +213,11 @@ function HTG_auto_insert_content_ads( $content ) {
 		$positions = HTG_parse_placement_rule( $rule, $total_real );
 
 		// Build ad HTML
-		$ad_html = '<div class="htg-ad htg-ad-in-article htg-ad-in-article-' . $slot . '">';
-		if ( (bool) get_option( 'HTG_ad_labels_enable', 1 ) ) {
-			$ad_html .= '<span class="htg-ad-label">' . esc_html__( 'Advertisement', 'adtech-pro' ) . '</span>';
+		$ad_html = '<div class="HTG-ad-container HTG-ad-in_article_' . $slot . '">';
+		if ( (int) get_option( 'HTG_ad_labels_enable', 1 ) === 1 ) {
+			$ad_html .= '<span class="HTG-ad-label">' . esc_html__( 'Advertisement', 'adtech-pro' ) . '</span>';
 		}
-		$ad_html .= '<div class="htg-ad-content">' . $ad_code . '</div></div>';
+		$ad_html .= '<div class="HTG-ad-slot">' . $ad_code . '</div></div>';
 
 		foreach ( $positions as $pos ) {
 			if ( ! isset( $insertions[ $pos ] ) ) {
@@ -229,26 +231,25 @@ function HTG_auto_insert_content_ads( $content ) {
 		return $content;
 	}
 
-	// Rebuild content with ads injected
+	// Rebuild content with ads injected after the specified paragraph's </p>
 	$new_content = '';
-	for ( $i = 0; $i < $total; $i++ ) {
+	$para_num = 0;
+	for ( $i = 0; $i < count( $paragraphs ); $i++ ) {
 		$new_content .= $paragraphs[ $i ];
-		if ( $i < $total - 1 ) {
-			$new_content .= '</p>';
-		}
-
-		// Paragraph number is 1-indexed: after paragraph ($i + 1)
-		$para_num = $i + 1;
-		if ( isset( $insertions[ $para_num ] ) ) {
-			foreach ( $insertions[ $para_num ] as $ad ) {
-				$new_content .= "\n" . $ad . "\n";
+		// Every odd index is a </p> delimiter — that closes a paragraph
+		if ( ( $i % 2 ) === 1 ) {
+			$para_num++;
+			if ( isset( $insertions[ $para_num ] ) ) {
+				foreach ( $insertions[ $para_num ] as $ad ) {
+					$new_content .= "\n" . $ad . "\n";
+				}
 			}
 		}
 	}
 
 	return $new_content;
 }
-add_filter( 'the_content', 'HTG_auto_insert_content_ads', 20 );
+add_filter( 'the_content', 'HTG_auto_insert_content_ads', 15 );
 
 /* =====================================================================
    ADMIN: Menu & Settings Page
@@ -274,13 +275,17 @@ add_action( 'admin_menu', 'HTG_ad_manager_admin_menu', 20 );
  */
 function HTG_render_ad_manager_page() {
 
+	if ( ! current_user_can( 'manage_options' ) ) {
+		wp_die( esc_html__( 'You do not have permission to access this page.', 'adtech-pro' ) );
+	}
+
 	// ── Save Handler ──
 	if ( isset( $_POST['HTG_save_ads'] ) && check_admin_referer( 'HTG_ad_manager_nonce' ) && current_user_can( 'manage_options' ) ) {
 
 		// Global settings
 		update_option( 'HTG_ad_labels_enable', isset( $_POST['HTG_ad_labels_enable'] ) ? 1 : 0 );
 
-		// All ad code fields — store raw HTML (admin-only, unslash to undo WP magic quotes)
+		// All ad code fields — store raw HTML (requires manage_options; unfiltered_html recommended for <script> tags)
 		$text_fields = array(
 			'HTG_ad_head_code',
 			'HTG_ad_footer_code',
@@ -295,15 +300,26 @@ function HTG_render_ad_manager_page() {
 		);
 
 		foreach ( $text_fields as $field ) {
-			update_option( $field, wp_unslash( $_POST[ $field ] ?? '' ) );
+			$code = wp_unslash( $_POST[ $field ] ?? '' );
+			// If user lacks unfiltered_html, strip script tags for safety on multisite
+			if ( ! current_user_can( 'unfiltered_html' ) ) {
+				$code = wp_kses_post( $code );
+			}
+			// autoload=false — large ad codes should not load on every request
+			update_option( $field, $code, false );
 		}
 
 		// In-article slots (1-3)
 		for ( $s = 1; $s <= 3; $s++ ) {
-			update_option( 'HTG_ad_in_article_' . $s, wp_unslash( $_POST[ 'HTG_ad_in_article_' . $s ] ?? '' ) );
+			$code = wp_unslash( $_POST[ 'HTG_ad_in_article_' . $s ] ?? '' );
+			if ( ! current_user_can( 'unfiltered_html' ) ) {
+				$code = wp_kses_post( $code );
+			}
+			update_option( 'HTG_ad_in_article_' . $s, $code, false );
 			update_option(
 				'HTG_ad_in_article_' . $s . '_position',
-				sanitize_text_field( $_POST[ 'HTG_ad_in_article_' . $s . '_position' ] ?? '' )
+				sanitize_text_field( wp_unslash( $_POST[ 'HTG_ad_in_article_' . $s . '_position' ] ?? '' ) ),
+				false
 			);
 		}
 
@@ -745,34 +761,5 @@ function HTG_render_ad_manager_page() {
    FRONTEND: Ad container styles
    ===================================================================== */
 
-/**
- * Output minimal frontend ad styles
- */
-function HTG_ad_frontend_styles() {
-	?>
-	<style>
-	.htg-ad {
-		margin: 25px 0;
-		text-align: center;
-		clear: both;
-	}
-	.htg-ad-label {
-		display: block;
-		font-size: 10px;
-		text-transform: uppercase;
-		letter-spacing: 1px;
-		color: #94a3b8;
-		margin-bottom: 8px;
-	}
-	.htg-ad-content {
-		display: flex;
-		justify-content: center;
-	}
-	.htg-ad-in-article {
-		margin: 30px auto;
-		max-width: 100%;
-	}
-	</style>
-	<?php
-}
-add_action( 'wp_head', 'HTG_ad_frontend_styles' );
+// Frontend ad styles are handled by css/simple-ads.css (enqueued via HTG_simple_ads_assets).
+// The legacy inline HTG_ad_frontend_styles() has been removed to avoid duplicate rules.

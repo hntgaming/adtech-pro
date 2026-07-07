@@ -345,7 +345,14 @@ class HTG_Author_Box {
 	 * Auto-insert author box
 	 */
 	public static function auto_insert_author_box( $content ) {
-		if ( ! is_single() || ! get_theme_mod( 'HTG_author_box_enable', true ) ) {
+		if ( ! is_single() || ! in_the_loop() || is_feed() || is_preview() ) {
+			return $content;
+		}
+		// Skip auto-insert if the legacy template part will render it (prevents duplicates)
+		if ( get_theme_mod( 'authorbox_sw', true ) ) {
+			return $content;
+		}
+		if ( ! get_theme_mod( 'HTG_author_box_enable', true ) ) {
 			return $content;
 		}
 
